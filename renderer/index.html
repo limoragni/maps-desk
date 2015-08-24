@@ -2,11 +2,19 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <script type="text/javascript">
+        	window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
+        </script>
         <title></title>
     </head>
     <body>
         <div class="">
-            <h1>HELLO</h1> 
+            <h1 id="hello">HELLO</h1> 
         </div>
     </body>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$('#hello').html("FUCK OFF");
+    	});
+    </script>
 </html>
