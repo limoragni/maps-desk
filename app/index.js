@@ -29,8 +29,6 @@ app.on('ready', function () {
             height: 706,
             'min-width': 1200,
             'min-height': 706,
-            kiosk: true,
-            fullscreen: true,
             title: 'Maps.'
         });
     }
