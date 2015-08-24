@@ -1,0 +1,22 @@
+{
+  "name": "maps-desk",
+  "version": "0.0.1",
+  "homepage": "https://github.com/limoragni/maps-desk",
+  "authors": [
+    "Guido Villaverde <guidovillaverde@gmail.com>"
+  ],
+  "main": "main.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.2.1",
+    "jquery": "~2.1.4",
+    "backbone.radio": "~1.0.0"
+  }
+}
