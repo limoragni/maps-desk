@@ -2,19 +2,38 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="css/main.css">
+
         <script type="text/javascript">
         	window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
         </script>
+        <script type="text/javascript" src="bower_components/d3/d3.js"></script>
+        <script type="text/javascript" src="data/worldMap.js"></script>
         <title></title>
     </head>
-    <body>
-        <div class="">
-            <h1 id="hello">HELLO</h1> 
-        </div>
-    </body>
+    <body></body>
     <script type="text/javascript">
     	$(document).ready(function(){
-    		$('#hello').html("FUCK OFF");
+    		d3.select('body')
+                .append('svg')
+                .attr('width', '100%')
+                .attr('height', '100%')
+                .selectAll('path')
+                .data(d3.entries(WorldMap.shapes))
+                .enter()
+                .append('path')
+                .attr('d', function(data){return data.value})
+                .classed('country', true)
+                .on('mouseover', function(d){
+                    $(this).attr('fill', '#FF2233')
+                })
+                .on('mouseout', function(){
+                    $(this).attr('fill', '#000000')
+                }).
+                on('click', function(data){
+                    console.log(WorldMap.names[data.key])
+                })
+
     	});
     </script>
 </html>
