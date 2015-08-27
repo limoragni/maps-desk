@@ -7,3 +7,33 @@ body{
 .country{
     cursor: pointer;
 }
+#country-indicator{
+	height:50px;
+    width:300px;
+    background-color:#BCD2EE;
+    border:2px solid #6495ED;
+    border-radius:100px;
+    margin:auto;
+    text-align:center;
+}
+#country-indicator h1{
+	margin: auto;
+	color:blue;
+	position: relative;
+}
+#popup {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background-color: blueviolet;
+	width: 80px;
+	height: 80px;
+	display: none;
+}
+.ctry-wrong{
+	fill:#FF2299;
+}
+.ctry-fine{
+	fill:rgb(221, 104, 42);
+	
+}

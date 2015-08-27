@@ -11,9 +11,24 @@
         <script type="text/javascript" src="data/worldMap.js"></script>
         <title></title>
     </head>
-    <body></body>
+    <body>
+        <div id="country-indicator"><h1 id="h-country"></h1></div>
+        <div id="pointero"><h3>Points: </h3></div>
+        <div id="popup"></div>
+    </body>
     <script type="text/javascript">
     	$(document).ready(function(){
+            Array.prototype.mix = function () {
+                var n = this.length;
+                while (n--) {
+                        var i = Math.floor(n * Math.random());
+                        var tmp = this[i];
+                        this[i] = this[n];
+                        this[n] = tmp;
+                }
+                return this;
+            }
+
     		d3.select('body')
                 .append('svg')
                 .attr('width', '100%')
@@ -31,9 +46,57 @@
                     $(this).attr('fill', '#000000')
                 }).
                 on('click', function(data){
-                    console.log(WorldMap.names[data.key])
+                    var countryClick = WorldMap.names[data.key];
+                    console.log(countryClick);
+                    if (countClicks < 3 && countryClick != firstCountry){
+                        $('#popup').html("<h3>Nooooo</h3>");
+                        $("#popup").fadeIn();
+                        setTimeout(function(){
+                            $('#popup').fadeOut();
+                            if(countClicks === 3){
+                                d3.selectAll('path').each(function(d){
+                                    if (countryRandomKeyArr[0] === d.key) {
+                                        d3.select(this).classed('ctry-wrong',true);
+                                    }
+                                })
+                                countryRandomKeyArr = countryRandomKeyArr.splice(1,countryRandomKeyArr.length);
+                                $("#h-country").empty();
+                                firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+                                $('#h-country').append(firstCountry);
+                                countClicks = 0;
+                            };
+                        },1000);
+                        countClicks++;
+                    } else if (countryClick === firstCountry) {
+                          $('#popup').html("<h3>Bravo!!</h3>");
+                          $("#popup").fadeIn();
+                          $('#pointero').empty();
+                          points++;
+                          $('#pointero').append("<h3>Points:"+ points + "</h3>");
+                          setTimeout(function(){
+                            $('#popup').fadeOut();
+                            countryRandomKeyArr = countryRandomKeyArr.splice(1,countryRandomKeyArr.length);
+                            $("#h-country").empty();
+                            firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+                            $('#h-country').append(firstCountry);
+                            countClicks = 0;
+
+                          },1000);
+                          d3.select(this).classed('ctry-fine',true);
+                    };
                 })
 
+                //d3.selectAll('path').each(function(d){console.log(d)})
+                var countClicks = 0;
+                var points = 0;
+                var countryKeyArr = Object.keys(WorldMap.names);
+                var countryRandomKeyArr = countryKeyArr.mix();
+                var firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+                $('#h-country').append(firstCountry);
+                //console.log(countryRandomKeyArr[0]);
+
+               
+                
     	});
     </script>
 </html>
