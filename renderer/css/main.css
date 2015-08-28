@@ -25,15 +25,40 @@ body{
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	background-color: blueviolet;
-	width: 80px;
+	background-color: #A7A5DD;
+	width: 110px;
 	height: 80px;
 	display: none;
+	border-radius:100%;
+	text-align: center;
+}
+#popup2 {
+	position: absolute;
+	left: 25%;
+	top: 50%;
+	background-color: #A7A5DD;
+	width: 170px;
+	height: 120px;
+	display: none;
+	border-radius:100%;
+	text-align: center;
+}
+#reset {
+	position: absolute;
+	left: 40%;
+	top: 50%;
+	background-color: #A7A5DD;
+	width: 85px;
+	height: 60px;
+	display: none;
+	border-radius:100%;
+	text-align: center;
+	cursor: pointer;
 }
 .ctry-wrong{
-	fill:#FF2299;
+	fill:#EC3753;
 }
 .ctry-fine{
-	fill:rgb(221, 104, 42);
+	fill:#10D00B;
 	
 }
