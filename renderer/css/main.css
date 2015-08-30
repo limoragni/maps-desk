@@ -21,36 +21,33 @@ body{
 	color:blue;
 	position: relative;
 }
-#popup {
+.popup {
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	background-color: #A7A5DD;
 	width: 110px;
 	height: 80px;
-	display: none;
 	border-radius:100%;
 	text-align: center;
 }
-#popup2 {
+.popup2 {
 	position: absolute;
 	left: 25%;
 	top: 50%;
 	background-color: #A7A5DD;
 	width: 170px;
 	height: 120px;
-	display: none;
 	border-radius:100%;
 	text-align: center;
 }
-#reset {
+.reset {
 	position: absolute;
 	left: 40%;
 	top: 50%;
 	background-color: #A7A5DD;
 	width: 85px;
 	height: 60px;
-	display: none;
 	border-radius:100%;
 	text-align: center;
 	cursor: pointer;
