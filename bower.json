@@ -16,8 +16,9 @@
   ],
   "dependencies": {
     "backbone": "~1.2.1",
-    "jquery": "~2.1.4",
     "backbone.radio": "~1.0.0",
-    "d3": "~3.5.6"
+    "bootstrap": "~3.3.5",
+    "d3": "~3.5.6",
+    "jquery": "~2.1.4"
   }
 }
