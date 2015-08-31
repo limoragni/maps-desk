@@ -48,12 +48,9 @@
                 this.messages[message].push(fn);
             }
 
-            Map.prototype.trigger = function(message, parameter, context){
-                if(!context)
-                    context = this;
-
+            Map.prototype.trigger = function(message, parameter){
                 for(var index in this.messages[message]){
-                    this.messages[message][index].apply(context, [parameter])
+                    this.messages[message][index](parameter)
                 }
             }
 
@@ -79,7 +76,7 @@
                         $(this).attr('fill', '#000000')
                     })
                     .on('click', function(d){
-                        self.trigger('countryClicked', d, this)
+                        self.trigger('countryClicked', {data: d, country: this});
                     });
             }
 
@@ -93,20 +90,20 @@
                 this.firstCountry = WorldMap.names[this.countryRandomKeyArr[0]];
                 this.countryClick = null
             }
-            
-            Game.prototype.onCountryClicked = function(data){
-                this.countryClick = WorldMap.names[data.key];
+
+            Game.prototype.onCountryClicked = function(options){
+                this.countryClick = WorldMap.names[options.data.key];
                 if (!this.isThisTheRightCountry()){
                     this.onWrongCountry();
                 } else  {
-                    this.onGuessedCountry(this);
+                    this.onGuessedCountry(options.country);
                 };
 
                 if (this.itThisTheLastCountry()) {
                     this.resetCountrys();
                 };
             }
-            
+
             Game.prototype.isThisTheRightCountry = function(){
                 if(this.countryClick === this.firstCountry)
                     return true
