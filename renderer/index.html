@@ -92,6 +92,7 @@
             }
 
             Game.prototype.onCountryClicked = function(options){
+                console.log(this);
                 this.countryClick = WorldMap.names[options.data.key];
                 if (!this.isThisTheRightCountry()){
                     this.onWrongCountry();
@@ -306,7 +307,9 @@
 
             var map = new Map(WorldMap.shapes, 'body');
             var game = new Game();
-            map.on('countryClicked', game.onCountryClicked);
+            map.on('countryClicked', function(options){
+                game.onCountryClicked(options)
+            });
             //map.on('countryClicked', onCountryClicked);
 
 
