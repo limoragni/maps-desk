@@ -83,46 +83,38 @@
                     });
             }
 
-            // var Game = function(){
-            //     this.countClicks = 0;
-            //     this.points = 0;
-            //
-            // }
-            //
-            // Game.prototype.onCountryClicked = function(){
-            //     this.countryClick = WorldMap.names[data.key];
-            //     if(!this.isThisTheRightCountry()){
-            //         //BLAH
-            //     }
-            // }
-            //
-            // Game.prototype.isThisTheRightCountry = function(){
-            //
-            // }
+            var Game = function(){
+                this.countClicks = 0;
+                this.points = 0;
+                this.wrongPoints = 0;
+                this.countryKeyArr = Object.keys(WorldMap.names);
+                this.countryRandomKeyArr = this.countryKeyArr.slice().mix();
 
-            var countClicks = 0;
-            var points = 0;
-            var wrongPoints = 0;
-            var countryKeyArr = Object.keys(WorldMap.names);
-            var countryRandomKeyArr = countryKeyArr.slice().mix();
-
-            var firstCountry = WorldMap.names[countryRandomKeyArr[0]];
-            var countryClick = null
-
-            var onCountryClicked = function(data){
-                countryClick = WorldMap.names[data.key];
-                if (!isThisTheRightCountry()){
-                    onWrongCountry();
+                this.firstCountry = WorldMap.names[this.countryRandomKeyArr[0]];
+                this.countryClick = null
+            }
+            
+            Game.prototype.onCountryClicked = function(data){
+                this.countryClick = WorldMap.names[data.key];
+                if (!this.isThisTheRightCountry()){
+                    this.onWrongCountry();
                 } else  {
-                    onGuessedCountry(this);
+                    this.onGuessedCountry(this);
                 };
 
-                if (itThisTheLastCountry()) {
-                    resetCountrys();
+                if (this.itThisTheLastCountry()) {
+                    this.resetCountrys();
                 };
-            };
+            }
+            
+            Game.prototype.isThisTheRightCountry = function(){
+                if(this.countryClick === this.firstCountry)
+                    return true
+                if(this.countClicks < 3 && this.countryClick != this.firstCountry)
+                    return false
+            }
 
-            var onGuessedCountry = function(country){
+            Game.prototype.onGuessedCountry = function(){
                 showPopup('<h1 style="color:green;">OK</h1>');
                 setPoints();
                 d3.select(country).classed('ctry-fine',true);
@@ -132,11 +124,9 @@
                     });
                     deleteFirstCountryShowNext();
                 },1000);
-
-                //console.log($('this'));
             }
 
-            var onWrongCountry = function(){
+            Game.prototype.onWrongCountry = function(){
                 showPopup('<h1 style="color:red;">X</h1>');
                 $('div[class="popup"]').fadeOut(1000,function(){
                     this.remove();
@@ -148,19 +138,14 @@
                     };
                 countClicks++;
             }
-            var isThisTheRightCountry = function(){
-                if(countryClick === firstCountry)
-                    return true
-                if(countClicks < 3 && countryClick != firstCountry)
-                    return false
-            }
-            var itThisTheLastCountry = function(){
+
+            Game.prototype.itThisTheLastCountry = function(){
                 if ((countryRandomKeyArr.length === 1 && countClicks === 3)||(countryRandomKeyArr.length === 1 && countryClick === firstCountry)) {
                     return true;
                 };
             }
 
-            var showPopup = function(content){
+            Game.prototype.showPopup = function(content){
                 var popup = $('<div class="popup"></div>')
                 $('body').append(popup);
                 popup.html(content);
@@ -168,7 +153,7 @@
                 return popup;
             }
 
-            var colorWrongCountry = function(){
+            Game.prototype.colorWrongCountry = function(){
                 d3.selectAll('path').each(function(d){
                     if (countryRandomKeyArr[0] === d.key) {
                         d3.select(this).classed('ctry-wrong',true);
@@ -176,7 +161,7 @@
                 })
             }
 
-            var deleteFirstCountryShowNext = function(){
+            Game.prototype.deleteFirstCountryShowNext = function(){
                         countryRandomKeyArr = countryRandomKeyArr.splice(1,countryRandomKeyArr.length);
                         $("#h-country").empty();
                         firstCountry = WorldMap.names[countryRandomKeyArr[0]];
@@ -184,12 +169,13 @@
                         countClicks = 0;
             }
 
-            var setPoints = function(){
+            Game.prototype.setPoints = function(){
                 $('#pointero').empty();
                 points++;
                 $('#pointero').append("<h3>Points:"+ points + "</h3>");
             }
-            var resetCountrys = function(){
+
+            Game.prototype.resetCountrys = function(){
                 var percent = points * 100 / countryKeyArr.length;
                     showPopup('<p style="margin-top:40px;">Has acertado el '+percent.toFixed(2)+'% de los paises</p>').addClass('popup2');
                     showPopup('<h4>Reset</h4>').addClass('reset');
@@ -207,16 +193,127 @@
                         $('#pointero').append("<h3>Points:</h3>");
                         });
             }
+            // var countClicks = 0;
+            // var points = 0;
+            // var wrongPoints = 0;
+            // var countryKeyArr = Object.keys(WorldMap.names);
+            // var countryRandomKeyArr = countryKeyArr.slice().mix();
+
+            // var firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+            // var countryClick = null
+
+            // var onCountryClicked = function(data){
+            //     countryClick = WorldMap.names[data.key];
+            //     if (!isThisTheRightCountry()){
+            //         onWrongCountry();
+            //     } else  {
+            //         onGuessedCountry(this);
+            //     };
+
+            //     if (itThisTheLastCountry()) {
+            //         resetCountrys();
+            //     };
+            // };
+
+            // var onGuessedCountry = function(country){
+            //     showPopup('<h1 style="color:green;">OK</h1>');
+            //     setPoints();
+            //     d3.select(country).classed('ctry-fine',true);
+            //     setTimeout(function(){
+            //         $('div[class="popup"]').fadeOut(function(){
+            //             this.remove();
+            //         });
+            //         deleteFirstCountryShowNext();
+            //     },1000);
+
+            //     console.log($('this'));
+            // }
+
+            // var onWrongCountry = function(){
+            //     showPopup('<h1 style="color:red;">X</h1>');
+            //     $('div[class="popup"]').fadeOut(1000,function(){
+            //         this.remove();
+            //     });
+            //     if(countClicks === 3){
+            //         colorWrongCountry();
+            //         deleteFirstCountryShowNext();
+            //         wrongPoints++
+            //         };
+            //     countClicks++;
+            // }
+
+            // var isThisTheRightCountry = function(){
+            //     if(countryClick === firstCountry)
+            //         return true
+            //     if(countClicks < 3 && countryClick != firstCountry)
+            //         return false
+            // }
+
+            // var itThisTheLastCountry = function(){
+            //     if ((countryRandomKeyArr.length === 1 && countClicks === 3)||(countryRandomKeyArr.length === 1 && countryClick === firstCountry)) {
+            //         return true;
+            //     };
+            // }
+
+            // var showPopup = function(content){
+            //     var popup = $('<div class="popup"></div>')
+            //     $('body').append(popup);
+            //     popup.html(content);
+            //     popup.fadeIn();
+            //     return popup;
+            // }
+
+            // var colorWrongCountry = function(){
+            //     d3.selectAll('path').each(function(d){
+            //         if (countryRandomKeyArr[0] === d.key) {
+            //             d3.select(this).classed('ctry-wrong',true);
+            //         }
+            //     })
+            // }
+
+            // var deleteFirstCountryShowNext = function(){
+            //             countryRandomKeyArr = countryRandomKeyArr.splice(1,countryRandomKeyArr.length);
+            //             $("#h-country").empty();
+            //             firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+            //             $('#h-country').append(firstCountry);
+            //             countClicks = 0;
+            // }
+
+            // var setPoints = function(){
+            //     $('#pointero').empty();
+            //     points++;
+            //     $('#pointero').append("<h3>Points:"+ points + "</h3>");
+            // }
+
+            // var resetCountrys = function(){
+            //     var percent = points * 100 / countryKeyArr.length;
+            //         showPopup('<p style="margin-top:40px;">Has acertado el '+percent.toFixed(2)+'% de los paises</p>').addClass('popup2');
+            //         showPopup('<h4>Reset</h4>').addClass('reset');
+            //         $('.reset').click(function() {
+            //             countClicks = 0;
+            //             points = 0;
+            //             wrongPoints = 0;
+            //             countryRandomKeyArr = countryKeyArr.slice().mix();
+            //             firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+            //             $("#h-country").empty();
+            //             $('#h-country').append(firstCountry);
+            //             $('.popup').fadeOut();
+            //             d3.selectAll('path').classed('ctry-fine ctry-wrong',false);
+            //             $('#pointero').empty();
+            //             $('#pointero').append("<h3>Points:</h3>");
+            //             });
+            // }
+
             //showPopup('HOLA').addClass('customPopup')
 
 
             var map = new Map(WorldMap.shapes, 'body');
-            // var game = new Game();
-            // map.on('countryClicked', game.onCountryClicked);
-            map.on('countryClicked', onCountryClicked);
+            var game = new Game();
+            map.on('countryClicked', game.onCountryClicked);
+            //map.on('countryClicked', onCountryClicked);
 
 
-            $('#h-country').append(firstCountry);
+            $('#h-country').append(game.firstCountry);
 
         });
     </script>
