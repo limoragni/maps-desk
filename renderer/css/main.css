@@ -4,22 +4,20 @@ html{
 body{
     height: 100%;
 }
+svg {
+	margin-left: 12%;
+}
 .country{
     cursor: pointer;
 }
 #country-indicator{
-	height:50px;
-    width:300px;
-    background-color:#BCD2EE;
-    border:2px solid #6495ED;
-    border-radius:100px;
-    margin:auto;
+	padding: 20px;
     text-align:center;
 }
 #country-indicator h1{
 	margin: auto;
-	color:blue;
-	position: relative;
+	
+	
 }
 .popup {
 	position: absolute;
@@ -53,9 +51,17 @@ body{
 	cursor: pointer;
 }
 .ctry-wrong{
-	fill:#EC3753;
+	fill:#BC4A48; 
 }
 .ctry-fine{
-	fill:#10D00B;
+	fill:#468847;
 	
+}
+h1.wrong-indicator{
+	color:#BC4A48;
+	background-color: #F2DEDE;
+}
+h1.fine-indicator{
+	color:#468847;
+	background-color:#DFF0D8;
 }

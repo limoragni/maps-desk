@@ -17,7 +17,11 @@
         <title></title>
     </head>
     <body>
-        <div id="country-indicator"><h1 id="h-country"></h1></div>
+        <div id="country-indicator" class="jumbotron">
+            <div class="container">
+                <h1 id="h-country"></h1>
+            </div>
+        </div>
         <div id="pointero"><h3>Points: </h3></div>
     </body>
     <script type="text/javascript">
@@ -94,15 +98,23 @@
             Game.prototype.onCountryClicked = function(options){
                 console.log(this);
                 this.countryClick = WorldMap.names[options.data.key];
+
+            
+            Game.prototype.onCountryClicked = function(data){
+                this.countryClick = WorldMap.names[data.key];
+
+            Game.prototype.onCountryClicked = function(options){
+                this.countryClick = WorldMap.names[options.data.key];
+
                 if (!this.isThisTheRightCountry()){
                     this.onWrongCountry();
                 } else  {
                     this.onGuessedCountry(options.country);
                 };
 
-                if (this.itThisTheLastCountry()) {
-                    this.resetCountrys();
-                };
+                // if (this.itThisTheLastCountry()) {
+                //     this.resetCountrys();
+                // };
             }
 
             Game.prototype.isThisTheRightCountry = function(){
@@ -112,85 +124,80 @@
                     return false
             }
 
-            Game.prototype.onGuessedCountry = function(){
-                showPopup('<h1 style="color:green;">OK</h1>');
-                setPoints();
-                d3.select(country).classed('ctry-fine',true);
+            Game.prototype.onGuessedCountry = function(country){
+                var self = this;
+                this.setPoints();
+                $('#h-country').addClass('fine-indicator');               
                 setTimeout(function(){
-                    $('div[class="popup"]').fadeOut(function(){
-                        this.remove();
-                    });
-                    deleteFirstCountryShowNext();
+                    $('#h-country').toggleClass('fine-indicator');
+                    self.deleteFirstCountryShowNext();
                 },1000);
+                d3.select(country).classed('ctry-fine',true);
             }
 
             Game.prototype.onWrongCountry = function(){
-                showPopup('<h1 style="color:red;">X</h1>');
-                $('div[class="popup"]').fadeOut(1000,function(){
-                    this.remove();
-                });
-                if(countClicks === 3){
-                    colorWrongCountry();
-                    deleteFirstCountryShowNext();
-                    wrongPoints++
-                    };
-                countClicks++;
+                var self = this;
+                $('#h-country').addClass('wrong-indicator');
+                setTimeout(function(){
+                    $('#h-country').toggleClass('wrong-indicator');
+                    if(self.countClicks === 3){
+                        self.colorWrongCountry();
+                        self.deleteFirstCountryShowNext();
+                        self.wrongPoints++
+                    };       
+                },1000);              
+                this.countClicks++;                             
             }
 
-            Game.prototype.itThisTheLastCountry = function(){
-                if ((countryRandomKeyArr.length === 1 && countClicks === 3)||(countryRandomKeyArr.length === 1 && countryClick === firstCountry)) {
-                    return true;
-                };
-            }
+            // Game.prototype.itThisTheLastCountry = function(){
+            //     if ((countryRandomKeyArr.length === 1 && countClicks === 3)||(countryRandomKeyArr.length === 1 && countryClick === firstCountry)) {
+            //         return true;
+            //     };
+            // }
 
-            Game.prototype.showPopup = function(content){
-                var popup = $('<div class="popup"></div>')
-                $('body').append(popup);
-                popup.html(content);
-                popup.fadeIn();
-                return popup;
-            }
 
             Game.prototype.colorWrongCountry = function(){
+                var self = this;
                 d3.selectAll('path').each(function(d){
-                    if (countryRandomKeyArr[0] === d.key) {
+                    if (self.countryRandomKeyArr[0] === d.key) {
                         d3.select(this).classed('ctry-wrong',true);
                     }
                 })
             }
 
             Game.prototype.deleteFirstCountryShowNext = function(){
-                        countryRandomKeyArr = countryRandomKeyArr.splice(1,countryRandomKeyArr.length);
+                        this.countryRandomKeyArr = this.countryRandomKeyArr.splice(1,this.countryRandomKeyArr.length);
                         $("#h-country").empty();
-                        firstCountry = WorldMap.names[countryRandomKeyArr[0]];
-                        $('#h-country').append(firstCountry);
-                        countClicks = 0;
+                        this.firstCountry = WorldMap.names[this.countryRandomKeyArr[0]];
+                        $('#h-country').append(this.firstCountry);
+                        this.countClicks = 0;
             }
 
             Game.prototype.setPoints = function(){
                 $('#pointero').empty();
-                points++;
-                $('#pointero').append("<h3>Points:"+ points + "</h3>");
+                this.points++;
+                $('#pointero').append("<h3>Points:"+ this.points + "</h3>");
             }
 
-            Game.prototype.resetCountrys = function(){
-                var percent = points * 100 / countryKeyArr.length;
-                    showPopup('<p style="margin-top:40px;">Has acertado el '+percent.toFixed(2)+'% de los paises</p>').addClass('popup2');
-                    showPopup('<h4>Reset</h4>').addClass('reset');
-                    $('.reset').click(function() {
-                        countClicks = 0;
-                        points = 0;
-                        wrongPoints = 0;
-                        countryRandomKeyArr = countryKeyArr.slice().mix();
-                        firstCountry = WorldMap.names[countryRandomKeyArr[0]];
-                        $("#h-country").empty();
-                        $('#h-country').append(firstCountry);
-                        $('.popup').fadeOut();
-                        d3.selectAll('path').classed('ctry-fine ctry-wrong',false);
-                        $('#pointero').empty();
-                        $('#pointero').append("<h3>Points:</h3>");
-                        });
-            }
+            // Game.prototype.resetCountrys = function(){
+            //     var percent = points * 100 / countryKeyArr.length;
+            //         showPopup('<p style="margin-top:40px;">Has acertado el '+percent.toFixed(2)+'% de los paises</p>').addClass('popup2');
+            //         showPopup('<h4>Reset</h4>').addClass('reset');
+            //         $('.reset').click(function() {
+            //             countClicks = 0;
+            //             points = 0;
+            //             wrongPoints = 0;
+            //             countryRandomKeyArr = countryKeyArr.slice().mix();
+            //             firstCountry = WorldMap.names[countryRandomKeyArr[0]];
+            //             $("#h-country").empty();
+            //             $('#h-country').append(firstCountry);
+            //             $('.popup').fadeOut();
+            //             d3.selectAll('path').classed('ctry-fine ctry-wrong',false);
+            //             $('#pointero').empty();
+            //             $('#pointero').append("<h3>Points:</h3>");
+            //             });
+            // }
+
             // var countClicks = 0;
             // var points = 0;
             // var wrongPoints = 0;
