@@ -95,17 +95,9 @@
                 this.countryClick = null
             }
 
-            Game.prototype.onCountryClicked = function(options){
-                console.log(this);
-                this.countryClick = WorldMap.names[options.data.key];
-
-            
-            Game.prototype.onCountryClicked = function(data){
-                this.countryClick = WorldMap.names[data.key];
 
             Game.prototype.onCountryClicked = function(options){
                 this.countryClick = WorldMap.names[options.data.key];
-
                 if (!this.isThisTheRightCountry()){
                     this.onWrongCountry();
                 } else  {
@@ -127,7 +119,7 @@
             Game.prototype.onGuessedCountry = function(country){
                 var self = this;
                 this.setPoints();
-                $('#h-country').addClass('fine-indicator');               
+                $('#h-country').addClass('fine-indicator');
                 setTimeout(function(){
                     $('#h-country').toggleClass('fine-indicator');
                     self.deleteFirstCountryShowNext();
@@ -144,9 +136,9 @@
                         self.colorWrongCountry();
                         self.deleteFirstCountryShowNext();
                         self.wrongPoints++
-                    };       
-                },1000);              
-                this.countClicks++;                             
+                    };
+                },1000);
+                this.countClicks++;
             }
 
             // Game.prototype.itThisTheLastCountry = function(){
