@@ -16,8 +16,11 @@ svg {
 }
 #country-indicator h1{
 	margin: auto;
-	
-	
+}
+#pointero {
+	position: absolute;
+    margin-top: -7%;
+    margin-left: 2%;
 }
 .popup {
 	position: absolute;

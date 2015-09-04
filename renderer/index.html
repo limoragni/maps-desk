@@ -22,7 +22,7 @@
                 <h1 id="h-country"></h1>
             </div>
         </div>
-        <div id="pointero"><h3>Points: </h3></div>
+        <div id="pointero"></div>
     </body>
     <script type="text/javascript">
     	$(document).ready(function(){
@@ -74,7 +74,7 @@
                     .attr('d', function(data){return data.value})
                     .classed('country', true)
                     .on('mouseover', function(){
-                        $(this).attr('fill', '#FF2233')
+                        $(this).attr('fill', '#987D7D')
                     })
                     .on('mouseout', function(){
                         $(this).attr('fill', '#000000')
@@ -123,7 +123,7 @@
                 setTimeout(function(){
                     $('#h-country').toggleClass('fine-indicator');
                     self.deleteFirstCountryShowNext();
-                },1000);
+                },700);
                 d3.select(country).classed('ctry-fine',true);
             }
 
@@ -137,7 +137,7 @@
                         self.deleteFirstCountryShowNext();
                         self.wrongPoints++
                     };
-                },1000);
+                },400);
                 this.countClicks++;
             }
 
@@ -168,7 +168,7 @@
             Game.prototype.setPoints = function(){
                 $('#pointero').empty();
                 this.points++;
-                $('#pointero').append("<h3>Points:"+ this.points + "</h3>");
+                $('#pointero').append("<span class='badge'>" + this.points + "</span>");
             }
 
             // Game.prototype.resetCountrys = function(){
