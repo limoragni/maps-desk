@@ -19,6 +19,7 @@ svg {
 #country-indicator{
 	padding: 20px;
     text-align:center;
+    height: 17%;
 }
 #country-indicator h1{
 	margin: auto;
@@ -74,13 +75,19 @@ h1.fine-indicator{
 	color:#468847;
 	background-color:#DFF0D8;
 }
-#final{
+#final-indicator{
   background-color: rgb(190, 180, 180);
   position: absolute;
-  height: 10%;
-  width: 30%;
+  height: 4%;
+  width: 25%;
   border-style: outset;
   margin-top: 10%;
   border-width: thin;
   left: -30%;
+}
+#reset-button{
+	position: absolute;
+	margin-left: 70%; 
+	margin-top: 1%;
+	cursor:pointer;
 }

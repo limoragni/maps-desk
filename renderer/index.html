@@ -23,7 +23,11 @@
             </div>
         </div>
         <div id="pointero"></div>
-        <div id="final"></div>
+        <div id="final-indicator">
+            <div id="reset">
+                <span id="reset-button" class="label label-default">Reset</span>
+            </div>
+        </div>
     </body>
     <script type="text/javascript">
     	$(document).ready(function(){
@@ -89,16 +93,16 @@
                 this.countClicks = 0;
                 this.points = 0;
                 this.wrongPoints = 0;
+                this.canClick = true;
                 this.countryKeyArr = Object.keys(WorldMap.names);
                 this.countryRandomKeyArr = this.countryKeyArr.slice().mix();
-                // this.countryRandomKeyArr.push("chuleta");
-                this.canClick = true;
                 this.firstCountry = WorldMap.names[this.countryRandomKeyArr[0]];
                 this.countryClick = null
             }
 
 
             Game.prototype.onCountryClicked = function(options){
+                console.log(this.countryRandomKeyArr)
                 if(this.canClick){
                     this.countryClick = WorldMap.names[options.data.key];
                     if (!this.isThisTheRightCountry()){
@@ -181,22 +185,27 @@
             }
 
             Game.prototype.resetCountrys = function(){
-                var percent = this.points * 100 / this.countryKeyArr.length;
-                    $('#h-country').append('THE END')
-                    $('#final').animate({left:'0%'}, 1000);
-                    // $('.reset').click(function() {
-                    //     countClicks = 0;
-                    //     points = 0;
-                    //     wrongPoints = 0;
-                    //     countryRandomKeyArr = countryKeyArr.slice().mix();
-                    //     firstCountry = WorldMap.names[countryRandomKeyArr[0]];
-                    //     $("#h-country").empty();
-                    //     $('#h-country').append(firstCountry);
-                    //     $('.popup').fadeOut();
-                    //     d3.selectAll('path').classed('ctry-fine ctry-wrong',false);
-                    //     $('#pointero').empty();
-                    //     $('#pointero').append("<h3>Points:</h3>");
-                    //     });
+                var self = this;
+                var percent = Math.floor(this.points * 100 / this.countryKeyArr.length) + '%';
+                $('#final-indicator').append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
+                $('#final-indicator').animate({left:'0%'}, 1000);
+
+                $('#reset-button').click(function() {
+                    self.countClicks = 0;
+                    self.points = 0;
+                    self.wrongPoints = 0;
+                    self.countryRandomKeyArr = self.countryKeyArr.slice().mix();
+                    self.firstCountry = WorldMap.names[self.countryRandomKeyArr[0]];
+                    $("#h-country").empty();
+                    $('#h-country').append(self.firstCountry);
+                    $('.popup').fadeOut();
+                    d3.selectAll('path').classed('ctry-fine ctry-wrong',false);
+                    $('#pointero').empty();
+                    $('#final-indicator').animate({left:'-30%'}, 1000);
+                    $('#final-indicator').empty();
+                    $('#final-indicator').append('<span id="reset-button" class="label label-default">Reset</span>');
+
+                    });
             }
 
             // var countClicks = 0;
@@ -322,7 +331,7 @@
 
 
             $('#h-country').append(game.firstCountry);
-            //console.log(game.countryRandomKeyArr);
+           //  console.log(game.countryRandomKeyArr);
         });
     </script>
 </html>
