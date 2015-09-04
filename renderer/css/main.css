@@ -6,6 +6,12 @@ body{
 }
 svg {
 	margin-left: 12%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .country{
     cursor: pointer;
@@ -67,4 +73,14 @@ h1.wrong-indicator{
 h1.fine-indicator{
 	color:#468847;
 	background-color:#DFF0D8;
+}
+#final{
+  background-color: rgb(190, 180, 180);
+  position: absolute;
+  height: 10%;
+  width: 30%;
+  border-style: outset;
+  margin-top: 10%;
+  border-width: thin;
+  left: -30%;
 }
