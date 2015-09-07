@@ -17,8 +17,6 @@ app.on('ready', () => {
         mainWindow = new BrowserWindow({
             width: 1200,
             height: 706,
-            'min-width': 1200,
-            'min-height': 706,
             fullscreen: false,
             title: 'Maps.'
         });
@@ -26,8 +24,6 @@ app.on('ready', () => {
         mainWindow = new BrowserWindow({
             width: 1366,
             height: 706,
-            'min-width': 1200,
-            'min-height': 706,
             title: 'Maps.'
         });
     }
