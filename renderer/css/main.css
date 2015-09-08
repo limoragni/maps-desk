@@ -19,7 +19,7 @@ svg {
 #country-indicator{
 	padding: 20px;
     text-align:center;
-    height: 17%;
+    height: 108px;
 }
 #country-indicator h1{
 	margin: auto;
@@ -28,26 +28,6 @@ svg {
 	position: absolute;
     margin-top: -7%;
     margin-left: 2%;
-}
-.popup {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	background-color: #A7A5DD;
-	width: 110px;
-	height: 80px;
-	border-radius:100%;
-	text-align: center;
-}
-.popup2 {
-	position: absolute;
-	left: 25%;
-	top: 50%;
-	background-color: #A7A5DD;
-	width: 170px;
-	height: 120px;
-	border-radius:100%;
-	text-align: center;
 }
 .reset {
 	position: absolute;
@@ -65,7 +45,10 @@ svg {
 }
 .ctry-fine{
 	fill:#468847;
-	
+}
+.stroke-country{
+	stroke:#BC4A48;
+	stroke-width="6";
 }
 h1.wrong-indicator{
 	color:#BC4A48;
@@ -78,8 +61,8 @@ h1.fine-indicator{
 #final-indicator{
   background-color: rgb(190, 180, 180);
   position: absolute;
-  height: 4%;
-  width: 25%;
+  height: 25px;
+  width: 340px;
   border-style: outset;
   margin-top: 10%;
   border-width: thin;

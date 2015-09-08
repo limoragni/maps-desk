@@ -16,12 +16,12 @@ Game.prototype = {
         $('#h-country').append(GameModel.getCurrentCountryName());
         $('#reset-button').click(_.bind(this.resetGame, this));
     },
-
+    //what the fuck the options parameters?
     onCountryClicked: function(options){
         if(this.canClick){
             this.countryClicked = options.data.key;
             if (!this.isThisTheRightCountry()){
-                this.onWrongCountry();
+                this.onWrongCountry(options.country);
             } else  {
                 this.onGuessedCountry(options.country);
             };
@@ -53,12 +53,14 @@ Game.prototype = {
         d3.select(country).classed('ctry-fine',true);
     },
 
-    onWrongCountry: function(){
+    onWrongCountry: function(country){
         var self = this;
         this.canClick = false;
         $('#h-country').addClass('wrong-indicator');
+        d3.select(country).classed('stroke-country',true);
         setTimeout(function(){
             $('#h-country').toggleClass('wrong-indicator');
+            d3.select(country).classed('stroke-country',false);
             if(self.countClicks === GameModel.amountOfTries){
                 self.colorWrongCountry();
                 self.showNextCountry();
@@ -79,7 +81,7 @@ Game.prototype = {
     colorWrongCountry: function(){
         var self = this;
         d3.selectAll('path').each(function(d){
-            if (GameModel.currentCountrie === d.key) {
+            if (GameModel.currentCountry === d.key) {
                 d3.select(this).classed('ctry-wrong',true);
             }
         })
@@ -107,7 +109,6 @@ Game.prototype = {
         this.setProperties();
         this.start();
         this.resetColors()
-        $('.popup').fadeOut();
         $('#final-indicator').animate({left:'-30%'}, 1000);
         $('#final-indicator').empty();
         $('#final-indicator').append('<span id="reset-button" class="label label-default">Reset</span>');
