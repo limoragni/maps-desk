@@ -74,3 +74,8 @@ h1.fine-indicator{
 	margin-top: 1%;
 	cursor:pointer;
 }
+#hint{
+	background-color: grey;
+	height: 50px;
+	width: 50px;
+}

@@ -14,6 +14,10 @@
             this.currentCountry      = this.randomizedCountries[0]
         },
 
+        getFiveCountries: function(){
+            this.randomizedCountries = this.randomizedCountries.splice(0,5);
+        },
+
         addPoints: function(points){
             this.points += points;
         },
@@ -31,7 +35,7 @@
         },
 
         nextCountry: function(){
-            this.randomizedCountries = this.randomizedCountries.splice(168,this.randomizedCountries.length);
+            this.randomizedCountries = this.randomizedCountries.splice(1,this.randomizedCountries.length);
             this.currentCountry = this.randomizedCountries[0];
         },
 

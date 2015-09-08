@@ -15,6 +15,19 @@ Game.prototype = {
         $("#h-country").empty();
         $('#h-country').append(GameModel.getCurrentCountryName());
         $('#reset-button').click(_.bind(this.resetGame, this));
+
+        $('#hint').click(function() {
+            GameModel.getFiveCountries();
+            d3.selectAll('path').each(function(d){
+                for(var i in GameModel.randomizedCountries){
+                    if(GameModel.randomizedCountries[i] === d.key){
+                        //d3.select(this).classed('ctry-wrong',true);
+                        console.log(GameModel.randomizedCountries[i])
+                    }
+                }
+            });            
+        });
+
     },
     //what the fuck the options parameters?
     onCountryClicked: function(options){

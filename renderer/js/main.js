@@ -6,5 +6,4 @@ $(document).ready(function(){
         game.onCountryClicked(options)
     });
     game.start()
-
 });
