@@ -26,7 +26,11 @@
 
         //Con esto agarras la hint para el pais actual
         getHintCountries: function(){
-            return this.hintCountries;
+            if (this.randomizedCountries.length > this.hintCountriesNumber + 1){
+                return this.hintCountries;
+            }else {
+                return [];
+            }
         },
         // getSubSetOfCountries: function(number){
         //     var copy = this.randomizedCountries.slice(0,this.randomizedCountries.length);

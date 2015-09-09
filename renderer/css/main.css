@@ -26,8 +26,7 @@ svg {
 }
 #pointero {
 	position: absolute;
-    margin-top: -7%;
-    margin-left: 2%;
+    margin-left: 5px;
 }
 .reset {
 	position: absolute;
@@ -66,7 +65,7 @@ h1.fine-indicator{
   border-style: outset;
   margin-top: 10%;
   border-width: thin;
-  left: -30%;
+  left: -340px;
 }
 #reset-button{
 	position: absolute;
@@ -74,8 +73,12 @@ h1.fine-indicator{
 	margin-top: 1%;
 	cursor:pointer;
 }
-#hint{
-	background-color: grey;
-	height: 50px;
-	width: 50px;
+#hint-button{
+	cursor: pointer;
+	position: absolute;
+	margin-top: 310px;
+}
+.hint-country{
+	fill:#3A9AD6;
+	opacity: 0.9;
 }

@@ -17,9 +17,8 @@ Game.prototype = {
         $('#h-country').append(GameModel.getCurrentCountryName());
         $('#reset-button').click(_.bind(this.resetGame, this));
 
-        $('#hint').click(function() {
+        $('#hint-button').click(function() {
             self.colorHintsCountries();
-            //console.log(GameModel.getSubSetOfCountries())
         });
     },
 
@@ -30,7 +29,11 @@ Game.prototype = {
             //var x = GameModel.getSubSetOfCountries(4); ESTO SE ETABA LLAMANDO 168 VECES
             for (var i in x ){
                 if (x[i] === d.key) {
-                    d3.select(this).classed('ctry-wrong',true);
+                    var self = this;
+                    d3.select(this).classed('hint-country',true);
+                    setTimeout(function(){
+                        d3.select(self).classed('hint-country',false);
+                    },600)
                 }
             }
         })
@@ -129,7 +132,7 @@ Game.prototype = {
         this.setProperties();
         this.start();
         this.resetColors()
-        $('#final-indicator').animate({left:'-30%'}, 1000);
+        $('#final-indicator').animate({left:'-340px'}, 1000);
         $('#final-indicator').empty();
         $('#final-indicator').append('<span id="reset-button" class="label label-default">Reset</span>');
     },
@@ -138,6 +141,6 @@ Game.prototype = {
         var self = this;
         var percent = Math.floor(GameModel.points * 100 / GameModel.getNumberOfCountries()) + '%';
         $('#final-indicator').append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
-        $('#final-indicator').animate({left:'0%'}, 1000);
+        $('#final-indicator').animate({left:'0px'}, 1000);
     }
 }
