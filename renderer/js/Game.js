@@ -24,9 +24,8 @@ Game.prototype = {
     },
 
     colorHintsCountries: function(){
-        var x = GameModel.getSubSetOfCountries(4); // Aca se llama solo una vez
-        // y después cuando iteras por todos los paises a la vez iteras por estos 4 para ver si
-        // los tenés que colorear o no
+        var x = GameModel.getHintCountries(); // ESTA NUEVA FUCION LA PODES LLAMAR CUANTAS VECES QUIERAS, PORQUE NO GENERA NADA NUEVO
+        //SIMPEMENTE TE DA LOS PAISES DE HINT
         d3.selectAll('path').each(function(d){
             //var x = GameModel.getSubSetOfCountries(4); ESTO SE ETABA LLAMANDO 168 VECES
             for (var i in x ){
