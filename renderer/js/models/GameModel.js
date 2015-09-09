@@ -21,6 +21,7 @@
         setHintCountries: function(){
             var copy = this.randomizedCountries.slice(0,this.randomizedCountries.length);
             this.hintCountries = copy.mix().slice(0, this.hintCountriesNumber); // Usa la variable con la cantidad de paises de hint
+            this.hintCountries.push(this.currentCountry);
         },
 
         //Con esto agarras la hint para el pais actual

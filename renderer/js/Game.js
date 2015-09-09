@@ -33,11 +33,6 @@ Game.prototype = {
                     d3.select(this).classed('ctry-wrong',true);
                 }
             }
-            // ACA TE AGREGUE ESTO PARA QUE TAMBIEN LE DE COLOR AL PAIS CORRECTO
-            // SINO ES LA PEOR PISTA DE LA HISTORIA JA!
-            if (d.key == GameModel.currentCountry){
-                d3.select(this).classed('ctry-wrong',true);
-            }
         })
     },
 
