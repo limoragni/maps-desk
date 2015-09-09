@@ -14,8 +14,8 @@
             this.currentCountry      = this.randomizedCountries[0]
         },
 
-        getFiveCountries: function(){
-            this.randomizedCountries = this.randomizedCountries.splice(0,5);
+        getSubSetOfCountries: function(number){
+            return this.randomizedCountries.mix().splice(0,number);
         },
 
         addPoints: function(points){
