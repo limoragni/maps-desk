@@ -24,14 +24,20 @@ Game.prototype = {
     },
 
     colorHintsCountries: function(){
+        var x = GameModel.getSubSetOfCountries(4); // Aca se llama solo una vez
+        // y después cuando iteras por todos los paises a la vez iteras por estos 4 para ver si
+        // los tenés que colorear o no
         d3.selectAll('path').each(function(d){
-            var x = GameModel.getSubSetOfCountries(4);
+            //var x = GameModel.getSubSetOfCountries(4); ESTO SE ETABA LLAMANDO 168 VECES
             for (var i in x ){
                 if (x[i] === d.key) {
-                console.log(this);
-                console.log("lalala");
-                //d3.select(this).classed('ctry-wrong',true);
+                    d3.select(this).classed('ctry-wrong',true);
                 }
+            }
+            // ACA TE AGREGUE ESTO PARA QUE TAMBIEN LE DE COLOR AL PAIS CORRECTO
+            // SINO ES LA PEOR PISTA DE LA HISTORIA JA!
+            if (d.key == GameModel.currentCountry){
+                d3.select(this).classed('ctry-wrong',true);
             }
         })
     },
