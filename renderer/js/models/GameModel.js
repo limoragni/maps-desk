@@ -7,14 +7,47 @@
 
     GameModel.prototype = {
         setProperties: function(){
-            this.points              = 0;
-            this.amountOfTries       = 3;
-            this.countriesKeys       = Object.keys(WorldMap.names);
-            this.randomizedCountries = this.countriesKeys.slice().mix();
-            this.currentCountry      = this.randomizedCountries[0]
-            this.hintCountries       = null
-            this.hintCountriesNumber = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
+            this.points                = 0;
+            this.amountOfTries         = 3;
+            this.countriesKeys         = Object.keys(WorldMap.names);
+            this.randomizedCountries   = this.countriesKeys.slice().mix();
+            this.currentCountry        = this.randomizedCountries[0]
+            this.easyCountries         = null
+            this.easyCountriesNumber   = 15
+            this.mediumCountries       = null
+            this.mediumCountriesNumber = 50
+            this.hintCountries         = null
+            this.hintCountriesNumber   = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
             this.setHintCountries() // Praparamos la hint para el primer pais
+            this.numberOfCountries     = null
+        },
+
+        setEasyMode: function(){
+            this.randomizedCountries = this.randomizedCountries.slice(0,this.easyCountriesNumber);
+            this.easyCountries = this.randomizedCountries.slice();
+            this.numberOfCountries = this.easyCountries.length;
+            this.setHintCountries() // Praparamos la hint para el primer pais
+        },
+
+        getEasyModeCountries: function(){
+            return this.easyCountries
+        },
+
+        setMediumMode: function(){
+            this.randomizedCountries = this.randomizedCountries.slice(0,this.mediumCountriesNumber);
+            this.mediumCountries = this.randomizedCountries.slice();
+            this.numberOfCountries = this.mediumCountries.length;
+            this.setHintCountries() // Praparamos la hint para el primer pais
+        },
+
+        getMediumModeCountries: function(){
+            return this.mediumCountries
+        },
+
+        setHardMode: function(){
+            this.randomizedCountries = this.countriesKeys.slice().mix();
+            this.numberOfCountries = this.randomizedCountries.length;
+            this.setHintCountries();
         },
 
         //Esto setea la hint
@@ -52,7 +85,7 @@
         },
 
         getNumberOfCountries: function(){
-            return this.countriesKeys.length;
+            return this.numberOfCountries
         },
 
         getNumberOfCountriesLeft: function(){

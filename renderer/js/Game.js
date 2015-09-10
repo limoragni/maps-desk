@@ -11,6 +11,7 @@ Game.prototype = {
     },
 
     start: function(){
+        this.gameModes();
         var self = this;
         $('#pointero').empty();
         $("#h-country").empty();
@@ -128,6 +129,7 @@ Game.prototype = {
     },
 
     resetGame: function(){
+        this.getInMenu();
         GameModel.reset();
         this.setProperties();
         this.start();
@@ -142,5 +144,57 @@ Game.prototype = {
         var percent = Math.floor(GameModel.points * 100 / GameModel.getNumberOfCountries()) + '%';
         $('#final-indicator').append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
         $('#final-indicator').animate({left:'0px'}, 1000);
+    },
+
+    gameModes: function(){
+        var self = this;
+        $('#btn1').click(function(event) {
+            GameModel.setEasyMode();
+            self.activeCountries(GameModel.getEasyModeCountries());
+            self.getOutTheMenu();
+        });
+        $('#btn2').click(function(event) {
+            GameModel.setMediumMode();
+            self.activeCountries(GameModel.getMediumModeCountries());
+            self.getOutTheMenu();
+        });
+        $('#btn3').click(function(event) {
+            GameModel.setHardMode();
+            self.getOutTheMenu();
+            d3.selectAll('path').each(function(d){
+                d3.select(this).classed('disable-country',false);
+            })
+        });
+    },
+
+    getOutTheMenu: function(){
+        $("#menu-buttons").fadeOut('slow', function() {
+            $('#container-game').css('pointer-events','all');
+            $('#h-country').fadeIn("fast", function() {
+                $('#container-game').css('fill-opacity','inherit');
+                $('#h-country').css('display', 'auto'); 
+            });
+        });
+    },
+
+    getInMenu: function(){
+        $('#container-game').css('fill-opacity','30%');
+        $('#h-country').css('display', 'none'); 
+        $("#menu-buttons").fadeIn('slow', function() {
+            $('#container-game').css('pointer-events','none');
+            $('#h-country').fadeOut("fast");
+        });
+    },
+
+    activeCountries: function(fn){
+        var x = fn;
+            d3.selectAll('path').each(function(d){
+                d3.select(this).classed('disable-country',true);
+                for (var i in x ){
+                    if (x[i] === d.key) {
+                        d3.select(this).classed('disable-country',false);
+                    }
+                }
+            })
     }
 }

@@ -23,6 +23,7 @@ svg {
 }
 #country-indicator h1{
 	margin: auto;
+	display: none;
 }
 #pointero {
 	position: absolute;
@@ -98,4 +99,8 @@ h1.fine-indicator{
 	position: absolute;
 	pointer-events: none;
 	fill-opacity:30%;
+}
+.disable-country{
+	fill-opacity:30%;
+	pointer-events:none;
 }
