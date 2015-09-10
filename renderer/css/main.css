@@ -82,3 +82,20 @@ h1.fine-indicator{
 	fill:#3A9AD6;
 	opacity: 0.9;
 }
+#menu-buttons{
+    position: absolute;
+    margin-left: 390px;
+    margin-top: 90px;
+}
+.buttons{
+	height: 100px;
+    width: 200px;
+}
+#container-game{
+	opacity: 3;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	pointer-events: none;
+	fill-opacity:30%;
+}

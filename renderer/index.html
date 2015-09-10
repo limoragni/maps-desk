@@ -23,19 +23,57 @@
         <title></title>
     </head>
     <body>
-        <div id="country-indicator" class="jumbotron">
-            <div class="container">
-                <h1 id="h-country"></h1>
+        <div id="container-game">
+            <div id="country-indicator" class="jumbotron">
+                <div class="container">
+                    <h1 id="h-country"></h1>
+                </div>
+            </div>
+            
+            <div id="pointero"></div>
+            <div id="final-indicator">
+                <div id="reset">
+                    <span id="reset-button" class="label label-default">Reset</span>
+                </div>
+            </div>
+            <div id="hint-button">
+                    <span class="label label-primary">Hint</span>
             </div>
         </div>
-        <div id="pointero"></div>
-        <div id="final-indicator">
-            <div id="reset">
-                <span id="reset-button" class="label label-default">Reset</span>
+        <div id="menu-buttons" class="btn-group">
+            <div class="btn-goup-vertical">
+                <button type="button" class="btn-group-vertical buttons btn btn-primary">Modo 1</button>
+ 
+                <button type="button" class="btn btn-primary dropdown-toggle"
+                      data-toggle="dropdown">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="sr-only">Desplegar menú</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><p>In this mode you only play with 15 countries</p></li>
+            </ul>
             </div>
-        </div>
-        <div id="hint-button">
-                <span class="label label-primary">Hint</span>
+            <div class="btn-goup-vertical">
+                <button type="button" class="btn-group-vertical buttons btn btn-success">Modo 2</button>
+ 
+                 <button type="button" class="btn btn-success dropdown-toggle"
+                      data-toggle="dropdown">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="sr-only">Desplegar menú</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><p>In this mode you play with 50 countries</p></li>
+            </ul>
+            </div>
+            <div class="btn-goup-vertical">
+                <button type="button" class="btn-group-vertical buttons btn btn-danger">Modo 3</button>
+ 
+            <button type="button" class="btn btn-danger dropdown-toggle"
+                      data-toggle="dropdown">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="sr-only">Desplegar menú</span>
+            </button>
+            </div>
         </div>
     </body>
 </html>

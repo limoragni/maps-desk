@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-    var map = new Map(WorldMap.shapes, 'body');
+    var map = new Map(WorldMap.shapes, '#container-game');
     var game = new Game();
     map.on('countryClicked', function(options){
         game.onCountryClicked(options)
