@@ -41,7 +41,7 @@ svg {
 	cursor: pointer;
 }
 .ctry-wrong{
-	fill:#BC4A48; 
+	fill:#BC4A48;
 }
 .ctry-fine{
 	fill:#468847;
@@ -50,14 +50,7 @@ svg {
 	stroke:#BC4A48;
 	stroke-width="6";
 }
-h1.wrong-indicator{
-	color:#BC4A48;
-	background-color: #F2DEDE;
-}
-h1.fine-indicator{
-	color:#468847;
-	background-color:#DFF0D8;
-}
+
 #final-indicator{
   background-color: rgb(190, 180, 180);
   position: absolute;
@@ -70,7 +63,7 @@ h1.fine-indicator{
 }
 #reset-button{
 	position: absolute;
-	margin-left: 70%; 
+	margin-left: 70%;
 	margin-top: 1%;
 	cursor:pointer;
 }

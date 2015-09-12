@@ -8,26 +8,46 @@ Game.prototype = {
         this.wrongPoints     = 0;
         this.canClick        = true;
         this.countryClicked  = null
+        this.UI              = {}
+        this.setUI()
     },
 
     start: function(){
+        this.setEvents()
         this.gameModes();
-        var self = this;
-        $('#pointero').empty();
-        $("#h-country").empty();
-        $('#h-country').append(GameModel.getCurrentCountryName());
-        $('#reset-button').click(_.bind(this.resetGame, this));
+        this.showCountry()
+    },
 
-        $('#hint-button').click(function() {
-            self.colorHintsCountries();
-        });
+    setUI: function(){
+        this.UI = {
+            points        : $('#player-points'),
+            reset         : $('#reset-button'),
+            hint          : $('#hint-button'),
+            countryName   : $('#h-country'),
+            finalPanel    : $('#final-indicator'),
+            easyButton    : $('#easy-mode-button'),
+            mediumButton  : $('#medium-mode-button'),
+            hardButton    : $('#hard-mode-button'),
+            modeButtons   : $('.game-mode-button')
+        }
+    },
+
+    setEvents: function(){
+        this.UI.reset.click(       _.bind( this.resetGame,           this));
+        this.UI.hint.click(        _.bind( this.colorHintsCountries, this));
+        this.UI.modeButtons.click( _.bind( this.onModeSelected,      this));
+    },
+
+    onModeSelected: function(evt){
+        var mode = $(evt.target).data('mode')
+        GameModel.setMode(mode);
+        this.activateCountries(GameModel.getCurrentCountries());
+        this.getOutTheMenu();
     },
 
     colorHintsCountries: function(){
-        var x = GameModel.getHintCountries(); // ESTA NUEVA FUCION LA PODES LLAMAR CUANTAS VECES QUIERAS, PORQUE NO GENERA NADA NUEVO
-        //SIMPEMENTE TE DA LOS PAISES DE HINT
+        var x = GameModel.getHintCountries();
         d3.selectAll('path').each(function(d){
-            //var x = GameModel.getSubSetOfCountries(4); ESTO SE ETABA LLAMANDO 168 VECES
             for (var i in x ){
                 if (x[i] === d.key) {
                     var self = this;
@@ -54,7 +74,6 @@ Game.prototype = {
                 this.gameOver();
             };
         }
-
     },
 
     isThisTheRightCountry: function(){
@@ -65,38 +84,36 @@ Game.prototype = {
     },
 
     onGuessedCountry: function(country){
-        var self = this;
         this.setPoints();
-        this.canClick = false;
-        $('#h-country').addClass('fine-indicator');
-        setTimeout(function(){
-            $('#h-country').toggleClass('fine-indicator');
-            self.showNextCountry();
-            self.canClick = true;
-        },700);
-        d3.select(country).classed('ctry-fine',true);
+        this.showNextCountry();
+        d3.select(country).classed('ctry-fine', true);
     },
 
     onWrongCountry: function(country){
         var self = this;
         this.canClick = false;
-        $('#h-country').addClass('wrong-indicator');
         d3.select(country).classed('stroke-country',true);
         setTimeout(function(){
-            $('#h-country').toggleClass('wrong-indicator');
             d3.select(country).classed('stroke-country',false);
             if(self.countClicks === GameModel.amountOfTries){
-                self.colorWrongCountry();
-                self.showNextCountry();
-                self.wrongPoints++
+                self.onLoseTurn();
             };
             self.canClick = true;
-        },400);
+        }, 400);
         this.countClicks++;
     },
 
+    onLoseTurn: function(){
+        this.colorWrongCountry();
+        this.showNextCountry();
+        this.wrongPoints++
+    },
+
     isThisTheLastCountry: function(){
-        if ((GameModel.getNumberOfCountriesLeft() === 1 && this.countClicks === GameModel.amountOfTries)||(GameModel.getNumberOfCountriesLeft() === 1 && this.countryClicked === GameModel.currentCountry)) {
+        var oneCountryLeft = GameModel.getNumberOfCountriesLeft() === 1
+        var triedAllTimes = this.countClicks === GameModel.amountOfTries
+        var rightCountry = this.countryClicked === GameModel.currentCountry
+        if (( oneCountryLeft && triedAllTimes)||(oneCountryLeft && rightCountry)) {
             return true;
         };
     },
@@ -113,15 +130,18 @@ Game.prototype = {
 
     showNextCountry: function(){
         GameModel.nextCountry()
-        $("#h-country").empty();
-        $('#h-country').append(GameModel.getCurrentCountryName());
+        this.showCountry()
         this.countClicks = 0;
     },
 
+    showCountry: function(){
+        this.UI.countryName.empty();
+        this.UI.countryName.append(GameModel.getCurrentCountryName());
+    },
+
     setPoints: function(){
-        $('#pointero').empty();
         GameModel.addPoints(1);
-        $('#pointero').append("<span class='badge'>" + GameModel.points + "</span>");
+        this.UI.points.html(GameModel.points);
     },
 
     resetColors: function(){
@@ -134,37 +154,21 @@ Game.prototype = {
         this.setProperties();
         this.start();
         this.resetColors()
-        $('#final-indicator').animate({left:'-340px'}, 1000);
-        $('#final-indicator').empty();
-        $('#final-indicator').append('<span id="reset-button" class="label label-default">Reset</span>');
+        this.UI.finalPanel.animate({left:'-340px'}, 1000);
+        this.UI.finalPanel.empty();
+        this.UI.finalPanel.append('<span id="reset-button" class="label label-default">Reset</span>');
+        this.UI.points.empty();
     },
 
     gameOver: function(){
-        var self = this;
         var percent = Math.floor(GameModel.points * 100 / GameModel.getNumberOfCountries()) + '%';
-        $('#final-indicator').append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
-        $('#final-indicator').animate({left:'0px'}, 1000);
+        this.UI.finalPanel.append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
+        this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
     gameModes: function(){
         var self = this;
-        $('#btn1').click(function(event) {
-            GameModel.setEasyMode();
-            self.activeCountries(GameModel.getEasyModeCountries());
-            self.getOutTheMenu();
-        });
-        $('#btn2').click(function(event) {
-            GameModel.setMediumMode();
-            self.activeCountries(GameModel.getMediumModeCountries());
-            self.getOutTheMenu();
-        });
-        $('#btn3').click(function(event) {
-            GameModel.setHardMode();
-            self.getOutTheMenu();
-            d3.selectAll('path').each(function(d){
-                d3.select(this).classed('disable-country',false);
-            })
-        });
+
     },
 
     getOutTheMenu: function(){
@@ -172,29 +176,31 @@ Game.prototype = {
             $('#container-game').css('pointer-events','all');
             $('#h-country').fadeIn("fast", function() {
                 $('#container-game').css('fill-opacity','inherit');
-                $('#h-country').css('display', 'auto'); 
+                $('#h-country').css('display', 'auto');
             });
         });
     },
 
     getInMenu: function(){
         $('#container-game').css('fill-opacity','30%');
-        $('#h-country').css('display', 'none'); 
+        $('#h-country').css('display', 'none');
         $("#menu-buttons").fadeIn('slow', function() {
             $('#container-game').css('pointer-events','none');
             $('#h-country').fadeOut("fast");
         });
     },
 
-    activeCountries: function(fn){
-        var x = fn;
+    activateCountries: function(countries){
+        if(countries){
             d3.selectAll('path').each(function(d){
                 d3.select(this).classed('disable-country',true);
-                for (var i in x ){
-                    if (x[i] === d.key) {
+                for (var i in countries ){
+                    if (countries[i] === d.key) {
                         d3.select(this).classed('disable-country',false);
                     }
                 }
             })
+        }
+
     }
 }

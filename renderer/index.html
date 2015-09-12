@@ -29,8 +29,10 @@
                     <h1 id="h-country"></h1>
                 </div>
             </div>
-            
-            <div id="pointero"></div>
+
+            <div id="pointero">
+                <span id="player-points" class="badge"></span>
+            </div>
             <div id="final-indicator">
                 <div id="reset">
                     <span id="reset-button" class="label label-default">Reset</span>
@@ -42,8 +44,8 @@
         </div>
         <div id="menu-buttons" class="btn-group">
             <div class="btn-goup-vertical">
-                <button id="btn1" type="button" class="btn-group-vertical buttons btn btn-primary">Easy Mode</button>
- 
+                <button id="easy-mode-button" data-mode="easy" type="button" class="btn-group-vertical buttons btn btn-primary game-mode-button">Easy Mode</button>
+
                 <button type="button" class="btn btn-primary dropdown-toggle"
                       data-toggle="dropdown">
                 <span class="glyphicon glyphicon-info-sign"></span>
@@ -54,8 +56,8 @@
             </ul>
             </div>
             <div class="btn-goup-vertical">
-                <button id="btn2" type="button" class="btn-group-vertical buttons btn btn-success">Medium Mode</button>
- 
+                <button id="medium-mode-button" data-mode="medium" type="button" class="btn-group-vertical buttons btn btn-success game-mode-button">Medium Mode</button>
+
                  <button type="button" class="btn btn-success dropdown-toggle"
                       data-toggle="dropdown">
                 <span class="glyphicon glyphicon-info-sign"></span>
@@ -66,8 +68,8 @@
             </ul>
             </div>
             <div class="btn-goup-vertical">
-                <button id="btn3" type="button" class="btn-group-vertical buttons btn btn-danger">Hard Mode</button>
- 
+                <button id="hard-mode-button" data-mode="hard" type="button" class="btn-group-vertical buttons btn btn-danger game-mode-button">Hard Mode</button>
+
                 <button type="button" class="btn btn-danger dropdown-toggle"
                       data-toggle="dropdown">
                 <span class="glyphicon glyphicon-info-sign"></span>
