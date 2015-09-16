@@ -71,6 +71,7 @@ Game.prototype = {
             };
 
             if (this.isThisTheLastCountry()) {
+                console.log("holanda");
                 this.gameOver();
             };
         }
