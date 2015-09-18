@@ -2,9 +2,31 @@ html{
     height: 100%;
 }
 body{
-    height: 100%;
+    background-color: #1D6C8F;
+	background-size: 28px 28px, 28px 28px;
+	background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+	background-image: -webkit-linear-gradient(#1D6C8F 1px, transparent 2px),
+	                  -webkit-linear-gradient(0, #1D6C8F 1px, transparent 2px),
+	                  -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+	                  -webkit-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+	background-image: -moz-linear-gradient(#1D6C8F 1px, transparent 2px),
+	                  -moz-linear-gradient(0, #1D6C8F 1px, transparent 2px),
+	                  -moz-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+	                  -moz-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+	background-image: linear-gradient(#1D6C8F 1px, transparent 2px),
+	                  linear-gradient(90deg, #1D6C8F 1px, transparent 2px),
+	                  linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+	                  linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+	-pie-background: linear-gradient(#1D6C8F 1px, transparent 2px) -2px -2px / 100px,
+	                 linear-gradient(90deg, #1D6C8F 1px, transparent 2px) -2px -2px / 100px,
+	                 linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px) -1px -1px / 20px,
+	                 linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px) -1px -1px / 20px,
+	                 #269;
+	behavior: url(/pie/PIE.htc);
+
 }
 svg {
+	fill:#CECECF;
 	margin-left: 12%;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -41,10 +63,10 @@ svg {
 	cursor: pointer;
 }
 .ctry-wrong{
-	fill:#BC4A48;
+	fill:#E44C27;
 }
 .ctry-fine{
-	fill:#468847;
+	fill:#1CA554;
 }
 .stroke-country{
 	stroke:#BC4A48;
@@ -73,7 +95,7 @@ svg {
 	margin-top: 310px;
 }
 .hint-country{
-	fill:#3A9AD6;
+	fill:#F4C550;
 	opacity: 0.9;
 }
 #menu-buttons{
@@ -92,8 +114,12 @@ svg {
 	position: absolute;
 	pointer-events: none;
 	fill-opacity:30%;
+	-webkit-filter: blur(2px);
+
 }
 .disable-country{
 	fill-opacity:30%;
 	pointer-events:none;
+	stroke:#2C768B;
+	stroke-width="4";
 }

@@ -174,6 +174,7 @@ Game.prototype = {
 
     getOutTheMenu: function(){
         $("#menu-buttons").fadeOut('slow', function() {
+            $('#container-game').css('-webkit-filter','none');
             $('#container-game').css('pointer-events','all');
             $('#h-country').fadeIn("fast", function() {
                 $('#container-game').css('fill-opacity','inherit');

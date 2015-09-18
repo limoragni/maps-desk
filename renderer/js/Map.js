@@ -35,10 +35,10 @@ Map.prototype = {
             .attr('d', function(data){return data.value})
             .classed('country', true)
             .on('mouseover', function(){
-                $(this).attr('fill', '#987D7D')
+                $(this).attr('fill', '#E3AF28')
             })
             .on('mouseout', function(){
-                $(this).attr('fill', '#000000')
+                $(this).attr('fill', '#CECECF')
             })
             .on('click', function(d){
                 self.trigger('countryClicked', {data: d, country: this});
