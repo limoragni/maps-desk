@@ -31,7 +31,7 @@ Map.prototype = {
     setContainer: function(selector){
         this.container = d3.select(selector)
             .append('svg')
-            .attr('width', '100%')
+            .attr('width', '88%')
             .attr('height', '100%')
             .call(this.zoom)
             .append('g')
@@ -57,7 +57,7 @@ Map.prototype = {
     },
 
     zoomed: function(a){
-        console.log(this.container);
+        //console.log(this.container);
         this.container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 }

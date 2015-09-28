@@ -18,6 +18,7 @@
 
         <script type="text/javascript" src="js/Utilities.js" ></script>
         <script type="text/javascript" src="js/models/GameModel.js" ></script>
+        <script type="text/javascript" src="js/MainMenu.js"></script>
         <script type="text/javascript" src="js/Game.js" ></script>
         <script type="text/javascript" src="js/Map.js" ></script>
         <script type="text/javascript" src="js/main.js" ></script>
@@ -25,15 +26,6 @@
     </head>
     <body>
         <div id="container-game">
-            <div id="country-indicator" class="jumbotron">
-                <div class="container">
-                    <h1 id="h-country"></h1>
-                </div>
-            </div>
-
-            <div id="pointero">
-                <span id="player-points" class="badge"></span>
-            </div>
             <div id="final-indicator">
                 <div id="reset">
                     <span id="reset-button" class="label label-default">Reset</span>
@@ -43,6 +35,17 @@
                     <span class="label label-primary">Hint</span>
             </div>
         </div>
+
+        <div id="country-indicator" class="jumbotron">
+            <div id="pointero">
+                <i class="fa fa-user fa-4x" id="icon"></i>
+                <span id="player-points"></span>
+            </div>
+            <div class="container">
+                <h1 id="h-country"></h1>
+            </div>
+        </div>
+
         <div id="menu-buttons" class="btn-group">
             <div class="btn-goup-vertical">
                 <button id="easy-mode-button" data-mode="easy" type="button" class="btn-group-vertical buttons btn btn-primary game-mode-button">Easy Mode</button>

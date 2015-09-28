@@ -14,7 +14,6 @@ Game.prototype = {
 
     start: function(){
         this.setEvents()
-        this.gameModes();
         this.showCountry()
     },
 
@@ -167,12 +166,7 @@ Game.prototype = {
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
-    gameModes: function(){
-        var self = this;
-
-    },
-
-    getOutTheMenu: function(){
+    getOutTheMenu : function(){
         $("#menu-buttons").fadeOut('slow', function() {
             $('#container-game').css('-webkit-filter','none');
             $('#container-game').css('pointer-events','all');
@@ -183,7 +177,7 @@ Game.prototype = {
         });
     },
 
-    getInMenu: function(){
+    getInMenu : function(){
         $('#container-game').css('fill-opacity','30%');
         $('#h-country').css('display', 'none');
         $("#menu-buttons").fadeIn('slow', function() {
