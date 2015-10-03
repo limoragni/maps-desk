@@ -6,5 +6,6 @@ $(document).ready(function(){
     map.on('countryClicked', function(options){
         game.onCountryClicked(options)
     });
+
     game.start()
 });

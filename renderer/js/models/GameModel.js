@@ -21,13 +21,28 @@
             this.hintCountriesNumber   = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
             this.setHintCountries() // Praparamos la hint para el primer pais
             this.numberOfCountries     = null
+            this.players = []
+            this.vent                  = _.extend({}, Backbone.Events);
         },
-
+        // setPlayers: function(numberOfPLayers){
+        //     if(numberOfPLayers == 1)
+        //         this.players.push(new Player())
+        //     if(numberOfPLayers == 2)
+        //         this.players.push(new Player())
+        //         this.players.push(new Player()) //MUY TRUCHO
+        //     this.currentPlayer = this.players[0]
+        //         // this.players[0] PLAYER UNO
+        //         // this.players[1] PLAYER DOS
+        //         // this.currentPlayer.getPoints() --> da los puntos
+        //         // this.currentPlayer.setPoints() --> setea puntos
+        //
+        // },
         setMode: function(mode){
             if(mode !== 'hard')
                 this.randomizedCountries = this.randomizedCountries.slice(0,this.modesConfig[mode]);
                 this.numberOfCountries = this.randomizedCountries.length
                 this.setHintCountries()
+            this.vent.trigger('game:mode:set', mode);
         },
 
         getCurrentCountries: function(){

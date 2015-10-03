@@ -24,8 +24,8 @@ MainMenu.prototype = {
     },
 
     setEvents : function(){
-        this.UI.modeButtons.click( _.bind( this.getOutModeMenuFrontBackground, this));
-        this.UI.menuPlay.click(    _.bind( this.moveDiv                      , this));
+        this.UI.modeButtons.click( _.bind( this.setMode, this));
+        this.UI.menuPlay.click(    _.bind( this.moveDiv, this));
     },
 
     moveDiv : function(){
@@ -38,11 +38,17 @@ MainMenu.prototype = {
         this.UI.menuModes.fadeIn()
     },
 
+    setMode: function(evt){
+        var mode = $(evt.target).data('mode');
+        GameModel.setMode(mode);
+        this.getOutModeMenuFrontBackground();
+    },
+
     getOutModeMenuFrontBackground : function(){
+
         this.UI.menuContainer.fadeOut();
         this.UI.containerGame.css('-webkit-filter','none');
         this.UI.containerGame.css('pointer-events','all');
-        this.UI.containerGame.css('fill-opacity','inherit');             
+        this.UI.containerGame.css('fill-opacity','inherit');
     },
 }
-

@@ -1,8 +1,9 @@
 var Map = function(shapes, selector){
-    this.messages  = {};
-    this.shapes    = shapes;
-    this.container = {}
-    this.zoom      = {}
+    this.messages   = {};
+    this.shapes     = shapes;
+    this.container  = {}
+    this.zoom       = {}
+    this.mouseMoved = false
     this.listenZoom();
     this.setContainer(selector)
     this.drawMap();
@@ -40,23 +41,28 @@ Map.prototype = {
     drawMap: function(){
         var self = this;
         this.container.selectAll('path')
-            .data(d3.entries(this.shapes))
-            .enter()
+            .data(d3.entries(this.shapes)) // Set data to be used by D3
+            .enter() //Start looping trhough the data creating an element for each item
             .append('path')
-            .attr('d', function(data){return data.value})
+            .attr('d', function(data){return data.value}) // Draw the path using the data binded to this item
             .classed('country', true)
             .on('mouseover', function(){
-                console.log("HOVER");
-                console.log($(this).attr('fill'));
                 $(this).attr('fill', '#E3AF28')
-                console.log($(this).attr('fill'));
-                
             })
-            .on('mouseout', function(){
+            .on('mouseout', function(d){
                 $(this).attr('fill', '#CECECF')
             })
-            .on('click', function(d){
-                self.trigger('countryClicked', {data: d, country: this});
+            .on('mousedown', function(){
+                self.mouseMoved = false;
+            })
+            .on('mousemove', function(){
+                self.mouseMoved = true;
+            })
+            .on('mouseup', function(){
+                //IF !mouseMoved self.trigger('countryClicked', {data: elementData, country: this});
+            })
+            .on('click', function(elementData){ // Parameter passed by D3 with the data binded to the clicked element
+                self.trigger('countryClicked', {data: elementData, country: this});
             });
     },
 

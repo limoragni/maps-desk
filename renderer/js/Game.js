@@ -24,7 +24,6 @@ Game.prototype = {
             hint             : $('#hint-button'),
             countryName      : $('#h-country'),
             finalPanel       : $('#final-indicator'),
-            modeButtons      : $('.mode-buttons'),
             countryNamePanel : $('#country-indicator'),
             containerGame    : $('#container-game')
 
@@ -32,14 +31,12 @@ Game.prototype = {
     },
 
     setEvents: function(){
-        this.UI.reset.click(       _.bind( this.resetGame,           this));
-        this.UI.hint.click(        _.bind( this.colorHintsCountries, this));
-        this.UI.modeButtons.click( _.bind( this.onModeSelected,      this));
+        this.UI.reset.click( _.bind( this.resetGame,           this));
+        this.UI.hint.click(  _.bind( this.colorHintsCountries, this));
+        GameModel.vent.on('game:mode:set', this.onModeSelected, this);
     },
 
-    onModeSelected: function(evt){
-        var mode = $(evt.target).data('mode');
-        GameModel.setMode(mode);
+    onModeSelected: function(mode){
         this.activateCountries(GameModel.getCurrentCountries());
         this.UI.countryNamePanel.fadeIn();
         this.UI.containerGame.css({
@@ -55,9 +52,6 @@ Game.prototype = {
                 if (x[i] === d.key) {
                     var self = this;
                     d3.select(this).classed('hint-country',true);
-                    // setTimeout(function(){
-                    //     d3.select(self).classed('hint-country',false);
-                    // },600)
                 }
             }
         })
@@ -65,19 +59,16 @@ Game.prototype = {
 
     //what the fuck the options parameters?
     onCountryClicked: function(options){
-        if(this.canClick){
-            this.countryClicked = options.data.key;
-            if (!this.isThisTheRightCountry()){
-                this.onWrongCountry(options.country);
-            } else  {
-                this.onGuessedCountry(options.country);
-            };
+        this.countryClicked = options.data.key;
+        if (!this.isThisTheRightCountry()){
+            this.onWrongCountry(options.country);
+        } else  {
+            this.onGuessedCountry(options.country);
+        };
 
-            if (this.isThisTheLastCountry()) {
-                console.log("holanda");
-                this.gameOver();
-            };
-        }
+        if (this.isThisTheLastCountry()) {
+            this.gameOver();
+        };
     },
 
     isThisTheRightCountry: function(){
@@ -95,15 +86,13 @@ Game.prototype = {
 
     onWrongCountry: function(country){
         var self = this;
-        this.canClick = false;
         d3.select(country).classed('stroke-country',true);
         setTimeout(function(){
             d3.select(country).classed('stroke-country',false);
-            if(self.countClicks === GameModel.amountOfTries){
-                self.onLoseTurn();
-            };
-            self.canClick = true;
         }, 400);
+        if(self.countClicks === GameModel.amountOfTries){
+            self.onLoseTurn();
+        };
         this.countClicks++;
     },
 
@@ -171,17 +160,6 @@ Game.prototype = {
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
-    // getOutTheMenu : function(){
-    //     $("#menu-buttons").fadeOut('slow', function() {
-    //         $('#container-game').css('-webkit-filter','none');
-    //         $('#container-game').css('pointer-events','all');
-    //         $('#h-country').fadeIn("fast", function() {
-    //             $('#container-game').css('fill-opacity','inherit');
-    //             $('#h-country').css('display', 'auto');
-    //         });
-    //     });
-    // },
-
     // getInMenu : function(){
     //     $('#container-game').css('fill-opacity','30%');
     //     $('#h-country').css('display', 'none');
@@ -202,6 +180,5 @@ Game.prototype = {
                 }
             })
         }
-
     }
 }
