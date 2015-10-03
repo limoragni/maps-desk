@@ -26,8 +26,8 @@
         setMode: function(mode){
             if(mode !== 'hard')
                 this.randomizedCountries = this.randomizedCountries.slice(0,this.modesConfig[mode]);
-            this.numberOfCountries = this.randomizedCountries.length
-            this.setHintCountries()
+                this.numberOfCountries = this.randomizedCountries.length
+                this.setHintCountries()
         },
 
         getCurrentCountries: function(){

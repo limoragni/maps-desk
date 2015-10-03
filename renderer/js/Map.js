@@ -31,7 +31,7 @@ Map.prototype = {
     setContainer: function(selector){
         this.container = d3.select(selector)
             .append('svg')
-            .attr('width', '88%')
+            .attr('width', '100%')
             .attr('height', '100%')
             .call(this.zoom)
             .append('g')
@@ -46,7 +46,11 @@ Map.prototype = {
             .attr('d', function(data){return data.value})
             .classed('country', true)
             .on('mouseover', function(){
+                console.log("HOVER");
+                console.log($(this).attr('fill'));
                 $(this).attr('fill', '#E3AF28')
+                console.log($(this).attr('fill'));
+                
             })
             .on('mouseout', function(){
                 $(this).attr('fill', '#CECECF')

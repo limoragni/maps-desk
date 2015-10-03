@@ -19,15 +19,15 @@ Game.prototype = {
 
     setUI: function(){
         this.UI = {
-            points        : $('#player-points'),
-            reset         : $('#reset-button'),
-            hint          : $('#hint-button'),
-            countryName   : $('#h-country'),
-            finalPanel    : $('#final-indicator'),
-            easyButton    : $('#easy-mode-button'),
-            mediumButton  : $('#medium-mode-button'),
-            hardButton    : $('#hard-mode-button'),
-            modeButtons   : $('.game-mode-button')
+            points           : $('#player-points'),
+            reset            : $('#reset-button'),
+            hint             : $('#hint-button'),
+            countryName      : $('#h-country'),
+            finalPanel       : $('#final-indicator'),
+            modeButtons      : $('.mode-buttons'),
+            countryNamePanel : $('#country-indicator'),
+            containerGame    : $('#container-game')
+
         }
     },
 
@@ -38,10 +38,14 @@ Game.prototype = {
     },
 
     onModeSelected: function(evt){
-        var mode = $(evt.target).data('mode')
+        var mode = $(evt.target).data('mode');
         GameModel.setMode(mode);
         this.activateCountries(GameModel.getCurrentCountries());
-        this.getOutTheMenu();
+        this.UI.countryNamePanel.fadeIn();
+        this.UI.containerGame.css({
+            'background-color': '#1D6C8F',
+            'background-size': '28px 28px, 28px 28px'
+        });
     },
 
     colorHintsCountries: function(){
@@ -51,9 +55,9 @@ Game.prototype = {
                 if (x[i] === d.key) {
                     var self = this;
                     d3.select(this).classed('hint-country',true);
-                    setTimeout(function(){
-                        d3.select(self).classed('hint-country',false);
-                    },600)
+                    // setTimeout(function(){
+                    //     d3.select(self).classed('hint-country',false);
+                    // },600)
                 }
             }
         })
@@ -132,6 +136,7 @@ Game.prototype = {
         GameModel.nextCountry()
         this.showCountry()
         this.countClicks = 0;
+        d3.selectAll('path').classed('hint-country',false)
     },
 
     showCountry: function(){
@@ -149,7 +154,7 @@ Game.prototype = {
     },
 
     resetGame: function(){
-        this.getInMenu();
+        // this.getInMenu();
         GameModel.reset();
         this.setProperties();
         this.start();
@@ -166,25 +171,25 @@ Game.prototype = {
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
-    getOutTheMenu : function(){
-        $("#menu-buttons").fadeOut('slow', function() {
-            $('#container-game').css('-webkit-filter','none');
-            $('#container-game').css('pointer-events','all');
-            $('#h-country').fadeIn("fast", function() {
-                $('#container-game').css('fill-opacity','inherit');
-                $('#h-country').css('display', 'auto');
-            });
-        });
-    },
+    // getOutTheMenu : function(){
+    //     $("#menu-buttons").fadeOut('slow', function() {
+    //         $('#container-game').css('-webkit-filter','none');
+    //         $('#container-game').css('pointer-events','all');
+    //         $('#h-country').fadeIn("fast", function() {
+    //             $('#container-game').css('fill-opacity','inherit');
+    //             $('#h-country').css('display', 'auto');
+    //         });
+    //     });
+    // },
 
-    getInMenu : function(){
-        $('#container-game').css('fill-opacity','30%');
-        $('#h-country').css('display', 'none');
-        $("#menu-buttons").fadeIn('slow', function() {
-            $('#container-game').css('pointer-events','none');
-            $('#h-country').fadeOut("fast");
-        });
-    },
+    // getInMenu : function(){
+    //     $('#container-game').css('fill-opacity','30%');
+    //     $('#h-country').css('display', 'none');
+    //     $("#menu-buttons").fadeIn('slow', function() {
+    //         $('#container-game').css('pointer-events','none');
+    //         $('#h-country').fadeOut("fast");
+    //     });
+    // },
 
     activateCountries: function(countries){
         if(countries){
