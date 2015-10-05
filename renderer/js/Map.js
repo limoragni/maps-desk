@@ -1,11 +1,20 @@
 var Map = function(shapes, selector){
-    this.messages = {};
-    this.shapes = shapes;
-    this.container = this.setContainer(selector);
+    this.messages  = {};
+    this.shapes    = shapes;
+    this.container = {}
+    this.zoom      = {}
+    this.listenZoom();
+    this.setContainer(selector)
     this.drawMap();
 }
 
 Map.prototype = {
+    listenZoom: function(){
+        this.zoom = d3.behavior.zoom()
+           .scaleExtent([1, 10])
+           .on("zoom", _.bind(this.zoomed, this));
+    },
+
     on: function(message, fn){
         if(!this.messages[message]){
             this.messages[message] = [];
@@ -20,10 +29,12 @@ Map.prototype = {
     },
 
     setContainer: function(selector){
-        return d3.select(selector)
+        this.container = d3.select(selector)
             .append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
+            .call(this.zoom)
+            .append('g')
     },
 
     drawMap: function(){
@@ -43,5 +54,10 @@ Map.prototype = {
             .on('click', function(d){
                 self.trigger('countryClicked', {data: d, country: this});
             });
+    },
+
+    zoomed: function(a){
+        console.log(this.container);
+        this.container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 }
