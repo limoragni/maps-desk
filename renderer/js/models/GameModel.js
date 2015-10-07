@@ -7,22 +7,22 @@
 
     GameModel.prototype = {
         setProperties: function(){
-            this.points                = 0;
-            this.amountOfTries         = 3;
-            this.countriesKeys         = Object.keys(WorldMap.names);
-            this.randomizedCountries   = this.countriesKeys.slice().mix();
-            this.currentCountry        = this.randomizedCountries[0]
-            this.modesConfig           = {
+            this.points                 = 0;
+            this.amountOfTries          = 3;
+            this.countriesKeys          = Object.keys(WorldMap.names);
+            this.randomizedCountries    = this.countriesKeys.slice().mix();
+            this.currentCountry         = this.randomizedCountries[0]
+            this.difficultyModesConfig  = {
                 easy: 15,
                 medium: 50
             }
 
-            this.hintCountries         = null
-            this.hintCountriesNumber   = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
+            this.hintCountries          = null
+            this.hintCountriesNumber    = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
             this.setHintCountries() // Praparamos la hint para el primer pais
-            this.numberOfCountries     = null
-            this.players = []
-            this.vent                  = _.extend({}, Backbone.Events);
+            this.numberOfCountries      = null
+            this.players                = []
+            this.vent                   = _.extend({}, Backbone.Events);
         },
         // setPlayers: function(numberOfPLayers){
         //     if(numberOfPLayers == 1)
@@ -37,10 +37,10 @@
         //         // this.currentPlayer.setPoints() --> setea puntos
         //
         // },
-        setMode: function(mode){
+        setDifficultyMode: function(mode){
             if(mode !== 'hard')
-                this.randomizedCountries = this.randomizedCountries.slice(0,this.modesConfig[mode]);
-                this.numberOfCountries = this.randomizedCountries.length
+                this.randomizedCountries = this.randomizedCountries.slice(0,this.difficultyModesConfig[mode]);
+                this.numberOfCountries   = this.randomizedCountries.length
                 this.setHintCountries()
             this.vent.trigger('game:mode:set', mode);
         },

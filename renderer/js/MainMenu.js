@@ -7,25 +7,21 @@ MainMenu.prototype = {
 
     setUI : function(){
         this.UI = {
-            menuContainer : $('#menu-container'),
-            menuPlay      : $('#menu-single-multi'),
-            singleButton  : $('#single-button'),
-            multiButton   : $('#multi-button'),
-            menuModes     : $('#menu-modes'),
-            easyButton    : $('#easy-mode-button'),
-            mediumButton  : $('#medium-mode-button'),
-            hardButton    : $('#hard-mode-button'),
+            menuContainer         : $('#menu-container'),
+            menuPlay              : $('#menu-single-multi'),
+            singleButton          : $('#single-button'),
+            multiButton           : $('#multi-button'),
+            menuDifficultyModes   : $('#menu-difficulty-modes'),
             // aqui tuve que volver a definir modeButtons, igual que en Game
-            modeButtons   : $('.mode-buttons'),
-
-            menuContainer : $('#menu-container'),
-            containerGame : $('#container-game'),
+            difficultyModeButtons : $('.difficulty-mode-buttons'),
+            menuContainer         : $('#menu-container'),
+            containerGame         : $('#container-game'),
         }
     },
 
     setEvents : function(){
-        this.UI.modeButtons.click( _.bind( this.setMode, this));
-        this.UI.menuPlay.click(    _.bind( this.moveDiv, this));
+        this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this));
+        this.UI.menuPlay.click(              _.bind( this.moveDiv, this));
     },
 
     moveDiv : function(){
@@ -35,12 +31,12 @@ MainMenu.prototype = {
             self.UI.menuPlay.fadeOut()
         });
         this.UI.multiButton.animate({top:'+=65.5%'});
-        this.UI.menuModes.fadeIn('slow')
+        this.UI.menuDifficultyModes.fadeIn('slow')
     },
 
-    setMode: function(evt){
+    setDifficultyMode: function(evt){
         var mode = $(evt.target).data('mode');
-        GameModel.setMode(mode);
+        GameModel.setDifficultyMode(mode);
         this.getOutModeMenuFrontBackground();
     },
 

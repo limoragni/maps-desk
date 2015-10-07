@@ -6,7 +6,6 @@ Game.prototype = {
     setProperties: function(){
         this.countClicks     = 0;
         this.wrongPoints     = 0;
-        this.canClick        = true;
         this.countryClicked  = null
         this.UI              = {}
         this.setUI()

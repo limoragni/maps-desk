@@ -144,7 +144,7 @@ svg {
 	position: absolute;
 }
 
-#menu-modes {
+#menu-difficulty-modes {
 	height: 37.5%;
 	width: 100%;
     margin-top: 50%;
@@ -152,7 +152,7 @@ svg {
 	display: none;
 	cursor: pointer;
 }
-.mode-buttons {
+.difficulty-mode-buttons {
 	height: 33.3%;
 	width: 100%;
 	border-top: 2px solid #616E73;
