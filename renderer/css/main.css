@@ -1,11 +1,13 @@
-html{
-    height: 100%;
-}
 body{
     height: 100%;
 }
+
 svg {
-	margin-left: 12%;
+	fill:#CECECF;
+	padding-left: 12%;
+	padding-top: 120px;
+	overflow: inherit !important;
+	cursor: -webkit-grab;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -17,18 +19,42 @@ svg {
     cursor: pointer;
 }
 #country-indicator{
+	background-color: #98A7B7;
 	padding: 20px;
     text-align:center;
     height: 108px;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    margin-top: 635px;
+    opacity: 0.9;
+    display: none;
 }
 #country-indicator h1{
 	margin: auto;
-	display: none;
+	font-weight: bold;
+	font-size: 70px;
+	color: #103B46;
 }
 #pointero {
 	position: absolute;
     margin-left: 5px;
 }
+
+#player-points {
+	font-size: 60px;
+    margin-left: 60px;
+    position: absolute;
+    font-weight: 600;
+    color: #103B46;
+}
+
+#icon {
+	position: absolute;
+    margin-top: 12px;
+    color: #236294;
+}
+
 .reset {
 	position: absolute;
 	left: 40%;
@@ -40,11 +66,23 @@ svg {
 	text-align: center;
 	cursor: pointer;
 }
+#hint-button{
+	cursor: pointer;
+	position: absolute;
+	margin-top: 310px;
+}
+.hint-country{
+	fill:#F4C550;
+	opacity: 0.9;
+}
+.on-mouse-over-the-country{
+	fill:#E3AF28;
+}
 .ctry-wrong{
-	fill:#BC4A48;
+	fill:#E44C27;
 }
 .ctry-fine{
-	fill:#468847;
+	fill:#1CA554;
 }
 .stroke-country{
 	stroke:#BC4A48;
@@ -67,20 +105,7 @@ svg {
 	margin-top: 1%;
 	cursor:pointer;
 }
-#hint-button{
-	cursor: pointer;
-	position: absolute;
-	margin-top: 310px;
-}
-.hint-country{
-	fill:#3A9AD6;
-	opacity: 0.9;
-}
-#menu-buttons{
-    position: absolute;
-    margin-left: 390px;
-    margin-top: 90px;
-}
+
 .buttons{
 	height: 100px;
     width: 200px;
@@ -92,8 +117,71 @@ svg {
 	position: absolute;
 	pointer-events: none;
 	fill-opacity:30%;
+	-webkit-filter: blur(6px);
+
+	background-color: #103B46;
+	background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+	background-image: -webkit-linear-gradient(#1D6C8F 1px, transparent 2px),
+	                  -webkit-linear-gradient(0, #1D6C8F 1px, transparent 2px),
+	                  -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+	                  -webkit-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+	
+	behavior: url(/pie/PIE.htc);
+
 }
 .disable-country{
 	fill-opacity:30%;
 	pointer-events:none;
+	stroke:#2C768B;
+	stroke-width="4";
+}
+
+#menu-container {
+	height: 100%;
+	width: 33.3%;
+	background-color: #92999F;
+	margin-left: 33.3%;
+	position: absolute;
+}
+
+#menu-modes {
+	height: 37.5%;
+	width: 100%;
+    margin-top: 50%;
+    position: absolute;
+	display: none;
+	cursor: pointer;
+}
+.mode-buttons {
+	height: 33.3%;
+	width: 100%;
+	border-top: 2px solid #616E73;
+}
+
+#hard-mode-button {
+	border-bottom: 2px solid #616E73;
+}
+
+#menu-single-multi {
+	height: 25%;
+	width: 100%;
+	margin-top: 50%;
+	position: absolute;
+}
+.menu-buttons {
+	height: 50%;
+	width: 100%;
+	border-top: 2px solid #616E73;
+	/*padding-top: 2%;*/
+	position: relative;
+	cursor: pointer;
+}
+#multi-button {
+	border-bottom: 2px solid #616E73;
+}
+
+#menu-single-multi h1{
+	text-align: center;
+    font-weight: bold;
+    color: #103B46;
 }

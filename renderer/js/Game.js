@@ -14,35 +14,35 @@ Game.prototype = {
 
     start: function(){
         this.setEvents()
-        this.gameModes();
         this.showCountry()
     },
 
     setUI: function(){
         this.UI = {
-            points        : $('#player-points'),
-            reset         : $('#reset-button'),
-            hint          : $('#hint-button'),
-            countryName   : $('#h-country'),
-            finalPanel    : $('#final-indicator'),
-            easyButton    : $('#easy-mode-button'),
-            mediumButton  : $('#medium-mode-button'),
-            hardButton    : $('#hard-mode-button'),
-            modeButtons   : $('.game-mode-button')
+            points           : $('#player-points'),
+            reset            : $('#reset-button'),
+            hint             : $('#hint-button'),
+            countryName      : $('#h-country'),
+            finalPanel       : $('#final-indicator'),
+            countryNamePanel : $('#country-indicator'),
+            containerGame    : $('#container-game')
+
         }
     },
 
     setEvents: function(){
-        this.UI.reset.click(       _.bind( this.resetGame,           this));
-        this.UI.hint.click(        _.bind( this.colorHintsCountries, this));
-        this.UI.modeButtons.click( _.bind( this.onModeSelected,      this));
+        this.UI.reset.click( _.bind( this.resetGame,           this));
+        this.UI.hint.click(  _.bind( this.colorHintsCountries, this));
+        GameModel.vent.on('game:mode:set', this.onModeSelected, this);
     },
 
-    onModeSelected: function(evt){
-        var mode = $(evt.target).data('mode')
-        GameModel.setMode(mode);
+    onModeSelected: function(mode){
         this.activateCountries(GameModel.getCurrentCountries());
-        this.getOutTheMenu();
+        this.UI.countryNamePanel.fadeIn();
+        this.UI.containerGame.css({
+            'background-color': '#1D6C8F',
+            'background-size': '28px 28px, 28px 28px'
+        });
     },
 
     colorHintsCountries: function(){
@@ -52,9 +52,6 @@ Game.prototype = {
                 if (x[i] === d.key) {
                     var self = this;
                     d3.select(this).classed('hint-country',true);
-                    setTimeout(function(){
-                        d3.select(self).classed('hint-country',false);
-                    },600)
                 }
             }
         })
@@ -62,19 +59,17 @@ Game.prototype = {
 
     //what the fuck the options parameters?
     onCountryClicked: function(options){
-        if(this.canClick){
-            this.countryClicked = options.data.key;
-            if (!this.isThisTheRightCountry()){
-                this.onWrongCountry(options.country);
-            } else  {
-                this.onGuessedCountry(options.country);
-            };
+        this.countClicks++
+        this.countryClicked = options.data.key;
+        if (!this.isThisTheRightCountry()){
+            this.onWrongCountry(options.country);
+        } else  {
+            this.onGuessedCountry(options.country);
+        };
 
-            if (this.isThisTheLastCountry()) {
-                console.log("holanda");
-                this.gameOver();
-            };
-        }
+        if (this.isThisTheLastCountry()) {
+            this.gameOver();
+        };
     },
 
     isThisTheRightCountry: function(){
@@ -91,17 +86,14 @@ Game.prototype = {
     },
 
     onWrongCountry: function(country){
-        var self = this;
-        this.canClick = false;
         d3.select(country).classed('stroke-country',true);
         setTimeout(function(){
             d3.select(country).classed('stroke-country',false);
-            if(self.countClicks === GameModel.amountOfTries){
-                self.onLoseTurn();
-            };
-            self.canClick = true;
         }, 400);
-        this.countClicks++;
+        if(this.countClicks === GameModel.amountOfTries){
+            this.onLoseTurn();
+        };
+        // this.countClicks++;
     },
 
     onLoseTurn: function(){
@@ -133,6 +125,7 @@ Game.prototype = {
         GameModel.nextCountry()
         this.showCountry()
         this.countClicks = 0;
+        d3.selectAll('path').classed('hint-country',false)
     },
 
     showCountry: function(){
@@ -150,7 +143,7 @@ Game.prototype = {
     },
 
     resetGame: function(){
-        this.getInMenu();
+        // this.getInMenu();
         GameModel.reset();
         this.setProperties();
         this.start();
@@ -167,29 +160,14 @@ Game.prototype = {
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
-    gameModes: function(){
-        var self = this;
-
-    },
-
-    getOutTheMenu: function(){
-        $("#menu-buttons").fadeOut('slow', function() {
-            $('#container-game').css('pointer-events','all');
-            $('#h-country').fadeIn("fast", function() {
-                $('#container-game').css('fill-opacity','inherit');
-                $('#h-country').css('display', 'auto');
-            });
-        });
-    },
-
-    getInMenu: function(){
-        $('#container-game').css('fill-opacity','30%');
-        $('#h-country').css('display', 'none');
-        $("#menu-buttons").fadeIn('slow', function() {
-            $('#container-game').css('pointer-events','none');
-            $('#h-country').fadeOut("fast");
-        });
-    },
+    // getInMenu : function(){
+    //     $('#container-game').css('fill-opacity','30%');
+    //     $('#h-country').css('display', 'none');
+    //     $("#menu-buttons").fadeIn('slow', function() {
+    //         $('#container-game').css('pointer-events','none');
+    //         $('#h-country').fadeOut("fast");
+    //     });
+    // },
 
     activateCountries: function(countries){
         if(countries){
@@ -202,6 +180,5 @@ Game.prototype = {
                 }
             })
         }
-
     }
 }

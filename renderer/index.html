@@ -13,11 +13,14 @@
         </script>
         <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
+        <script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
+        <script type="text/javascript" src="bower_components/backbone.radio/build/backbone.radio.js"></script>
         <script type="text/javascript" src="bower_components/d3/d3.js"></script>
         <script type="text/javascript" src="data/worldMap.js"></script>
 
         <script type="text/javascript" src="js/Utilities.js" ></script>
         <script type="text/javascript" src="js/models/GameModel.js" ></script>
+        <script type="text/javascript" src="js/MainMenu.js"></script>
         <script type="text/javascript" src="js/Game.js" ></script>
         <script type="text/javascript" src="js/Map.js" ></script>
         <script type="text/javascript" src="js/main.js" ></script>
@@ -25,15 +28,6 @@
     </head>
     <body>
         <div id="container-game">
-            <div id="country-indicator" class="jumbotron">
-                <div class="container">
-                    <h1 id="h-country"></h1>
-                </div>
-            </div>
-
-            <div id="pointero">
-                <span id="player-points" class="badge"></span>
-            </div>
             <div id="final-indicator">
                 <div id="reset">
                     <span id="reset-button" class="label label-default">Reset</span>
@@ -43,42 +37,33 @@
                     <span class="label label-primary">Hint</span>
             </div>
         </div>
-        <div id="menu-buttons" class="btn-group">
-            <div class="btn-goup-vertical">
-                <button id="easy-mode-button" data-mode="easy" type="button" class="btn-group-vertical buttons btn btn-primary game-mode-button">Easy Mode</button>
 
-                <button type="button" class="btn btn-primary dropdown-toggle"
-                      data-toggle="dropdown">
-                <span class="glyphicon glyphicon-info-sign"></span>
-                <span class="sr-only">Desplegar menú</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><p>In this mode you only play with 15 countries</p></li>
-            </ul>
+        <div id="country-indicator">
+            <div id="pointero">
+                <i class="fa fa-user fa-4x" id="icon"></i>
+                <span id="player-points"></span>
             </div>
-            <div class="btn-goup-vertical">
-                <button id="medium-mode-button" data-mode="medium" type="button" class="btn-group-vertical buttons btn btn-success game-mode-button">Medium Mode</button>
-
-                 <button type="button" class="btn btn-success dropdown-toggle"
-                      data-toggle="dropdown">
-                <span class="glyphicon glyphicon-info-sign"></span>
-                <span class="sr-only">Desplegar menú</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><p>In this mode you play with 50 countries</p></li>
-            </ul>
+            <div class="container">
+                <h1 id="h-country"></h1>
             </div>
-            <div class="btn-goup-vertical">
-                <button id="hard-mode-button" data-mode="hard" type="button" class="btn-group-vertical buttons btn btn-danger game-mode-button">Hard Mode</button>
+        </div>
 
-                <button type="button" class="btn btn-danger dropdown-toggle"
-                      data-toggle="dropdown">
-                <span class="glyphicon glyphicon-info-sign"></span>
-                <span class="sr-only">Desplegar menú</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><p>In this hard mode you play with all (169) countries<br>Only for no fear people</p></li>
-            </ul>
+        <div id="menu-container">
+            <div id="menu-modes">
+                <div id="easy-mode-button"   data-mode="easy"     class="mode-buttons">Easy</div>
+                <div id="medium-mode-button" data-mode="medium"   class="mode-buttons">Medium</div>
+                <div id="hard-mode-button"   data-mode="hard"     class="mode-buttons">Hard</div>
+            </div>
+
+            <div id="menu-single-multi">
+                <div id="single-button" class="menu-buttons">
+                    <i class="fa fa-user fa-4x" id="icon"></i>
+                    <h1>SINGLE PLAYER</h1>
+                </div>
+                <div id="multi-button" class="menu-buttons">
+                    <i class="fa fa-users fa-4x" id="icon"></i>
+                    <h1>MULTIPLAYER</h1>
+                </div>
             </div>
         </div>
     </body>

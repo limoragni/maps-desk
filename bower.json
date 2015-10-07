@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "homepage": "https://github.com/limoragni/maps-desk",
   "authors": [
-    "Guido Villaverde <guidovillaverde@gmail.com>"
+    "Guido Villaverde <guidovillaverde@gmail.com>",
+    "Leonardo Molinari  <elnegroleo9@gmail.com>"
   ],
   "main": "main.js",
   "license": "MIT",
