@@ -59,6 +59,7 @@ Game.prototype = {
 
     //what the fuck the options parameters?
     onCountryClicked: function(options){
+        this.countClicks++
         this.countryClicked = options.data.key;
         if (!this.isThisTheRightCountry()){
             this.onWrongCountry(options.country);
@@ -85,15 +86,14 @@ Game.prototype = {
     },
 
     onWrongCountry: function(country){
-        var self = this;
         d3.select(country).classed('stroke-country',true);
         setTimeout(function(){
             d3.select(country).classed('stroke-country',false);
         }, 400);
-        if(self.countClicks === GameModel.amountOfTries){
-            self.onLoseTurn();
+        if(this.countClicks === GameModel.amountOfTries){
+            this.onLoseTurn();
         };
-        this.countClicks++;
+        // this.countClicks++;
     },
 
     onLoseTurn: function(){

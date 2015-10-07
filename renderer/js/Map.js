@@ -47,10 +47,10 @@ Map.prototype = {
             .attr('d', function(data){return data.value}) // Draw the path using the data binded to this item
             .classed('country', true)
             .on('mouseover', function(){
-                $(this).attr('fill', '#E3AF28')
+                d3.select(this).classed('on-mouse-over-the-country',true);
             })
             .on('mouseout', function(d){
-                $(this).attr('fill', '#CECECF')
+                d3.select(this).classed('on-mouse-over-the-country',false);
             })
             .on('mousedown', function(){
                 self.mouseMoved = false;
@@ -58,16 +58,17 @@ Map.prototype = {
             .on('mousemove', function(){
                 self.mouseMoved = true;
             })
-            .on('mouseup', function(){
-                //IF !mouseMoved self.trigger('countryClicked', {data: elementData, country: this});
+            .on('mouseup', function(elementData){
+                if (!self.mouseMoved) {
+                    self.trigger('countryClicked', {data: elementData, country: this});
+                }
             })
-            .on('click', function(elementData){ // Parameter passed by D3 with the data binded to the clicked element
-                self.trigger('countryClicked', {data: elementData, country: this});
-            });
+            // .on('click', function(elementData){ // Parameter passed by D3 with the data binded to the clicked element
+            //     self.trigger('countryClicked', {data: elementData, country: this});
+            // });
     },
 
     zoomed: function(a){
-        //console.log(this.container);
         this.container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 }

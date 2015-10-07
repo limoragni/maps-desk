@@ -31,11 +31,11 @@ MainMenu.prototype = {
     moveDiv : function(){
         var self = this;
         this.UI.singleButton.css('border-bottom', '2px solid #616E73');
-        this.UI.singleButton.animate({bottom:'+=138px'},function(){
+        this.UI.singleButton.animate({bottom:'+=32.5%'},function(){
             self.UI.menuPlay.fadeOut()
         });
-        this.UI.multiButton.animate({top:'+=158px'});
-        this.UI.menuModes.fadeIn()
+        this.UI.multiButton.animate({top:'+=65.5%'});
+        this.UI.menuModes.fadeIn('slow')
     },
 
     setMode: function(evt){

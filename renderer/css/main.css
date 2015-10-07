@@ -7,6 +7,7 @@ svg {
 	padding-left: 12%;
 	padding-top: 120px;
 	overflow: inherit !important;
+	cursor: -webkit-grab;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -18,18 +19,21 @@ svg {
     cursor: pointer;
 }
 #country-indicator{
+	background-color: #98A7B7;
 	padding: 20px;
     text-align:center;
     height: 108px;
-    width: 1350px;
-    position: fixed;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
     margin-top: 635px;
-    opacity: 0.7;
+    opacity: 0.9;
     display: none;
 }
 #country-indicator h1{
 	margin: auto;
 	font-weight: bold;
+	font-size: 70px;
 	color: #103B46;
 }
 #pointero {
@@ -42,6 +46,7 @@ svg {
     margin-left: 60px;
     position: absolute;
     font-weight: 600;
+    color: #103B46;
 }
 
 #icon {
@@ -60,6 +65,18 @@ svg {
 	border-radius:100%;
 	text-align: center;
 	cursor: pointer;
+}
+#hint-button{
+	cursor: pointer;
+	position: absolute;
+	margin-top: 310px;
+}
+.hint-country{
+	fill:#F4C550;
+	opacity: 0.9;
+}
+.on-mouse-over-the-country{
+	fill:#E3AF28;
 }
 .ctry-wrong{
 	fill:#E44C27;
@@ -88,28 +105,15 @@ svg {
 	margin-top: 1%;
 	cursor:pointer;
 }
-#hint-button{
-	cursor: pointer;
-	position: absolute;
-	margin-top: 310px;
-}
-.hint-country{
-	fill:#F4C550;
-	opacity: 0.9;
-}
-#menu-buttons{
-    position: absolute;
-    margin-left: 390px;
-    margin-top: 90px;
-}
+
 .buttons{
 	height: 100px;
     width: 200px;
 }
 #container-game{
 	opacity: 3;
-	width: 1351px;
-	height: 744px;
+	width: 100%;
+	height: 100%;
 	position: absolute;
 	pointer-events: none;
 	fill-opacity:30%;
@@ -133,43 +137,42 @@ svg {
 }
 
 #menu-container {
-	height: 744px;
-	width: 480px;
+	height: 100%;
+	width: 33.3%;
 	background-color: #92999F;
-	margin: 0 auto;
-	position: relative;
+	margin-left: 33.3%;
+	position: absolute;
 }
 
 #menu-modes {
-	height: 300px;
-    margin-top: 190px;
+	height: 37.5%;
+	width: 100%;
+    margin-top: 50%;
     position: absolute;
-	width: 480px;
 	display: none;
 	cursor: pointer;
 }
-
 .mode-buttons {
-	height: 100px;
-	width: 480px;
+	height: 33.3%;
+	width: 100%;
 	border-top: 2px solid #616E73;
 }
+
 #hard-mode-button {
 	border-bottom: 2px solid #616E73;
 }
 
 #menu-single-multi {
-	height: 300px;
-	width: 480px;
-	margin-top: 230px;
+	height: 25%;
+	width: 100%;
+	margin-top: 50%;
 	position: absolute;
-	padding-left: 20px;
 }
-.single-multi-buttons {
-	height: 100px;
-	width: 440px;
+.menu-buttons {
+	height: 50%;
+	width: 100%;
 	border-top: 2px solid #616E73;
-	padding-top: 5px;
+	/*padding-top: 2%;*/
 	position: relative;
 	cursor: pointer;
 }
