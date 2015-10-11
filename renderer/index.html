@@ -39,10 +39,10 @@
         </div>
 
         <div id="country-indicator">
-            <div id="pointero">
-                <i class="fa fa-user fa-4x" id="icon"></i>
-                <span id="player-points"></span>
-            </div>
+            <i class="fa fa-user fa-4x" id="icon-player"></i>
+            <span id="player-points"></span>
+            <i class="fa fa-user fa-4x" id="icon-player2"></i>
+            <span id="player2-points"></span>
             <div class="container">
                 <h1 id="h-country"></h1>
             </div>
@@ -50,20 +50,18 @@
 
         <div id="menu-container">
             <div id="menu-difficulty-modes">
-                <div id="easy-mode-button"   data-mode="easy"     class="difficulty-mode-buttons">Easy</div>
-                <div id="medium-mode-button" data-mode="medium"   class="difficulty-mode-buttons">Medium</div>
-                <div id="hard-mode-button"   data-mode="hard"     class="difficulty-mode-buttons">Hard</div>
+                <div id="easy-mode-button"   data-mode="easy"     class="difficulty-mode-buttons"><p>Easy</p></div>
+                <div id="medium-mode-button" data-mode="medium"   class="difficulty-mode-buttons"><p>Medium</p></div>
+                <div id="hard-mode-button"   data-mode="hard"     class="difficulty-mode-buttons"><p>Hard</p></div>
             </div>
 
-            <div id="menu-single-multi">
-                <div id="single-button" class="menu-buttons">
-                    <i class="fa fa-user fa-4x" id="icon"></i>
-                    <h1>SINGLE PLAYER</h1>
-                </div>
-                <div id="multi-button" class="menu-buttons">
-                    <i class="fa fa-users fa-4x" id="icon"></i>
-                    <h1>MULTIPLAYER</h1>
-                </div>
+            <div id="single-button" data-mode="single" class="players-menu-buttons">
+                    <i class="fa fa-user icon-menu"></i>
+                    <p>SINGLE PLAYER</p>
+            </div>
+            <div id="multi-button" data-mode="multi" class="players-menu-buttons">
+                <i class="fa fa-users icon-menu"></i>
+                <p>MULTIPLAYER</p>
             </div>
         </div>
     </body>

@@ -4,15 +4,11 @@ body{
 
 svg {
 	fill:#CECECF;
-	padding-left: 12%;
-	padding-top: 120px;
+	padding: 10%;
 	overflow: inherit !important;
 	cursor: -webkit-grab;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .country{
@@ -36,10 +32,6 @@ svg {
 	font-size: 70px;
 	color: #103B46;
 }
-#pointero {
-	position: absolute;
-    margin-left: 5px;
-}
 
 #player-points {
 	font-size: 60px;
@@ -47,14 +39,27 @@ svg {
     position: absolute;
     font-weight: 600;
     color: #103B46;
+    left: 3%
 }
 
-#icon {
+#icon-player {
 	position: absolute;
     margin-top: 12px;
     color: #236294;
+    left: 2%;
 }
-
+#icon-player2 {
+	position: absolute;
+    margin-top: 12px;
+    color: #236294;
+    right: 2%;
+}
+.icon-menu {
+	font-size: 2.5em !important;
+	color: #236294;
+	position: absolute;
+	margin-top: 0.3em;
+}
 .reset {
 	position: absolute;
 	left: 40%;
@@ -69,7 +74,7 @@ svg {
 #hint-button{
 	cursor: pointer;
 	position: absolute;
-	margin-top: 310px;
+	margin-top: 20%;
 }
 .hint-country{
 	fill:#F4C550;
@@ -81,8 +86,14 @@ svg {
 .ctry-wrong{
 	fill:#E44C27;
 }
+.ctry-wrong-player2{
+	fill:#DF7E33;
+}
 .ctry-fine{
 	fill:#1CA554;
+}
+.ctry-fine-player2{
+	fill:#864EB3;
 }
 .stroke-country{
 	stroke:#BC4A48;
@@ -140,6 +151,7 @@ svg {
 	height: 100%;
 	width: 33.3%;
 	background-color: #92999F;
+	padding-top: 15%;
 	margin-left: 33.3%;
 	position: absolute;
 }
@@ -147,7 +159,6 @@ svg {
 #menu-difficulty-modes {
 	height: 37.5%;
 	width: 100%;
-    margin-top: 50%;
     position: absolute;
 	display: none;
 	cursor: pointer;
@@ -162,26 +173,25 @@ svg {
 	border-bottom: 2px solid #616E73;
 }
 
-#menu-single-multi {
-	height: 25%;
-	width: 100%;
-	margin-top: 50%;
-	position: absolute;
-}
-.menu-buttons {
-	height: 50%;
+.players-menu-buttons {
+	height: 7em;
 	width: 100%;
 	border-top: 2px solid #616E73;
-	/*padding-top: 2%;*/
+	padding: 1em;
 	position: relative;
 	cursor: pointer;
+	overflow: hidden;
 }
 #multi-button {
 	border-bottom: 2px solid #616E73;
 }
 
-#menu-single-multi h1{
+#menu-container p{
 	text-align: center;
     font-weight: bold;
     color: #103B46;
+    font-size: 3em;
+}
+#single-button p{
+	margin-left: 0.8em;
 }

@@ -38,10 +38,11 @@ Game.prototype = {
     onModeSelected: function(mode){
         this.activateCountries(GameModel.getCurrentCountries());
         this.UI.countryNamePanel.fadeIn();
-        this.UI.containerGame.css({
+        this.UI.containerGame.css({ //esta funcion pone el fondo celeste y hace el cuadriculado
             'background-color': '#1D6C8F',
             'background-size': '28px 28px, 28px 28px'
         });
+        console.log(GameModel.players)
     },
 
     colorHintsCountries: function(){
@@ -69,6 +70,7 @@ Game.prototype = {
         if (this.isThisTheLastCountry()) {
             this.gameOver();
         };
+        console.log(GameModel.currentPlayer)
     },
 
     isThisTheRightCountry: function(){
@@ -81,7 +83,7 @@ Game.prototype = {
     onGuessedCountry: function(country){
         this.setPoints();
         this.showNextCountry();
-        d3.select(country).classed('ctry-fine', true);
+        d3.select(country).classed(GameModel.currentPlayer.userColorFine, true);
     },
 
     onWrongCountry: function(country){
@@ -92,7 +94,6 @@ Game.prototype = {
         if(this.countClicks === GameModel.amountOfTries){
             this.onLoseTurn();
         };
-        // this.countClicks++;
     },
 
     onLoseTurn: function(){
@@ -115,13 +116,14 @@ Game.prototype = {
         var self = this;
         d3.selectAll('path').each(function(d){
             if (GameModel.currentCountry === d.key) {
-                d3.select(this).classed('ctry-wrong',true);
+                d3.select(this).classed(GameModel.currentPlayer.userColorWrong,true);
             }
         })
     },
 
     showNextCountry: function(){
         GameModel.nextCountry()
+        GameModel.vent.on('multi:mode', GameModel.changePlayer());
         this.showCountry()
         this.countClicks = 0;
         d3.selectAll('path').classed('hint-country',false)
@@ -134,7 +136,7 @@ Game.prototype = {
 
     setPoints: function(){
         GameModel.addPoints(1);
-        this.UI.points.html(GameModel.points);
+        this.UI.points.html(GameModel.currentPlayer.points);
     },
 
     resetColors: function(){
@@ -158,15 +160,6 @@ Game.prototype = {
         this.UI.finalPanel.append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
-
-    // getInMenu : function(){
-    //     $('#container-game').css('fill-opacity','30%');
-    //     $('#h-country').css('display', 'none');
-    //     $("#menu-buttons").fadeIn('slow', function() {
-    //         $('#container-game').css('pointer-events','none');
-    //         $('#h-country').fadeOut("fast");
-    //     });
-    // },
 
     activateCountries: function(countries){
         if(countries){

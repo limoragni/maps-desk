@@ -4,7 +4,7 @@
     var GameModel = function(){
         this.setProperties();
     }
-
+//por que usabamos mayusculas en algunas cosas?
     GameModel.prototype = {
         setProperties: function(){
             this.points                 = 0;
@@ -21,8 +21,37 @@
             this.hintCountriesNumber    = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
             this.setHintCountries() // Praparamos la hint para el primer pais
             this.numberOfCountries      = null
+
+            this.playersModeConfig      = {
+                single: 1,
+                multi : 2
+            }
+            this.numberOfPLayers        = null
             this.players                = []
+            this.currentPlayer          = null
             this.vent                   = _.extend({}, Backbone.Events);
+        },
+
+        player: function(userName,userColorFine,userColorWrong){
+            this.points         = 0;
+            this.amountOfTries  = 3;
+            this.userName       = userName; // why I can't use the 'name'and 'color' words?
+            this.userColorFine  = userColorFine;
+            this.userColorWrong = userColorWrong
+        },
+
+        setPlayersMode: function(mode){
+            this.players.push(new this.player('player 1','ctry-fine','ctry-wrong'));
+            this.currentPlayer = this.players[0]
+            if (mode == 'multi') {
+                this.players.push(new this.player('player 2','ctry-fine-player2','ctry-wrong-player2'));
+                this.vent.trigger('multi:mode')
+            }
+        },
+
+        changePlayer: function(){
+            this.players.reverse()
+            this.currentPlayer = this.players[0]
         },
         // setPlayers: function(numberOfPLayers){
         //     if(numberOfPLayers == 1)
@@ -64,7 +93,7 @@
         },
 
         addPoints: function(points){
-            this.points += points;
+            this.currentPlayer.points += points;
         },
 
         getNumberOfCountries: function(){

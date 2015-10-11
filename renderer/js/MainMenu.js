@@ -9,6 +9,7 @@ MainMenu.prototype = {
         this.UI = {
             menuContainer         : $('#menu-container'),
             menuPlay              : $('#menu-single-multi'),
+            menuPlayers           : $('.players-menu-buttons'),
             singleButton          : $('#single-button'),
             multiButton           : $('#multi-button'),
             menuDifficultyModes   : $('#menu-difficulty-modes'),
@@ -21,27 +22,34 @@ MainMenu.prototype = {
 
     setEvents : function(){
         this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this));
-        this.UI.menuPlay.click(              _.bind( this.moveDiv, this));
+        this.UI.menuPlayers.click(              _.bind( this.moveDiv,           this));
+        this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
     },
 
     moveDiv : function(){
         var self = this;
         this.UI.singleButton.css('border-bottom', '2px solid #616E73');
-        this.UI.singleButton.animate({bottom:'+=32.5%'},function(){
-            self.UI.menuPlay.fadeOut()
+        this.UI.singleButton.animate({bottom:'+=6.8em'},function(){
+            self.UI.menuPlayers.fadeOut()
         });
-        this.UI.multiButton.animate({top:'+=65.5%'});
+        this.UI.multiButton.animate({top:'+=12.7em'});
         this.UI.menuDifficultyModes.fadeIn('slow')
     },
 
+    setPlayersMode: function(evt){ // que hace el evt?
+        var mode = $(evt.currentTarget).data('mode');
+        GameModel.setPlayersMode(mode);
+        console.log(mode)
+    },
+
     setDifficultyMode: function(evt){
-        var mode = $(evt.target).data('mode');
+        var mode = $(evt.currentTarget).data('mode');
         GameModel.setDifficultyMode(mode);
         this.getOutModeMenuFrontBackground();
+        console.log(mode)
     },
 
     getOutModeMenuFrontBackground : function(){
-
         this.UI.menuContainer.fadeOut();
         this.UI.containerGame.css('-webkit-filter','none');
         this.UI.containerGame.css('pointer-events','all');
