@@ -1,10 +1,9 @@
-var MainMenu = function(){
+window.MainMenu = function(){
     this.setUI();
     this.setEvents();
 }
 
 MainMenu.prototype = {
-
     setUI : function(){
         this.UI = {
             menuContainer         : $('#menu-container'),
@@ -13,7 +12,6 @@ MainMenu.prototype = {
             singleButton          : $('#single-button'),
             multiButton           : $('#multi-button'),
             menuDifficultyModes   : $('#menu-difficulty-modes'),
-            // aqui tuve que volver a definir modeButtons, igual que en Game
             difficultyModeButtons : $('.difficulty-mode-buttons'),
             menuContainer         : $('#menu-container'),
             containerGame         : $('#container-game'),
@@ -22,7 +20,7 @@ MainMenu.prototype = {
 
     setEvents : function(){
         this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this));
-        this.UI.menuPlayers.click(              _.bind( this.moveDiv,           this));
+        this.UI.menuPlayers.click(           _.bind( this.moveDiv,           this));
         this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
     },
 
@@ -39,14 +37,12 @@ MainMenu.prototype = {
     setPlayersMode: function(evt){ // que hace el evt?
         var mode = $(evt.currentTarget).data('mode');
         GameModel.setPlayersMode(mode);
-        console.log(mode)
     },
 
     setDifficultyMode: function(evt){
         var mode = $(evt.currentTarget).data('mode');
         GameModel.setDifficultyMode(mode);
         this.getOutModeMenuFrontBackground();
-        console.log(mode)
     },
 
     getOutModeMenuFrontBackground : function(){

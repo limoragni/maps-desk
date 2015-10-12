@@ -7,15 +7,22 @@ var Map = function(shapes, selector){
     this.listenZoom();
     this.setContainer(selector)
     this.drawMap();
+    this.setEvents()
 }
 
 Map.prototype = {
+    setEvents: function(){
+        // Acá escuchamos el mensaje del HINT
+        // GameModel.vent.on('show:hint', this.drawHint, this)
+    },
+
     listenZoom: function(){
         this.zoom = d3.behavior.zoom()
            .scaleExtent([1, 10])
            .on("zoom", _.bind(this.zoomed, this));
     },
 
+    // Borrar métodos on y trigger, se va a usar GameModel.vent para remplazar esta funcionalidad
     on: function(message, fn){
         if(!this.messages[message]){
             this.messages[message] = [];
@@ -40,6 +47,11 @@ Map.prototype = {
 
     drawMap: function(){
         var self = this;
+        // Acá vamos a guardar en una propiedad la selección de todos los paises
+        // this.countries = this.container.selectAll('path')
+        // entonces abajo en vez de usar this.container.selectAll('path') ya lo podemos reemplazar por
+        // this.countries
+        //     .data(d3.entries(this.shapes)), etc...
         this.container.selectAll('path')
             .data(d3.entries(this.shapes)) // Set data to be used by D3
             .enter() //Start looping trhough the data creating an element for each item
@@ -63,11 +75,10 @@ Map.prototype = {
                     self.trigger('countryClicked', {data: elementData, country: this});
                 }
             })
-            // .on('click', function(elementData){ // Parameter passed by D3 with the data binded to the clicked element
-            //     self.trigger('countryClicked', {data: elementData, country: this});
-            // });
     },
-
+    // Este método se va a llamar cuando se dispare el mensaje show:hint ver Arriba
+    // [2] drawHints: function() ...
+    // this.countries.each(function(d){blah})
     zoomed: function(a){
         this.container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }

@@ -1,5 +1,13 @@
-var Game = function(){
-    this.setProperties()
+// WINDOW es el objeto global en los browsers. Cualquier propiedad de este objeto es una variable global
+// que puede ser utilizada desde cualquier parte de la aplicación
+// OJO! también puede ser sobrescrita. Por eso, para prevenir en cierta medida esto, se usa la
+// convención de que las variables globales comiencen con Mayúsculas
+
+// TAREA: cambiar nombre a GameUI porque a partir de ahora este objeto debería manejar
+// solamente la interfaz gráfica con la que interactua el usuario (Puntos, botón de hint, nombre del país, etc.)
+// Todo lo que es mostrar cosas en el mapa ahora va a pasar al Map
+window.Game = function(){
+    this.setProperties();
 }
 
 Game.prototype = {
@@ -46,7 +54,11 @@ Game.prototype = {
     },
 
     colorHintsCountries: function(){
-        var x = GameModel.getHintCountries();
+        // Se lamará el método GameModel.showHint() -> El game model manda mensaje (ver comment [1] en Game Model)
+        // usando this.trigger('show:hint', countries)
+        // Lo que sigue acá abajo, debería de no estar más
+        var x = GameModel.getHintCountries(); // Este método ahora se va a usar dentro del GameModel
+        // Este de acá abajo se va a usar dentro de Map ver comment [2] en Map
         d3.selectAll('path').each(function(d){
             for (var i in x ){
                 if (x[i] === d.key) {
@@ -83,7 +95,7 @@ Game.prototype = {
     onGuessedCountry: function(country){
         this.setPoints();
         this.showNextCountry();
-        d3.select(country).classed(GameModel.currentPlayer.userColorFine, true);
+        d3.select(country).classed(GameModel.currentPlayer.playerColorFine, true);
     },
 
     onWrongCountry: function(country){
@@ -116,14 +128,14 @@ Game.prototype = {
         var self = this;
         d3.selectAll('path').each(function(d){
             if (GameModel.currentCountry === d.key) {
-                d3.select(this).classed(GameModel.currentPlayer.userColorWrong,true);
+                d3.select(this).classed(GameModel.currentPlayer.playerColorWrong,true);
             }
         })
     },
 
     showNextCountry: function(){
         GameModel.nextCountry()
-        GameModel.vent.on('multi:mode', GameModel.changePlayer());
+        GameModel.changePlayer()
         this.showCountry()
         this.countClicks = 0;
         d3.selectAll('path').classed('hint-country',false)

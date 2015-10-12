@@ -8,3 +8,5 @@ Array.prototype.mix = function () {
     }
     return this;
 }
+
+window.GlobalChannel = _.extend({}, Backbone.Events);

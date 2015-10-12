@@ -32,20 +32,21 @@
             this.vent                   = _.extend({}, Backbone.Events);
         },
 
-        player: function(userName,userColorFine,userColorWrong){
-            this.points         = 0;
-            this.amountOfTries  = 3;
-            this.userName       = userName; // why I can't use the 'name'and 'color' words?
-            this.userColorFine  = userColorFine;
-            this.userColorWrong = userColorWrong
-        },
-
         setPlayersMode: function(mode){
-            this.players.push(new this.player('player 1','ctry-fine','ctry-wrong'));
+            var playerOne = {
+                playerName: 'player 1',
+                playerColorFine: 'ctry-fine',
+                playerColorWrong: 'ctry-wrong'
+            }
+            this.players.push(new Player(playerOne));
             this.currentPlayer = this.players[0]
             if (mode == 'multi') {
-                this.players.push(new this.player('player 2','ctry-fine-player2','ctry-wrong-player2'));
-                this.vent.trigger('multi:mode')
+                var playerTwo = {
+                    playerName: 'player 2',
+                    playerColorFine: 'ctry-fine-player2',
+                    playerColorWrong: 'ctry-wrong-player2'
+                }
+                this.players.push(new Player(playerTwo));
             }
         },
 
@@ -53,19 +54,7 @@
             this.players.reverse()
             this.currentPlayer = this.players[0]
         },
-        // setPlayers: function(numberOfPLayers){
-        //     if(numberOfPLayers == 1)
-        //         this.players.push(new Player())
-        //     if(numberOfPLayers == 2)
-        //         this.players.push(new Player())
-        //         this.players.push(new Player()) //MUY TRUCHO
-        //     this.currentPlayer = this.players[0]
-        //         // this.players[0] PLAYER UNO
-        //         // this.players[1] PLAYER DOS
-        //         // this.currentPlayer.getPoints() --> da los puntos
-        //         // this.currentPlayer.setPoints() --> setea puntos
-        //
-        // },
+
         setDifficultyMode: function(mode){
             if(mode !== 'hard')
                 this.randomizedCountries = this.randomizedCountries.slice(0,this.difficultyModesConfig[mode]);
@@ -77,6 +66,10 @@
         getCurrentCountries: function(){
             return this.randomizedCountries
         },
+        // [1] Agregar el método
+        // showHint: function ...
+        //   var countries = this.getHintCountries()
+        //   this.trigger('show:hint', countries) -> esto se va a estar escuchando en Map ver comment [3] 
 
         setHintCountries: function(){
             var copy = this.randomizedCountries.slice(0,this.randomizedCountries.length);
@@ -93,7 +86,7 @@
         },
 
         addPoints: function(points){
-            this.currentPlayer.points += points;
+            this.currentPlayer.addPoints(points);
         },
 
         getNumberOfCountries: function(){
@@ -125,3 +118,4 @@
 
     window.GameModel = new GameModel();
 })()
+Map.vent.on
