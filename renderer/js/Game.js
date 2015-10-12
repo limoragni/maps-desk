@@ -41,6 +41,10 @@ Game.prototype = {
         this.UI.reset.click( _.bind( this.resetGame,           this));
         this.UI.hint.click(  _.bind( this.colorHintsCountries, this));
         GameModel.vent.on('game:mode:set', this.onModeSelected, this);
+        // Acá es donde se van a escuchar todos los nuevos mensajes
+        // por ej GameModel.vent.on('country:guessed', this.onGuessedCountry, this)
+        // una posibilidad sería tener un mensaje que sea show:country que mande como parametro
+        // el couentry que hay que mostrar.
     },
 
     onModeSelected: function(mode){
@@ -74,13 +78,13 @@ Game.prototype = {
         this.countClicks++
         this.countryClicked = options.data.key;
         if (!this.isThisTheRightCountry()){
-            this.onWrongCountry(options.country);
+            this.onWrongCountry(options.country); // Estos métodos que se llamana acá van a ser reemplazados por los mensajes que manda GameModel
         } else  {
             this.onGuessedCountry(options.country);
         };
 
         if (this.isThisTheLastCountry()) {
-            this.gameOver();
+            this.gameOver(); // Esto puede ser otro mensaje que envía el GameModel
         };
         console.log(GameModel.currentPlayer)
     },
@@ -93,7 +97,7 @@ Game.prototype = {
     },
 
     onGuessedCountry: function(country){
-        this.setPoints();
+        this.setPoints(); // Con los nuevos cambios esto se va a hacer directamente dentro del gameModel
         this.showNextCountry();
         d3.select(country).classed(GameModel.currentPlayer.playerColorFine, true);
     },
@@ -115,14 +119,13 @@ Game.prototype = {
     },
 
     isThisTheLastCountry: function(){
-        var oneCountryLeft = GameModel.getNumberOfCountriesLeft() === 1
-        var triedAllTimes = this.countClicks === GameModel.amountOfTries
-        var rightCountry = this.countryClicked === GameModel.currentCountry
+        var oneCountryLeft = GameModel.getNumberOfCountriesLeft() === 1;
+        var triedAllTimes = this.countClicks === GameModel.amountOfTries;
+        var rightCountry = this.countryClicked === GameModel.currentCountry;
         if (( oneCountryLeft && triedAllTimes)||(oneCountryLeft && rightCountry)) {
             return true;
         };
     },
-
 
     colorWrongCountry: function(){
         var self = this;
@@ -147,6 +150,8 @@ Game.prototype = {
     },
 
     setPoints: function(){
+        //Como esto ahora se hace en el GameModel, el GameModel debería de mandar un mensaje
+        // diciendo que se sumaron puntos a X player y que hay que mostrarlos
         GameModel.addPoints(1);
         this.UI.points.html(GameModel.currentPlayer.points);
     },

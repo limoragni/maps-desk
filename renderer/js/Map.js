@@ -14,6 +14,9 @@ Map.prototype = {
     setEvents: function(){
         // Acá escuchamos el mensaje del HINT
         // GameModel.vent.on('show:hint', this.drawHint, this)
+        // Acá también vamos a escuchar los mensajes del GameModel que dirán si
+        // se adivinó o se erró un país, para colorearlo como corresponda
+        // GameModel.vent.on('country:guessed', this.colorCountry, this)
     },
 
     listenZoom: function(){
@@ -71,6 +74,10 @@ Map.prototype = {
                 self.mouseMoved = true;
             })
             .on('mouseup', function(elementData){
+                // [4] Ya no se va a usar el trigger de map que va a volar.
+                // se va a llamar a GameModel.onCountryClicked({data: elementData, country: this})
+                // donde se van a hacer los chequeos de si es el país correcto o no
+                // y se van a mandar los mensajes que corresponde para cada caso
                 if (!self.mouseMoved) {
                     self.trigger('countryClicked', {data: elementData, country: this});
                 }

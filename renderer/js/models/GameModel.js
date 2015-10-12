@@ -4,7 +4,8 @@
     var GameModel = function(){
         this.setProperties();
     }
-//por que usabamos mayusculas en algunas cosas?
+//por que usabamos mayusculas en algunas cosas? porque son objetos globales entonces no hay que confundirlos
+// para no pisarlos en cualquier parte de la plicación.
     GameModel.prototype = {
         setProperties: function(){
             this.points                 = 0;
@@ -69,7 +70,9 @@
         // [1] Agregar el método
         // showHint: function ...
         //   var countries = this.getHintCountries()
-        //   this.trigger('show:hint', countries) -> esto se va a estar escuchando en Map ver comment [3] 
+        //   this.trigger('show:hint', countries) -> esto se va a estar escuchando en Map ver comment [3]
+
+        // Agregar también el método onCountryClicked que reemplazaría el que está ahora en Game
 
         setHintCountries: function(){
             var copy = this.randomizedCountries.slice(0,this.randomizedCountries.length);
