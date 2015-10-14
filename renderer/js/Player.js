@@ -7,10 +7,11 @@ window.Player = function(options){
 
 Player.prototype = {
     setProperties: function(options){
-        this.points           = 0;
-        this.playerName       = options.playerName; // why I can't use the 'name'and 'color' words?
-        this.playerColorFine  = options.playerColorFine;
-        this.playerColorWrong = options.playerColorWrong;
+        this.points            = 0;
+        this.countClicks       = 0;
+        this.playerName        = options.playerName; // why I can't use the 'name'and 'color' words?
+        this.playerColor       = options.playerColor;
+        this.playerPanelPoints = options.playerPanelPoints
     },
 
     addPoints: function(points){

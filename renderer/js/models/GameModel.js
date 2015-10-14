@@ -14,7 +14,7 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 15,
+                easy: 16,
                 medium: 50
             }
 
@@ -35,20 +35,21 @@
 
         setPlayersMode: function(mode){
             var playerOne = {
-                playerName: 'player 1',
-                playerColorFine: 'ctry-fine',
-                playerColorWrong: 'ctry-wrong'
+                playerName       : 'player 1',
+                playerColor      : 'player1-color',
+                playerPanelPoints: $('#player-points')
             }
             this.players.push(new Player(playerOne));
             this.currentPlayer = this.players[0]
             if (mode == 'multi') {
                 var playerTwo = {
-                    playerName: 'player 2',
-                    playerColorFine: 'ctry-fine-player2',
-                    playerColorWrong: 'ctry-wrong-player2'
+                    playerName       : 'player 2',
+                    playerColor      : 'player2-color',
+                    playerPanelPoints: $('#player2-points')
                 }
                 this.players.push(new Player(playerTwo));
             }
+            console.log(this.currentPlayer)
         },
 
         changePlayer: function(){
@@ -67,12 +68,31 @@
         getCurrentCountries: function(){
             return this.randomizedCountries
         },
+
+        showHint: function(){
+            var countriesHint = this.getHintCountries();
+            this.vent.trigger('show:hint', countriesHint)
+        },
         // [1] Agregar el método
         // showHint: function ...
         //   var countries = this.getHintCountries()
         //   this.trigger('show:hint', countries) -> esto se va a estar escuchando en Map ver comment [3]
 
         // Agregar también el método onCountryClicked que reemplazaría el que está ahora en Game
+
+        onCountryClicked: function(options){
+            this.currentPlayer.countClicks++ 
+            this.countryClicked = options.data.key;
+            if (!this.isThisCountryCorrect(this.countryClicked)){
+                this.vent.trigger('stroke:wrong:country', options.country)
+                if (this.currentPlayer.countClicks === this.amountOfTries) {
+                    this.vent.trigger('next:turn',{country: options.country, guessed:false})
+                };
+            } else  {
+                this.addPoints(1)
+                this.vent.trigger('next:turn',{country: options.country, guessed:true})
+            };
+        },
 
         setHintCountries: function(){
             var copy = this.randomizedCountries.slice(0,this.randomizedCountries.length);
@@ -90,6 +110,7 @@
 
         addPoints: function(points){
             this.currentPlayer.addPoints(points);
+            this.vent.trigger('points:added')
         },
 
         getNumberOfCountries: function(){
@@ -121,4 +142,4 @@
 
     window.GameModel = new GameModel();
 })()
-Map.vent.on
+// Map.vent.on

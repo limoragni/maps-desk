@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
     var map  = new Map(WorldMap.shapes, '#container-game');
-    var game = new Game();
+    var game = new GameUI();
     var menu = new MainMenu();
 
     // Esto vuela de acá
@@ -12,9 +12,9 @@ $(document).ready(function(){
     // o GameModel.trigger('country:failed', country)
     // Y estos mensajes deben ser escuchados desde Map, para colorear el país correspondiente.
     // Para enviar el mensaje de que se cliqueó un país.
-    map.on('countryClicked', function(options){
-        game.onCountryClicked(options)
-    });
+    // map.on('countryClicked', function(options){
+    //     game.onCountryClicked(options)
+    // });
 
     game.start()
 });

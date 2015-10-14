@@ -42,16 +42,25 @@ svg {
     left: 3%
 }
 
+#player2-points {
+	font-size: 60px;
+    margin-right: 60px;
+    position: absolute;
+    font-weight: 600;
+    color: #103B46;
+    right: 3%
+}
+
 #icon-player {
 	position: absolute;
     margin-top: 12px;
-    color: #236294;
+    color: #1CA554;
     left: 2%;
 }
 #icon-player2 {
 	position: absolute;
     margin-top: 12px;
-    color: #236294;
+    color: #864EB3;
     right: 2%;
 }
 .icon-menu {
@@ -86,13 +95,10 @@ svg {
 .ctry-wrong{
 	fill:#E44C27;
 }
-.ctry-wrong-player2{
-	fill:#DF7E33;
-}
-.ctry-fine{
+.player1-color{
 	fill:#1CA554;
 }
-.ctry-fine-player2{
+.player2-color{
 	fill:#864EB3;
 }
 .stroke-country{
