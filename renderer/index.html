@@ -41,9 +41,19 @@
 
         <div id="country-indicator">
             <i class="fa fa-user fa-4x" id="icon-player"></i>
-            <span id="player-points"></span>
-            <i class="fa fa-user fa-4x" id="icon-player2"></i>
-            <span id="player2-points"></span>
+            <div id='player-info'>
+                <span class='info' ><i id="player-points"            class="fa fa-trophy"></i></span>
+                <span class='info' ><i id='player-countries-guessed' class="fa fa-check"></i></span>
+                <span class='info' ><i id='player-countries-missed'  class="fa fa-times"></i></span>
+            </div>
+            <div id='player2-div'>
+                <i class="fa fa-user fa-4x" id="icon-player2"></i>
+                <div id='player2-info'>
+                    <span class='info' ><i id="player2-points"            class="fa fa-trophy"></i></span>
+                    <span class='info' ><i id='player2-countries-guessed' class="fa fa-check"></i></span>
+                    <span class='info' ><i id='player2-countries-missed'  class="fa fa-times"></i></span>
+                </div>
+            </div>
             <div class="container">
                 <h1 id="h-country"></h1>
             </div>
@@ -51,9 +61,9 @@
 
         <div id="menu-container">
             <div id="menu-difficulty-modes">
-                <div id="easy-mode-button"   data-mode="easy"     class="difficulty-mode-buttons"><p>Easy</p></div>
+                <div id="easy-mode-button"   data-mode="easy"     class="difficulty-mode-buttons"><p>Short</p></div>
                 <div id="medium-mode-button" data-mode="medium"   class="difficulty-mode-buttons"><p>Medium</p></div>
-                <div id="hard-mode-button"   data-mode="hard"     class="difficulty-mode-buttons"><p>Hard</p></div>
+                <div id="hard-mode-button"   data-mode="hard"     class="difficulty-mode-buttons"><p>Long</p></div>
             </div>
 
             <div id="single-button" data-mode="single" class="players-menu-buttons">

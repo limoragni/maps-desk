@@ -33,23 +33,27 @@ svg {
 	color: #103B46;
 }
 
-#player-points {
+/*#player-points {
 	font-size: 60px;
     margin-left: 60px;
     position: absolute;
     font-weight: 600;
     color: #103B46;
     left: 3%
+}*/
+
+#player2-div {
+	display: none;
 }
 
-#player2-points {
+/*#player2-points {
 	font-size: 60px;
     margin-right: 60px;
     position: absolute;
     font-weight: 600;
     color: #103B46;
     right: 3%
-}
+}*/
 
 #icon-player {
 	position: absolute;
@@ -63,6 +67,26 @@ svg {
     color: #864EB3;
     right: 2%;
 }
+.info {
+	display: block;
+	display: block;
+    font-size: 20px;
+    text-align: left;
+}
+#player-info {
+	position: absolute;
+	left: 7%;
+    width: 10%;
+	height: 70%;
+}
+#player2-info {
+	position: absolute;
+	right: 7%;
+    width: 10%;
+	height: 70%;
+}
+
+
 .icon-menu {
 	font-size: 2.5em !important;
 	color: #236294;

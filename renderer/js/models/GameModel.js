@@ -8,8 +8,8 @@
 // para no pisarlos en cualquier parte de la plicación.
     GameModel.prototype = {
         setProperties: function(){
-            this.points                 = 0;
             this.amountOfTries          = 3;
+            this.relativePoints         = 10;
             this.countriesKeys          = Object.keys(WorldMap.names);
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
@@ -35,21 +35,25 @@
 
         setPlayersMode: function(mode){
             var playerOne = {
-                playerName       : 'player 1',
-                playerColor      : 'player1-color',
-                playerPanelPoints: $('#player-points')
+                playerName         : 'player 1',
+                playerColor        : 'player1-color',
+                playerPanelPoints  : $('#player-points'),
+                playerPanelGuessed : $('#player-countries-guessed'),
+                playerPanelMissed  : $('#player-countries-missed')
             }
             this.players.push(new Player(playerOne));
             this.currentPlayer = this.players[0]
             if (mode == 'multi') {
+                this.vent.trigger('multi:mode');
                 var playerTwo = {
-                    playerName       : 'player 2',
-                    playerColor      : 'player2-color',
-                    playerPanelPoints: $('#player2-points')
+                    playerName         : 'player 2',
+                    playerColor        : 'player2-color',
+                    playerPanelPoints  : $('#player2-points'),
+                    playerPanelGuessed : $('#player2-countries-guessed'),
+                    playerPanelMissed  : $('#player2-countries-missed')
                 }
                 this.players.push(new Player(playerTwo));
             }
-            console.log(this.currentPlayer)
         },
 
         changePlayer: function(){
@@ -72,26 +76,39 @@
         showHint: function(){
             var countriesHint = this.getHintCountries();
             this.vent.trigger('show:hint', countriesHint)
+            this.relativePoints -= 3;
         },
-        // [1] Agregar el método
-        // showHint: function ...
-        //   var countries = this.getHintCountries()
-        //   this.trigger('show:hint', countries) -> esto se va a estar escuchando en Map ver comment [3]
-
-        // Agregar también el método onCountryClicked que reemplazaría el que está ahora en Game
 
         onCountryClicked: function(options){
             this.currentPlayer.countClicks++ 
             this.countryClicked = options.data.key;
+            this.checkElection(options);
+        },
+
+        checkElection: function(options){
             if (!this.isThisCountryCorrect(this.countryClicked)){
+                this.relativePoints -= 2;
                 this.vent.trigger('stroke:wrong:country', options.country)
                 if (this.currentPlayer.countClicks === this.amountOfTries) {
-                    this.vent.trigger('next:turn',{country: options.country, guessed:false})
+                    this.missedCountry(options)
                 };
             } else  {
-                this.addPoints(1)
-                this.vent.trigger('next:turn',{country: options.country, guessed:true})
+                this.guessedCountry(options);
             };
+        },
+
+        missedCountry: function(options){
+            this.relativePoints = 10;
+            this.currentPlayer.countriesMissed += 1;
+            this.addPoints(0);
+            this.vent.trigger('next:turn',{country: options.country, guessed:false})
+        },
+
+        guessedCountry: function(options){
+            this.currentPlayer.countriesGuessed += 1;
+            this.addPoints(this.relativePoints)
+            this.relativePoints = 10;
+            this.vent.trigger('next:turn',{country: options.country, guessed:true})
         },
 
         setHintCountries: function(){
@@ -107,7 +124,7 @@
                 return [];
             }
         },
-
+        
         addPoints: function(points){
             this.currentPlayer.addPoints(points);
             this.vent.trigger('points:added')
@@ -142,4 +159,3 @@
 
     window.GameModel = new GameModel();
 })()
-// Map.vent.on

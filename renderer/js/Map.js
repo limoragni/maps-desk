@@ -85,7 +85,6 @@ Map.prototype = {
                 if (!self.mouseMoved) {
                     // self.trigger('countryClicked', {data: elementData, country: this});
                     GameModel.onCountryClicked({data: elementData, country:this})
-                    console.log(elementData.key)
                 }
             })
     },

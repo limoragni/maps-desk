@@ -3,16 +3,12 @@
 // OJO! también puede ser sobrescrita. Por eso, para prevenir en cierta medida esto, se usa la
 // convención de que las variables globales comiencen con Mayúsculas
 
-// TAREA: cambiar nombre a GameUI porque a partir de ahora este objeto debería manejar
-// solamente la interfaz gráfica con la que interactua el usuario (Puntos, botón de hint, nombre del país, etc.)
-// Todo lo que es mostrar cosas en el mapa ahora va a pasar al Map
 window.GameUI = function(){
     this.setProperties();
 }
 
 GameUI.prototype = {
     setProperties: function(){
-        // this.countClicks     = 0;
         this.wrongPoints     = 0;
         this.countryClicked  = null
         this.UI              = {}
@@ -33,20 +29,16 @@ GameUI.prototype = {
             finalPanel       : $('#final-indicator'),
             countryNamePanel : $('#country-indicator'),
             containerGame    : $('#container-game')
-
         }
     },
 
     setEvents: function(){
         this.UI.reset.click( _.bind( this.resetGame,           this));
         this.UI.hint.click(  _.bind( this.colorHintsCountries, this));
-        GameModel.vent.on('game:mode:set', this.onModeSelected, this);
-        GameModel.vent.on('points:added', this.setPoints, this)
-        GameModel.vent.on('next:turn', this.showNextCountry, this);
-        // Acá es donde se van a escuchar todos los nuevos mensajes
-        // por ej GameModel.vent.on('country:guessed', this.onGuessedCountry, this)
-        // una posibilidad sería tener un mensaje que sea show:country que mande como parametro
-        // el couentry que hay que mostrar.
+        GameModel.vent.on('multi:mode'   , this.displayPlayer2 , this)
+        GameModel.vent.on('game:mode:set', this.onModeSelected , this);
+        GameModel.vent.on('points:added' , this.setPoints      , this)
+        GameModel.vent.on('next:turn'    , this.showNextCountry, this);
     },
 
     onModeSelected: function(mode){
@@ -58,53 +50,14 @@ GameUI.prototype = {
         });
     },
 
+    displayPlayer2: function(){
+        $('#player2-div').show()
+    },
+
     colorHintsCountries: function(){
         GameModel.showHint();
     },
-    
-    // onCountryClicked: function(options){
-    //     this.countClicks++
-    //     this.countryClicked = options.data.key;
-    //     if (!this.isThisTheRightCountry()){
-    //         this.onWrongCountry(options.country); // Estos métodos que se llamana acá van a ser reemplazados por los mensajes que manda GameModel
-    //     } else  {
-    //         this.onGuessedCountry(options.country);
-    //     };
-
-    //     if (this.isThisTheLastCountry()) {
-    //         this.gameOver(); // Esto puede ser otro mensaje que envía el GameModel
-    //     };
-    // },
-
-    // isThisTheRightCountry: function(){
-    //     if(GameModel.isThisCountryCorrect(this.countryClicked))
-    //         return true
-    //     if(this.countClicks < GameModel.amountOfTries && !GameModel.isThisCountryCorrect(this.countryClicked))
-    //         return false
-    // },
-
-    // onGuessedCountry: function(country){
-    //     this.setPoints(); // Con los nuevos cambios esto se va a hacer directamente dentro del gameModel
-    //     this.showNextCountry();
-    //     d3.select(country).classed(GameModel.currentPlayer.playerColorFine, true);
-    // },
-
-    // onWrongCountry: function(country){
-    //     d3.select(country).classed('stroke-country',true);
-    //     setTimeout(function(){
-    //         d3.select(country).classed('stroke-country',false);
-    //     }, 400);
-    //     if(this.countClicks === GameModel.amountOfTries){
-    //         this.onLoseTurn();
-    //     };
-    // },
-
-    // onLoseTurn: function(){
-    //     this.colorWrongCountry();
-    //     this.showNextCountry();
-    //     this.wrongPoints++
-    // },
-
+                                    // ??????????????????
     isThisTheLastCountry: function(){
         var oneCountryLeft = GameModel.getNumberOfCountriesLeft() === 1;
         var triedAllTimes = this.countClicks === GameModel.amountOfTries;
@@ -113,15 +66,6 @@ GameUI.prototype = {
             return true;
         };
     },
-
-    // colorWrongCountry: function(){
-    //     var self = this;
-    //     d3.selectAll('path').each(function(d){
-    //         if (GameModel.currentCountry === d.key) {
-    //             d3.select(this).classed(GameModel.currentPlayer.playerColorWrong,true);
-    //         }
-    //     })
-    // },
 
     showNextCountry: function(){
         GameModel.nextCountry()
@@ -137,10 +81,9 @@ GameUI.prototype = {
     },
 
     setPoints: function(){
-        //Como esto ahora se hace en el GameModel, el GameModel debería de mandar un mensaje
-        // diciendo que se sumaron puntos a X player y que hay que mostrarlos
-        // GameModel.addPoints(1);
-        GameModel.currentPlayer.playerPanelPoints.html(GameModel.currentPlayer.points);
+        GameModel.currentPlayer.playerPanelPoints.html( GameModel.currentPlayer.points);
+        GameModel.currentPlayer.playerPanelGuessed.html(GameModel.currentPlayer.countriesGuessed);
+        GameModel.currentPlayer.playerPanelMissed.html( GameModel.currentPlayer.countriesMissed);
     },
 
     resetColors: function(){
