@@ -35,30 +35,34 @@
 
         setPlayersMode: function(mode){
             var playerOne = {
-                playerName         : 'player 1',
-                playerColor        : 'player1-color',
-                playerPanelPoints  : $('#player-points'),
-                playerPanelGuessed : $('#player-countries-guessed'),
-                playerPanelMissed  : $('#player-countries-missed')
+                playerName          : 'player 1',
+                playerColor         : 'player1-color',
+                playerPanelPoints   : $('#player-points'),
+                playerPanelGuessed  : $('#player-countries-guessed'),
+                playerPanelMissed   : $('#player-countries-missed'),
+                playerTurnIndicator : $('#player-turn')
             }
             this.players.push(new Player(playerOne));
             this.currentPlayer = this.players[0]
             if (mode == 'multi') {
                 this.vent.trigger('multi:mode');
                 var playerTwo = {
-                    playerName         : 'player 2',
-                    playerColor        : 'player2-color',
-                    playerPanelPoints  : $('#player2-points'),
-                    playerPanelGuessed : $('#player2-countries-guessed'),
-                    playerPanelMissed  : $('#player2-countries-missed')
+                    playerName          : 'player 2',
+                    playerColor         : 'player2-color',
+                    playerPanelPoints   : $('#player2-points'),
+                    playerPanelGuessed  : $('#player2-countries-guessed'),
+                    playerPanelMissed   : $('#player2-countries-missed'),
+                    playerTurnIndicator : $('#player2-turn')
                 }
                 this.players.push(new Player(playerTwo));
             }
         },
 
         changePlayer: function(){
+            this.currentPlayer.playerTurnIndicator.hide()
             this.players.reverse()
             this.currentPlayer = this.players[0]
+            this.currentPlayer.playerTurnIndicator.show()
         },
 
         setDifficultyMode: function(mode){
@@ -146,6 +150,8 @@
             this.randomizedCountries = this.randomizedCountries.splice(1,this.randomizedCountries.length);
             this.currentCountry = this.randomizedCountries[0];
             this.setHintCountries() //Siempre que se muestra un nuevo pais preparamos la hint que corresponde
+            this.changePlayer()
+            this.currentPlayer.countClicks = 0;
         },
 
         isThisCountryCorrect: function(country){

@@ -33,27 +33,9 @@ svg {
 	color: #103B46;
 }
 
-/*#player-points {
-	font-size: 60px;
-    margin-left: 60px;
-    position: absolute;
-    font-weight: 600;
-    color: #103B46;
-    left: 3%
-}*/
-
 #player2-div {
 	display: none;
 }
-
-/*#player2-points {
-	font-size: 60px;
-    margin-right: 60px;
-    position: absolute;
-    font-weight: 600;
-    color: #103B46;
-    right: 3%
-}*/
 
 #icon-player {
 	position: absolute;
@@ -66,6 +48,19 @@ svg {
     margin-top: 12px;
     color: #864EB3;
     right: 2%;
+}
+#player-turn {
+	position: absolute;
+    top: -130%;
+    left: 11%;
+    color: #E3AF28;
+}
+#player2-turn {
+	position: absolute;
+    top: -130%;
+    right: 11%;
+    display: none;
+    color: #E3AF28;
 }
 .info {
 	display: block;
@@ -81,7 +76,7 @@ svg {
 }
 #player2-info {
 	position: absolute;
-	right: 7%;
+	right: 1%;
     width: 10%;
 	height: 70%;
 }
@@ -108,6 +103,12 @@ svg {
 	cursor: pointer;
 	position: absolute;
 	margin-top: 20%;
+	transition: transform 0.5s;
+}
+#hint-button:hover {
+	transform: scale(5,5);
+	transform-origin: 0% 0%;
+	
 }
 .hint-country{
 	fill:#F4C550;
@@ -116,6 +117,7 @@ svg {
 .on-mouse-over-the-country{
 	fill:#E3AF28;
 }
+
 .ctry-wrong{
 	fill:#E44C27;
 }

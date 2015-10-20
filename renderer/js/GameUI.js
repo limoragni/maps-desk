@@ -22,7 +22,6 @@ GameUI.prototype = {
 
     setUI: function(){
         this.UI = {
-            points           : [$('#player-points'),$('#player2-points')],
             reset            : $('#reset-button'),
             hint             : $('#hint-button'),
             countryName      : $('#h-country'),
@@ -69,7 +68,6 @@ GameUI.prototype = {
 
     showNextCountry: function(){
         GameModel.nextCountry()
-        GameModel.changePlayer()
         this.showCountry()
         GameModel.currentPlayer.countClicks = 0;
         d3.selectAll('path').classed('hint-country',false)
