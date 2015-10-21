@@ -20,7 +20,7 @@
 
             this.hintCountries          = null
             this.hintCountriesNumber    = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
-            this.setHintCountries() // Praparamos la hint para el primer pais
+            this.setHintCountries()         // Praparamos la hint para el primer pais
             this.numberOfCountries      = null
 
             this.playersModeConfig      = {
@@ -29,40 +29,33 @@
             }
             this.numberOfPLayers        = null
             this.players                = []
+            this.playersMode            = null
             this.currentPlayer          = null
             this.vent                   = _.extend({}, Backbone.Events);
         },
 
         setPlayersMode: function(mode){
-            var playerOne = {
-                playerName          : 'player 1',
-                playerColor         : 'player1-color',
-                playerPanelPoints   : $('#player-points'),
-                playerPanelGuessed  : $('#player-countries-guessed'),
-                playerPanelMissed   : $('#player-countries-missed'),
-                playerTurnIndicator : $('#player-turn')
+            this.players.push(new PlayerModel({
+                colorClass: 'player-1-color',
+                playerName: 'Player 1',
+                playerIndex: 0
+            }));
+            this.currentPlayer = this.players[0];
+            if (mode == 'multi'){
+                this.players.push(new PlayerModel({
+                    colorClass: 'player-2-color',
+                    playerName: 'Player 2',
+                    playerIndex: 1
+                }));
             }
-            this.players.push(new Player(playerOne));
-            this.currentPlayer = this.players[0]
-            if (mode == 'multi') {
-                this.vent.trigger('multi:mode');
-                var playerTwo = {
-                    playerName          : 'player 2',
-                    playerColor         : 'player2-color',
-                    playerPanelPoints   : $('#player2-points'),
-                    playerPanelGuessed  : $('#player2-countries-guessed'),
-                    playerPanelMissed   : $('#player2-countries-missed'),
-                    playerTurnIndicator : $('#player2-turn')
-                }
-                this.players.push(new Player(playerTwo));
-            }
+            this.playersMode = mode;
+            this.vent.trigger('player:mode:set', mode);
         },
 
         changePlayer: function(){
-            this.currentPlayer.playerTurnIndicator.hide()
             this.players.reverse()
             this.currentPlayer = this.players[0]
-            this.currentPlayer.playerTurnIndicator.show()
+            this.vent.trigger('current:player:changed', this.currentPlayer)
         },
 
         setDifficultyMode: function(mode){
@@ -84,7 +77,7 @@
         },
 
         onCountryClicked: function(options){
-            this.currentPlayer.countClicks++ 
+            this.currentPlayer.countClicks++
             this.countryClicked = options.data.key;
             this.checkElection(options);
         },
@@ -128,7 +121,7 @@
                 return [];
             }
         },
-        
+
         addPoints: function(points){
             this.currentPlayer.addPoints(points);
             this.vent.trigger('points:added')

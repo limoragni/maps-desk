@@ -12,11 +12,13 @@ GameUI.prototype = {
         this.wrongPoints     = 0;
         this.countryClicked  = null
         this.UI              = {}
+        this.playersUI       = []
         this.setUI()
+        this.initialize()
     },
 
-    start: function(){
-        this.setEvents()
+    initialize: function(){
+        this.listenToEvents()
         this.showCountry()
     },
 
@@ -31,17 +33,18 @@ GameUI.prototype = {
         }
     },
 
-    setEvents: function(){
-        this.UI.reset.click( _.bind( this.resetGame,           this));
-        this.UI.hint.click(  _.bind( this.colorHintsCountries, this));
-        GameModel.vent.on('multi:mode'   , this.displayPlayer2 , this)
-        GameModel.vent.on('game:mode:set', this.onModeSelected , this);
-        GameModel.vent.on('points:added' , this.setPoints      , this)
-        GameModel.vent.on('next:turn'    , this.showNextCountry, this);
+    listenToEvents: function(){
+        this.UI.reset.click( _.bind( this.resetGame,             this));
+        this.UI.hint.click(  _.bind( this.colorHintsCountries,   this));
+
+        GameModel.vent.on('player:mode:set',        this.setPlayersUI,           this);
+        GameModel.vent.on('game:mode:set',          this.onModeSelected,         this);
+        GameModel.vent.on('points:added',           this.setPoints,              this);
+        GameModel.vent.on('next:turn',              this.showNextCountry,        this);
+        GameModel.vent.on('current:player:changed', this.onCurrentPlayerChanged, this);
     },
 
     onModeSelected: function(mode){
-        this.activateCountries(GameModel.getCurrentCountries());
         this.UI.countryNamePanel.fadeIn();
         this.UI.containerGame.css({ //esta funcion pone el fondo celeste y hace el cuadriculado
             'background-color': '#1D6C8F',
@@ -49,14 +52,20 @@ GameUI.prototype = {
         });
     },
 
-    displayPlayer2: function(){
-        $('#player2-div').show()
+    setPlayersUI: function(mode){
+        this.playersUI.push(new PlayerUI(1))
+        if(mode == 'multi'){
+            this.playersUI.push(new PlayerUI(2))
+            $('#player2-div').show()
+        }
+
     },
 
     colorHintsCountries: function(){
         GameModel.showHint();
     },
-                                    // ??????????????????
+
+    //Este método puede ir en el GameModel
     isThisTheLastCountry: function(){
         var oneCountryLeft = GameModel.getNumberOfCountriesLeft() === 1;
         var triedAllTimes = this.countClicks === GameModel.amountOfTries;
@@ -79,9 +88,10 @@ GameUI.prototype = {
     },
 
     setPoints: function(){
-        GameModel.currentPlayer.playerPanelPoints.html( GameModel.currentPlayer.points);
-        GameModel.currentPlayer.playerPanelGuessed.html(GameModel.currentPlayer.countriesGuessed);
-        GameModel.currentPlayer.playerPanelMissed.html( GameModel.currentPlayer.countriesMissed);
+        current = this.playersUI[GameModel.currentPlayer.playerIndex]
+        current.UI.panelPoints.html(GameModel.currentPlayer.points)
+        current.UI.panelGuessed.html(GameModel.currentPlayer.countriesGuessed)
+        current.UI.panelMissed.html(GameModel.currentPlayer.countriesMissed)
     },
 
     resetColors: function(){
@@ -89,7 +99,6 @@ GameUI.prototype = {
     },
 
     resetGame: function(){
-        // this.getInMenu();
         GameModel.reset();
         this.setProperties();
         this.start();
@@ -106,16 +115,11 @@ GameUI.prototype = {
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
-    activateCountries: function(countries){
-        if(countries){
-            d3.selectAll('path').each(function(d){
-                d3.select(this).classed('disable-country',true);
-                for (var i in countries ){
-                    if (countries[i] === d.key) {
-                        d3.select(this).classed('disable-country',false);
-                    }
-                }
-            })
+    onCurrentPlayerChanged: function(player){
+        if(GameModel.playersMode == 'multi'){
+            this.playersUI[0].UI.turnIndicator.hide();
+            this.playersUI[1].UI.turnIndicator.hide();
+            this.playersUI[player.playerIndex].UI.turnIndicator.show();
         }
     }
 }

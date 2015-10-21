@@ -33,7 +33,7 @@ svg {
 	color: #103B46;
 }
 
-#player2-div {
+#player-2-div {
 	display: none;
 }
 
@@ -49,17 +49,17 @@ svg {
     color: #864EB3;
     right: 2%;
 }
-#player-turn {
-	position: absolute;
-    top: -130%;
-    left: 11%;
-    color: #E3AF28;
+#player-1-turn {
+	left: 11%;
 }
-#player2-turn {
-	position: absolute;
-    top: -130%;
-    right: 11%;
+#player-2-turn {
     display: none;
+	right: 11%;
+}
+
+.player-turn{
+    position: absolute;
+    top: -130%;
     color: #E3AF28;
 }
 .info {
@@ -104,11 +104,12 @@ svg {
 	position: absolute;
 	margin-top: 20%;
 	transition: transform 0.5s;
+    transform-origin: 0% 0%;
 }
 #hint-button:hover {
 	transform: scale(5,5);
 	transform-origin: 0% 0%;
-	
+
 }
 .hint-country{
 	fill:#F4C550;
@@ -121,10 +122,10 @@ svg {
 .ctry-wrong{
 	fill:#E44C27;
 }
-.player1-color{
+.player-1-color{
 	fill:#1CA554;
 }
-.player2-color{
+.player-2-color{
 	fill:#864EB3;
 }
 .stroke-country{
@@ -168,7 +169,7 @@ svg {
 	                  -webkit-linear-gradient(0, #1D6C8F 1px, transparent 2px),
 	                  -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
 	                  -webkit-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
-	
+
 	behavior: url(/pie/PIE.htc);
 
 }

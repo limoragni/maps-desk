@@ -11,15 +11,11 @@ var Map = function(shapes, selector){
 }
 
 Map.prototype = {
-    setEvents: function(){           // this.drawHint(countriesHint) esto nunca, por que la funcion se pasa para que se ejecute y no ya ejecutada. el parametro que manda trigger se recibe internamente   
-        GameModel.vent.on('show:hint', this.drawHint, this)
+    setEvents: function(){           // this.drawHint(countriesHint) esto nunca, por que la funcion se pasa para que se ejecute y no ya ejecutada. el parametro que manda trigger se recibe internamente
+        GameModel.vent.on('show:hint',            this.drawHint,           this)
         GameModel.vent.on('stroke:wrong:country', this.strokeWrongCountry, this)
-        GameModel.vent.on('next:turn', this.colorCountry, this)
-        // Acá escuchamos el mensaje del HINT
-        // GameModel.vent.on('show:hint', this.drawHint, this)
-        // Acá también vamos a escuchar los mensajes del GameModel que dirán si
-        // se adivinó o se erró un país, para colorearlo como corresponda
-        // GameModel.vent.on('country:guessed', this.colorCountry, this)
+        GameModel.vent.on('next:turn',            this.colorCountry,       this)
+        GameModel.vent.on('game:mode:set',        this.activateCountries,  this)
     },
 
     listenZoom: function(){
@@ -27,20 +23,6 @@ Map.prototype = {
            .scaleExtent([1, 10])
            .on("zoom", _.bind(this.zoomed, this));
     },
-
-    // Borrar métodos on y trigger, se va a usar GameModel.vent para remplazar esta funcionalidad
-    // on: function(message, fn){
-    //     if(!this.messages[message]){
-    //         this.messages[message] = [];
-    //     }
-    //     this.messages[message].push(fn);
-    // },
-
-    // trigger: function(message, parameter){
-    //     for(var index in this.messages[message]){
-    //         this.messages[message][index](parameter)
-    //     }
-    // },
 
     setContainer: function(selector){
         this.container = d3.select(selector)
@@ -53,20 +35,21 @@ Map.prototype = {
 
     drawMap: function(){
         var self = this;
-        this.countries = this.container.selectAll('path');
         // Acá vamos a guardar en una propiedad la selección de todos los paises
         // this.countries = this.container.selectAll('path')
         // entonces abajo en vez de usar this.container.selectAll('path') ya lo podemos reemplazar por
         // this.countries
         //     .data(d3.entries(this.shapes)), etc...
-        this.countries
+        this.countries = this.container.selectAll('path')
             .data(d3.entries(this.shapes)) // Set data to be used by D3
             .enter() //Start looping trhough the data creating an element for each item
             .append('path')
             .attr('d', function(data){return data.value}) // Draw the path using the data binded to this item
             .classed('country', true)
-            .on('mouseover', function(){
+            .on('mouseover', function(d){
                 d3.select(this).classed('on-mouse-over-the-country',true);
+                // self.UI.countryHover.html(WorldMap.names[d.key])
+                // self.UI.countryHover.css('top', d3.event.mousePosition.x) Acá te tengo que pasar la data de como agarrar la posición del mouse
             })
             .on('mouseout', function(d){
                 d3.select(this).classed('on-mouse-over-the-country',false);
@@ -97,11 +80,9 @@ Map.prototype = {
     // this.countries.each(function(d){blah})
 
     drawHint: function(countriesHint){
-        // no me estaria funcionando el this.countries
-        d3.selectAll('path').each(function(d){
+        this.countries.each(function(d){
             for (var i in countriesHint ){
                 if (countriesHint[i] === d.key) {
-                    var self = this;
                     d3.select(this).classed('hint-country',true);
                 }
             }
@@ -111,20 +92,34 @@ Map.prototype = {
     strokeWrongCountry: function(country){
         d3.select(country).classed('stroke-country',true);
         setTimeout(function(){
-        d3.select(country).classed('stroke-country',false);
+            d3.select(country).classed('stroke-country',false);
         }, 400);
     },
 
     colorCountry:function(options){
         if (!options.guessed) {
-            var self = this; // buscar alguna mejor forma de colorear
-            d3.selectAll('path').each(function(d){
+            this.countries.each(function(d){
                 if (GameModel.currentCountry === d.key) {
                     d3.select(this).classed('ctry-wrong',true);
                 }
             })
         } else {
-            d3.select(options.country).classed(GameModel.currentPlayer.playerColor, true);
+            d3.select(options.country).classed(GameModel.currentPlayer.colorClass, true);
+        }
+    },
+
+    activateCountries: function(){
+        countries = GameModel.getCurrentCountries()
+        if(countries){
+            this.countries.each(function(d){
+                d3.select(this).classed('disable-country',true);
+                for (var i in countries ){
+                    if (countries[i] === d.key) {
+                        d3.select(this).classed('disable-country',false);
+                    }
+                }
+            })
         }
     }
+
 }

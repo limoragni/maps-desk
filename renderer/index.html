@@ -19,10 +19,11 @@
         <script type="text/javascript" src="data/worldMap.js"></script>
 
         <script type="text/javascript" src="js/Utilities.js" ></script>
-        <script type="text/javascript" src="js/Player.js" ></script>
         <script type="text/javascript" src="js/models/GameModel.js" ></script>
+        <script type="text/javascript" src="js/models/PlayerModel.js" ></script>
         <script type="text/javascript" src="js/MainMenu.js"></script>
         <script type="text/javascript" src="js/GameUI.js" ></script>
+        <script type="text/javascript" src="js/PlayerUI.js" ></script>
         <script type="text/javascript" src="js/Map.js" ></script>
         <script type="text/javascript" src="js/main.js" ></script>
         <title></title>
@@ -40,18 +41,18 @@
         </div>
 
         <div id="country-indicator">
-            <i class="fa fa-user fa-4x" id="icon-player"><i id='player-turn' class="fa fa-caret-down"></i></i>
+            <i class="fa fa-user fa-4x" id="icon-player"><i id='player-1-turn' class="player-turn fa fa-caret-down"></i></i>
             <div id='player-info'>
-                <span class='info' ><i id="player-points"            class="fa fa-trophy"></i></span>
-                <span class='info' ><i id='player-countries-guessed' class="fa fa-check"></i></span>
-                <span class='info' ><i id='player-countries-missed'  class="fa fa-times"></i></span>
+                <span class='info' ><i id="player-1-points"            class="fa fa-trophy">0</i></span>
+                <span class='info' ><i id='player-1-countries-guessed' class="fa fa-check">0</i></span>
+                <span class='info' ><i id='player-1-countries-missed'  class="fa fa-times">0</i></span>
             </div>
             <div id='player2-div'>
-                <i class="fa fa-user fa-4x" id="icon-player2"><i id='player2-turn' class="fa fa-caret-down"></i></i>
+                <i class="fa fa-user fa-4x" id="icon-player2"><i id='player-2-turn' class="player-turn fa fa-caret-down"></i></i>
                 <div id='player2-info'>
-                    <span class='info' ><i id="player2-points"            class="fa fa-trophy"></i></span>
-                    <span class='info' ><i id='player2-countries-guessed' class="fa fa-check"></i></span>
-                    <span class='info' ><i id='player2-countries-missed'  class="fa fa-times"></i></span>
+                    <span class='info' ><i id="player-2-points"            class="fa fa-trophy">0</i></span>
+                    <span class='info' ><i id='player-2-countries-guessed' class="fa fa-check">0</i></span>
+                    <span class='info' ><i id='player-2-countries-missed'  class="fa fa-times">0</i></span>
                 </div>
             </div>
             <div class="container">
@@ -75,5 +76,6 @@
                 <p>MULTIPLAYER</p>
             </div>
         </div>
+
     </body>
 </html>
