@@ -14,7 +14,7 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 16,
+                easy: 3,
                 medium: 50
             }
 
@@ -92,6 +92,9 @@
             } else  {
                 this.guessedCountry(options);
             };
+            if (this.isThisTheLastCountry()) {
+                console.log('soy el ultimo')
+            }
         },
 
         missedCountry: function(options){
@@ -149,6 +152,15 @@
 
         isThisCountryCorrect: function(country){
             return this.currentCountry === country;
+        },
+
+        isThisTheLastCountry: function(){
+            var oneCountryLeft = this.getNumberOfCountriesLeft() === 0;
+            var triedAllTimes = this.currentPlayer.countClicks === this.amountOfTries;
+            var rightCountry = this.countryClicked === this.currentCountry;
+            if ( oneCountryLeft ) {
+                return true;
+            };
         },
 
         reset: function(){

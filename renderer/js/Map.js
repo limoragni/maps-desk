@@ -1,9 +1,12 @@
 var Map = function(shapes, selector){
-    this.messages   = {};
-    this.shapes     = shapes;
-    this.container  = {}
-    this.zoom       = {}
-    this.mouseMoved = false
+    this.messages       = {};
+    this.shapes         = shapes;
+    this.container      = {};
+    this.zoom           = {};
+    this.mouseMoved     = false;
+    this.countryUsed    = false;
+    this.functionOfPopName = null;
+    this.popCountryName = $('#country-hover');
     this.listenZoom();
     this.setContainer(selector)
     this.drawMap();
@@ -35,24 +38,24 @@ Map.prototype = {
 
     drawMap: function(){
         var self = this;
-        // Acá vamos a guardar en una propiedad la selección de todos los paises
-        // this.countries = this.container.selectAll('path')
-        // entonces abajo en vez de usar this.container.selectAll('path') ya lo podemos reemplazar por
-        // this.countries
-        //     .data(d3.entries(this.shapes)), etc...
+
         this.countries = this.container.selectAll('path')
             .data(d3.entries(this.shapes)) // Set data to be used by D3
             .enter() //Start looping trhough the data creating an element for each item
             .append('path')
             .attr('d', function(data){return data.value}) // Draw the path using the data binded to this item
             .classed('country', true)
-            .on('mouseover', function(d){
+            .on('mouseover', function(d){ // why 'this' refer only to the country hover?
                 d3.select(this).classed('on-mouse-over-the-country',true);
-                // self.UI.countryHover.html(WorldMap.names[d.key])
-                // self.UI.countryHover.css('top', d3.event.mousePosition.x) Acá te tengo que pasar la data de como agarrar la posición del mouse
+                this.countryUsed = d3.select(this).classed('ctry-clicked'); //this say if countryUsed is true or false
+                if (this.countryUsed) {
+                    self.showNameCountryPop(WorldMap.names[d.key])
+                }
             })
             .on('mouseout', function(d){
                 d3.select(this).classed('on-mouse-over-the-country',false);
+                self.popCountryName.hide();
+                clearInterval(self.functionOfPopName);               
             })
             .on('mousedown', function(){
                 self.mouseMoved = false;
@@ -60,13 +63,8 @@ Map.prototype = {
             .on('mousemove', function(){
                 self.mouseMoved = true;
             })
-            .on('mouseup', function(elementData){
-                // [4] Ya no se va a usar el trigger de map que va a volar.
-                // se va a llamar a GameModel.onCountryClicked({data: elementData, country: this})
-                // donde se van a hacer los chequeos de si es el país correcto o no
-                // y se van a mandar los mensajes que corresponde para cada caso
-                if (!self.mouseMoved) {
-                    // self.trigger('countryClicked', {data: elementData, country: this});
+            .on('mouseup', function(elementData){ 
+                if (!self.mouseMoved && !this.countryUsed) {
                     GameModel.onCountryClicked({data: elementData, country:this})
                 }
             })
@@ -75,9 +73,6 @@ Map.prototype = {
      zoomed: function(a){
         this.container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     },
-    // Este método se va a llamar cuando se dispare el mensaje show:hint ver Arriba
-    // [2] drawHints: function() ...
-    // this.countries.each(function(d){blah})
 
     drawHint: function(countriesHint){
         this.countries.each(function(d){
@@ -101,10 +96,12 @@ Map.prototype = {
             this.countries.each(function(d){
                 if (GameModel.currentCountry === d.key) {
                     d3.select(this).classed('ctry-wrong',true);
+                    d3.select(this).classed('ctry-clicked',true);
                 }
             })
         } else {
             d3.select(options.country).classed(GameModel.currentPlayer.colorClass, true);
+            d3.select(options.country).classed('ctry-clicked',true);
         }
     },
 
@@ -120,6 +117,15 @@ Map.prototype = {
                 }
             })
         }
-    }
+    },
+
+    showNameCountryPop: function(name){
+        var self = this;
+        this.popCountryName.css({'top':event.clientY,'left':event.clientX})
+        this.functionOfPopName = setInterval(function(){ // this is a little inappropriate,because if the mouse still hover the country, the function never stop, but you can't see that. so uglymente its works
+                                     self.popCountryName.html(name);  
+                                     self.popCountryName.show();    
+                                 }, 500);
+    },
 
 }

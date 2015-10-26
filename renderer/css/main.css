@@ -28,8 +28,9 @@ svg {
 }
 #country-indicator h1{
 	margin: auto;
+	margin-top: 1.1%;
 	font-weight: bold;
-	font-size: 70px;
+	font-size: 40px;
 	color: #103B46;
 }
 
@@ -111,6 +112,14 @@ svg {
 	transform-origin: 0% 0%;
 
 }
+.flag-cuestion {
+	transition: transform 0.5s;
+    transform-origin: 10% 100%;
+}
+.flag-cuestion:hover {
+	transform: scale(5,5);
+	transform-origin: 10% 100%;
+}
 .hint-country{
 	fill:#F4C550;
 	opacity: 0.9;
@@ -124,9 +133,11 @@ svg {
 }
 .player-1-color{
 	fill:#1CA554;
+	stroke:#167D40;
 }
 .player-2-color{
 	fill:#864EB3;
+	stroke:#704891;
 }
 .stroke-country{
 	stroke:#BC4A48;

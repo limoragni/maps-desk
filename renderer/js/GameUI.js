@@ -78,13 +78,14 @@ GameUI.prototype = {
     showNextCountry: function(){
         GameModel.nextCountry()
         this.showCountry()
-        GameModel.currentPlayer.countClicks = 0;
         d3.selectAll('path').classed('hint-country',false)
     },
 
     showCountry: function(){
         this.UI.countryName.empty();
+        this.UI.countryName.append('<span class="flag-cuestion flag-icon flag-icon-'+ GameModel.currentCountry.toLowerCase() +'"></span>  ');
         this.UI.countryName.append(GameModel.getCurrentCountryName());
+
     },
 
     setPoints: function(){
@@ -92,6 +93,14 @@ GameUI.prototype = {
         current.UI.panelPoints.html(GameModel.currentPlayer.points)
         current.UI.panelGuessed.html(GameModel.currentPlayer.countriesGuessed)
         current.UI.panelMissed.html(GameModel.currentPlayer.countriesMissed)
+    },
+
+    onCurrentPlayerChanged: function(player){
+        if(GameModel.playersMode == 'multi'){
+            this.playersUI[0].UI.turnIndicator.hide();
+            this.playersUI[1].UI.turnIndicator.hide();
+            this.playersUI[player.playerIndex].UI.turnIndicator.show();
+        }
     },
 
     resetColors: function(){
@@ -115,11 +124,5 @@ GameUI.prototype = {
         this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
-    onCurrentPlayerChanged: function(player){
-        if(GameModel.playersMode == 'multi'){
-            this.playersUI[0].UI.turnIndicator.hide();
-            this.playersUI[1].UI.turnIndicator.hide();
-            this.playersUI[player.playerIndex].UI.turnIndicator.show();
-        }
-    }
+    
 }
