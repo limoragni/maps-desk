@@ -83,9 +83,14 @@ GameUI.prototype = {
 
     showCountry: function(){
         this.UI.countryName.empty();
-        this.UI.countryName.append('<span class="flag-cuestion flag-icon flag-icon-'+ GameModel.currentCountry.toLowerCase() +'"></span>  ');
+        this.addFlag();
         this.UI.countryName.append(GameModel.getCurrentCountryName());
+    },
 
+    addFlag: function(){
+        if (!GameModel.isItNoMoreCountries()) {
+            this.UI.countryName.append('<span class="flag-cuestion flag-icon flag-icon-'+ GameModel.currentCountry.toLowerCase() +'"></span>  ');           
+        };
     },
 
     setPoints: function(){
@@ -116,12 +121,6 @@ GameUI.prototype = {
         this.UI.finalPanel.empty();
         this.UI.finalPanel.append('<span id="reset-button" class="label label-default">Reset</span>');
         this.UI.points.empty();
-    },
-
-    gameOver: function(){
-        var percent = Math.floor(GameModel.points * 100 / GameModel.getNumberOfCountries()) + '%';
-        this.UI.finalPanel.append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
-        this.UI.finalPanel.animate({left:'0px'}, 1000);
     },
 
     

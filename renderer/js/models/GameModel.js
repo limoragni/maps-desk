@@ -14,7 +14,7 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 3,
+                easy: 6,
                 medium: 50
             }
 
@@ -92,8 +92,12 @@
             } else  {
                 this.guessedCountry(options);
             };
-            if (this.isThisTheLastCountry()) {
-                console.log('soy el ultimo')
+            if (this.isItNoMoreCountries()) {
+                if (this.playersMode === 'multi') {
+                    this.comparePlayersPoints();
+                }else{
+                    console.log(this.getPercent(this.currentPlayer.points))
+                }
             }
         },
 
@@ -154,14 +158,37 @@
             return this.currentCountry === country;
         },
 
-        isThisTheLastCountry: function(){
+        isItNoMoreCountries: function(){
             var oneCountryLeft = this.getNumberOfCountriesLeft() === 0;
-            var triedAllTimes = this.currentPlayer.countClicks === this.amountOfTries;
-            var rightCountry = this.countryClicked === this.currentCountry;
-            if ( oneCountryLeft ) {
+            if ( oneCountryLeft ) 
                 return true;
-            };
         },
+
+        comparePlayersPoints: function(){
+            var index1 = this.players[0].playerIndex
+            var index2 = this.players[1].playerIndex
+            if (this.players[index1].points > this.players[index2].points) {
+                console.log(this.players[index1].playerName)
+                console.log(this.getPercent(this.players[index1].points))
+            } else if (this.players[index1].points === this.players[index2].points){
+                console.log('esto es un empate')
+            } else {
+                console.log(this.players[index2].playerName)
+                console.log(this.getPercent(this.players[index2].points))
+            }
+        },
+
+        getPercent: function(playerPoints){
+            if (this.playersMode === 'multi') {
+                var totalPoints = (this.getNumberOfCountries() / 2) * 10;
+            } else {
+                var totalPoints = this.getNumberOfCountries() * 10
+            }            
+            var percent = Math.floor(playerPoints * 100 / totalPoints) + '%';
+            return percent
+            // this.UI.finalPanel.append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
+            // this.UI.finalPanel.animate({left:'0px'}, 1000);
+            },
 
         reset: function(){
             this.setProperties();
