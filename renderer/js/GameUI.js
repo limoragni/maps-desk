@@ -104,7 +104,8 @@ GameUI.prototype = {
         if(GameModel.playersMode == 'multi'){
             this.playersUI[0].UI.turnIndicator.hide();
             this.playersUI[1].UI.turnIndicator.hide();
-            this.playersUI[player.playerIndex].UI.turnIndicator.show();
+            if (!GameModel.isItNoMoreCountries()) 
+                this.playersUI[player.playerIndex].UI.turnIndicator.show();
         }
     },
 

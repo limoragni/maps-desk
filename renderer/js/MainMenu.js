@@ -15,6 +15,16 @@ MainMenu.prototype = {
             difficultyModeButtons : $('.difficulty-mode-buttons'),
             menuContainer         : $('#menu-container'),
             containerGame         : $('#container-game'),
+            finalPanel            : $('#final-panel'),
+            panelWinners          : $('#multi-panel-winner'),
+            panelTie              : $('#multi-panel-tie'),
+            panelSingle           : $('#single-panel'),
+            winnerMessage         : $('#winner-h1'),
+            winnerPercent         : $('#winner-percent'),
+            loserMessage          : $('#loser-h1'),
+            loserPercent          : $('#loser-percent'),
+            tiePercent            : $('#tie-percent'),
+            singlePercent         : $('#single-percent')
         }
     },
 
@@ -22,6 +32,9 @@ MainMenu.prototype = {
         this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this));
         this.UI.menuPlayers.click(           _.bind( this.moveDiv,           this));
         this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
+
+        GameModel.vent.on('finish-game', this.showFinalPanel, this);
+        GameModel.vent.on('winner:message', this.putNamesPodium, this);
     },
 
     moveDiv : function(){
@@ -51,4 +64,27 @@ MainMenu.prototype = {
         this.UI.containerGame.css('pointer-events','all');
         this.UI.containerGame.css('fill-opacity','inherit');
     },
+
+    showFinalPanel: function(options){
+        this.UI.finalPanel.css({'height':'70%','width':'33.3%'});
+        if (GameModel.playersMode === 'multi') {
+            if (options.winner) {
+                this.UI.panelWinners.show()
+            } else {
+                this.UI.tiePercent.html(options.points + ' of points')
+                this.UI.panelTie.show()
+            }
+        } else {
+            this.UI.singlePercent.html(options.points + ' of points')
+            this.UI.panelSingle.show()
+        }
+    },
+
+    putNamesPodium: function(position){
+        this.UI.winnerMessage.html(position.winner + ' winner!');
+        this.UI.winnerPercent.html(position.winnerPercent + ' of points');
+        this.UI.loserMessage.html(position.loser + ' Loser');
+        this.UI.loserPercent.html(position.loserPercent + ' of points');
+    },
+
 }

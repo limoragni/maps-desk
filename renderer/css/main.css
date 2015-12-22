@@ -26,7 +26,7 @@ svg {
     opacity: 0.9;
     display: none;
 }
-#country-indicator h1{
+h1 {
 	margin: auto;
 	margin-top: 1.1%;
 	font-weight: bold;
@@ -82,13 +82,13 @@ svg {
 	height: 70%;
 }
 
-
 .icon-menu {
 	font-size: 2.5em !important;
 	color: #236294;
 	position: absolute;
 	margin-top: 0.3em;
 }
+/*
 .reset {
 	position: absolute;
 	left: 40%;
@@ -100,6 +100,7 @@ svg {
 	text-align: center;
 	cursor: pointer;
 }
+*/
 #hint-button{
 	cursor: pointer;
 	position: absolute;
@@ -143,7 +144,7 @@ svg {
 	stroke:#BC4A48;
 	stroke-width="6";
 }
-
+/*
 #final-indicator{
   background-color: rgb(190, 180, 180);
   position: absolute;
@@ -160,7 +161,7 @@ svg {
 	margin-top: 1%;
 	cursor:pointer;
 }
-
+*/
 .buttons{
 	height: 100px;
     width: 200px;
@@ -238,4 +239,39 @@ svg {
 }
 #single-button p{
 	margin-left: 0.8em;
+}
+
+#final-panel {
+	position: absolute;
+	width: 33.3%;
+	height: 0%;
+	width: 0%;
+	background-color: #92999F;
+	margin-left: 33.3%;
+	margin-top: 4%;
+	text-align: center;
+	overflow: hidden;
+	transition: height 2s;
+    border-style: ridge;
+    border-width: thin;
+    border-color: rgb(122, 127, 131);
+}
+
+.trophy-final {
+	font-size: 10em !important;
+    float: clear;
+    clear: ;
+    color: #E3AF28;
+    text-align: center;
+    display: block;
+}
+
+#sad-face {
+	font-size: 5em;
+	margin-top: 10%;
+	color: #E44C27;
+}
+
+#multi-panel-winner, #multi-panel-tie, #single-panel {
+	display: none;
 }

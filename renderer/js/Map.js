@@ -122,10 +122,10 @@ Map.prototype = {
     showNameCountryPop: function(name){
         var self = this;
         this.popCountryName.css({'top':event.clientY,'left':event.clientX})
-        this.functionOfPopName = setInterval(function(){ // this is a little inappropriate,because if the mouse still hover the country, the function never stop, but you can't see that. so uglymente its works
-                                     self.popCountryName.html(name);  
-                                     self.popCountryName.show();    
-                                 }, 500);
+        this.functionOfPopName = setInterval(function(){ // this is a little inappropriate,because if the mouse still hover the country, the function never stop, but you can't see that. so uglymente it works
+            self.popCountryName.html(name);  
+            self.popCountryName.show();    
+         }, 500);
     },
 
 }

@@ -14,7 +14,7 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 6,
+                easy: 2,
                 medium: 50
             }
 
@@ -94,9 +94,17 @@
             };
             if (this.isItNoMoreCountries()) {
                 if (this.playersMode === 'multi') {
-                    this.comparePlayersPoints();
+                    var tie = 'tie' === this.comparePlayersPoints(this.players[0],this.players[1]);
+                    if (!tie) {
+                        this.setWinner();
+                        this.vent.trigger('finish-game',{winner:true})
+                    }else {
+                        var percent = this.getPercent(this.players[0].points);
+                        this.vent.trigger('finish-game',{winner:false, points:percent});
+                    }                   
                 }else{
-                    console.log(this.getPercent(this.currentPlayer.points))
+                    var percent = this.getPercent(this.currentPlayer.points)
+                    this.vent.trigger('finish-game',{points:percent})
                 }
             }
         },
@@ -164,18 +172,34 @@
                 return true;
         },
 
-        comparePlayersPoints: function(){
-            var index1 = this.players[0].playerIndex
-            var index2 = this.players[1].playerIndex
-            if (this.players[index1].points > this.players[index2].points) {
-                console.log(this.players[index1].playerName)
-                console.log(this.getPercent(this.players[index1].points))
-            } else if (this.players[index1].points === this.players[index2].points){
-                console.log('esto es un empate')
+        setWinner: function(){
+            var index1  = this.players[0].playerIndex
+            var index2  = this.players[1].playerIndex
+            var playerA = this.players[index1]
+            var playerB = this.players[index2]
+            var winner  = playerA.playerName === this.comparePlayersPoints(playerA,playerB)
+            if (winner) {
+                this.vent.trigger('winner:message', {winner: playerA.playerName,
+                                                     loser : playerB.playerName,
+                                                     winnerPercent: this.getPercent(playerA.points),
+                                                     loserPercent : this.getPercent(playerB.points),
+                                                  })
             } else {
-                console.log(this.players[index2].playerName)
-                console.log(this.getPercent(this.players[index2].points))
+                this.vent.trigger('winner:message', {winner:playerB.playerName,
+                                                     loser:playerA.playerName,
+                                                     winnerPercent: this.getPercent(playerB.points),
+                                                     loserPercent : this.getPercent(playerA.points),
+                                                  })
             }
+        },
+
+        comparePlayersPoints: function(playerA,playerB){
+            if (playerA.points > playerB.points) {
+                return playerA.playerName
+            } 
+            if (playerA.points === playerB.points){
+                return 'tie'
+            } 
         },
 
         getPercent: function(playerPoints){
