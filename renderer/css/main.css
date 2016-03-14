@@ -13,6 +13,8 @@ svg {
 }
 .country{
     cursor: pointer;
+    stroke: #2C768B;
+    stroke-width: 0.4;
 }
 #country-indicator{
 	background-color: #98A7B7;
@@ -142,7 +144,7 @@ h1 {
 }
 .stroke-country{
 	stroke:#BC4A48;
-	stroke-width="6";
+	stroke-width: 0.4;
 }
 /*
 #final-indicator{
@@ -189,7 +191,7 @@ h1 {
 	fill-opacity:30%;
 	pointer-events:none;
 	stroke:#2C768B;
-	stroke-width="4";
+	stroke-width: 0.4;
 }
 
 #menu-container {

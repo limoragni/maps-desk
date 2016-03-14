@@ -101,7 +101,7 @@
                     }else {
                         var percent = this.getPercent(this.players[0].points);
                         this.vent.trigger('finish-game',{winner:false, points:percent});
-                    }                   
+                    }
                 }else{
                     var percent = this.getPercent(this.currentPlayer.points)
                     this.vent.trigger('finish-game',{points:percent})
@@ -168,7 +168,7 @@
 
         isItNoMoreCountries: function(){
             var oneCountryLeft = this.getNumberOfCountriesLeft() === 0;
-            if ( oneCountryLeft ) 
+            if ( oneCountryLeft )
                 return true;
         },
 
@@ -196,10 +196,10 @@
         comparePlayersPoints: function(playerA,playerB){
             if (playerA.points > playerB.points) {
                 return playerA.playerName
-            } 
+            }
             if (playerA.points === playerB.points){
                 return 'tie'
-            } 
+            }
         },
 
         getPercent: function(playerPoints){
@@ -207,7 +207,7 @@
                 var totalPoints = (this.getNumberOfCountries() / 2) * 10;
             } else {
                 var totalPoints = this.getNumberOfCountries() * 10
-            }            
+            }
             var percent = Math.floor(playerPoints * 100 / totalPoints) + '%';
             return percent
             // this.UI.finalPanel.append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
@@ -218,6 +218,5 @@
             this.setProperties();
         }
     }
-
     window.GameModel = new GameModel();
 })()
