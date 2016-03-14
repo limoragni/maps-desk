@@ -6,7 +6,7 @@
   "scripts": {
     "start": "DEVELOPMENT=true electron app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buildosx": "electron-packager ./production-build Footmapp --platform=darwin --arch=x64 --version=0.35.4 --out ./dist/Osx --asar  --app-bundle-id Maps --app-version 1.5",
+    "buildosx": "electron-packager ./ Maps --platform=darwin --arch=x64 --version=0.35.4 --out ./dist/Osx --asar  --app-bundle-id Maps --app-version 1.5",
     "buildwin": "electron-packager ./production-build Footmapp --platform=win32 --arch=x64 --version=0.35.4 --out ./dist/Win --asar  --version-string.CompanyName='Minegra' --version-string.ProductName='Maps' --version-string.FileDescription='Maps' --version-string.OriginalFilename='maps.exe' --version-string.LegalCopyright='Copyright (C) 2015 Minegra'"
   },
   "repository": {
