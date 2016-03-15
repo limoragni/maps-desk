@@ -8,11 +8,13 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="bower_components/flag-icon-css/css/flag-icon.min.css">
+        <link rel="stylesheet" href="bower_components/chosen/chosen.css">
 
         <script type="text/javascript">
             window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js'); // ELECTRON
         </script>
         <!-- BROSWER --> <!-- <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script> -->
+        <script type="text/javascript" src="bower_components/chosen/chosen.jquery.js"></script>
         <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
         <script type="text/javascript" src="bower_components/backbone/backbone.js"></script>
@@ -61,6 +63,12 @@
                 </div>
             </div>
             <div class="container">
+                <select data-placeholder="Choose a country..." class="chosen-select">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </select>
                 <h1 id="h-country">
                     <!-- <span class="flag-icon flag-icon-gr"></span> -->
                 </h1>
@@ -74,17 +82,17 @@
                 <div id="hard-mode-button"   data-mode="hard"     class="difficulty-mode-buttons"><p>Long</p></div>
             </div>
 
-            <div id="single-button" data-mode="single" class="players-menu-buttons">
+            <div id="single-button" data-mode="single" class="menu-buttons">
                 <i class="fa fa-user icon-menu"></i>
                 <p>SINGLE PLAYER</p>
             </div>
-            <div id="multi-button" data-mode="multi" class="players-menu-buttons">
+            <div id="multi-button" data-mode="multi" class="menu-buttons">
                 <i class="fa fa-users icon-menu"></i>
                 <p>TWO PLAYERS</p>
-                <div id="multi-mode-opcion" class="players-menu-buttons">
-                <div id="random"></div>
-                <div id="choose"></div>
-            </div>
+                <div id="multi-mode-opcion" class="menu-buttons">
+                    <div id="random"></div>
+                    <div id="choose"></div>
+                </div>
             </div>
         </div>
 

@@ -8,7 +8,7 @@ MainMenu.prototype = {
         this.UI = {
             menuContainer         : $('#menu-container'),
             menuPlay              : $('#menu-single-multi'),
-            menuPlayers           : $('.players-menu-buttons'),
+            menuPlayers           : $('.menu-buttons'),
             singleButton          : $('#single-button'),
             multiButton           : $('#multi-button'),
             menuDifficultyModes   : $('#menu-difficulty-modes'),
@@ -29,7 +29,7 @@ MainMenu.prototype = {
     },
 
     setEvents : function(){
-        this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this));
+        this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this)); //what the deal with bind?
         this.UI.menuPlayers.click(           _.bind( this.moveDiv,           this));
         this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
 

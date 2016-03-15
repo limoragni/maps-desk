@@ -20,6 +20,7 @@ GameUI.prototype = {
     initialize: function(){
         this.listenToEvents()
         this.showCountry()
+        $(".chosen-select").chosen()
     },
 
     setUI: function(){
