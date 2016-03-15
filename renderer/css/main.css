@@ -116,8 +116,10 @@ h1 {
 
 }
 .flag-cuestion {
-	transition: transform 0.5s;
-    transform-origin: 10% 100%;
+	/*transition: transform 0.5s;
+    transform-origin: 10% 100%;*/
+    transition: all .2s ease-in-out;
+
 }
 .flag-cuestion:hover {
 	transform: scale(5,5);
@@ -143,7 +145,8 @@ h1 {
 	stroke:#704891;
 }
 .stroke-country{
-	stroke:#BC4A48;
+	opacity: 0.8;
+	fill:#E44C27;
 	stroke-width: 0.4;
 }
 /*
@@ -241,6 +244,12 @@ h1 {
 }
 #single-button p{
 	margin-left: 0.8em;
+}
+
+#multi-mode-opcion { 
+	position: absolute;
+	top: 0;
+	left: 100%
 }
 
 #final-panel {

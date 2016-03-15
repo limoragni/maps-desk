@@ -34,7 +34,10 @@ GameUI.prototype = {
     },
 
     listenToEvents: function(){
-        this.UI.reset.click( _.bind( this.resetGame,             this));
+        this.UI.reset.click(function(event) {
+            location.reload()
+        });
+        // this.UI.reset.click( _.bind( this.resetGame,             this));
         this.UI.hint.click(  _.bind( this.colorHintsCountries,   this));
 
         GameModel.vent.on('player:mode:set',        this.setPlayersUI,           this);
@@ -113,16 +116,16 @@ GameUI.prototype = {
         d3.selectAll('path').classed('ctry-fine ctry-wrong',false);
     },
 
-    resetGame: function(){
-        GameModel.reset();
-        this.setProperties();
-        this.start();
-        this.resetColors()
-        this.UI.finalPanel.animate({left:'-340px'}, 1000);
-        this.UI.finalPanel.empty();
-        this.UI.finalPanel.append('<span id="reset-button" class="label label-default">Reset</span>');
-        this.UI.points.empty();
-    },
+    // resetGame: function(){
+    //     GameModel.reset();
+    //     this.setProperties();
+    //     this.start();
+    //     this.resetColors()
+    //     this.UI.finalPanel.animate({left:'-340px'}, 1000);
+    //     this.UI.finalPanel.empty();
+    //     this.UI.finalPanel.append('<span id="reset-button" class="label label-default">Reset</span>');
+    //     this.UI.points.empty();
+    // },
 
     
 }
