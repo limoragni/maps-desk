@@ -16,7 +16,7 @@ svg {
     stroke: #2C768B;
     stroke-width: 0.4;
 }
-#country-indicator{
+#bottom-bar {
 	background-color: #98A7B7;
 	padding: 20px;
     text-align:center;
@@ -149,8 +149,8 @@ h1 {
 	fill:#E44C27;
 	stroke-width: 0.4;
 }
-/*
-#final-indicator{
+
+/*#final-indicator{
   background-color: rgb(190, 180, 180);
   position: absolute;
   height: 25px;
@@ -159,14 +159,14 @@ h1 {
   margin-top: 10%;
   border-width: thin;
   left: -340px;
-}
+}*/
 #reset-button{
 	position: absolute;
-	margin-left: 70%;
-	margin-top: 1%;
+	margin-left: 95%;
+	margin-top: 5%;
 	cursor:pointer;
 }
-*/
+
 .buttons{
 	height: 100px;
     width: 200px;
@@ -285,4 +285,10 @@ h1 {
 
 #multi-panel-winner, #multi-panel-tie, #single-panel {
 	display: none;
+}
+
+#select-country {
+	position: absolute;
+    top: -44%;
+    left: 3%;
 }

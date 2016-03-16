@@ -29,7 +29,7 @@ GameUI.prototype = {
             hint             : $('#hint-button'),
             countryName      : $('#h-country'),
             finalPanel       : $('#final-indicator'),
-            countryNamePanel : $('#country-indicator'),
+            countryNamePanel : $('#bottom-bar'),
             containerGame    : $('#container-game')
         }
     },
