@@ -38,7 +38,7 @@ MainMenu.prototype = {
         // this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
         // this.UI.multiModeOption.click(       _.bind( this.moveDiv2,          this));
 
-        GameModel.vent.on('finish-game', this.showFinalPanel, this);
+        GameModel.vent.on('finish-game',    this.showFinalPanel, this);
         GameModel.vent.on('winner:message', this.putNamesPodium, this);
     },
 
@@ -89,7 +89,7 @@ MainMenu.prototype = {
     setDifficultyMode: function(evt){
         var mode = $(evt.currentTarget).data('mode');
         GameModel.setDifficultyMode(mode);
-        if (this.checkMultiMode()) {GameModel.setMultiMode(GameModel.multiMode);};
+        if (this.checkMultiMode()) {GameModel.setMultiMode(GameModel.multiMode);};//because we need first the number of countries
         this.getOutModeMenuFrontBackground();
     },
 
@@ -111,12 +111,12 @@ MainMenu.prototype = {
     },
 
     showFinalPanel: function(options){
-        this.UI.finalPanel.css({'height':'70%','width':'33.3%'});
+        this.UI.finalPanel.css({'height':'85%','width':'33.3%'});
         if (GameModel.playersMode === 'multi') {
             if (options.winner) {
                 this.UI.panelWinners.show()
             } else {
-                this.UI.tiePercent.html(options.points + ' of points')
+                this.UI.tiePercent.html(GameModel.currentPlayer.countriesGuessed +' of '+(GameModel.currentPlayer.countriesGuessed+GameModel.currentPlayer.countriesMissed) +' guessed countries <br>' + options.points + ' of points');
                 this.UI.panelTie.show()
             }
         } else {
@@ -126,10 +126,10 @@ MainMenu.prototype = {
     },
 
     putNamesPodium: function(position){
-        this.UI.winnerMessage.html(position.winner + ' winner!');
-        this.UI.winnerPercent.html(position.winnerPercent + ' of points');
-        this.UI.loserMessage.html(position.loser + ' Loser');
-        this.UI.loserPercent.html(position.loserPercent + ' of points');
+        this.UI.winnerMessage.html(position.winner.playerName + ' winner! <br>'+position.winner.countriesGuessed+' guessed countries of '+(position.winner.countriesGuessed+position.winner.countriesMissed));
+        this.UI.winnerPercent.html(position.winnerPercent     + ' of points');
+        this.UI.loserMessage.html(position.loser.playerName   + ' Loser <br>'  +position.winner.countriesGuessed+' guessed countries of '+(position.winner.countriesGuessed+position.winner.countriesMissed));
+        this.UI.loserPercent.html(position.loserPercent       + ' of points');
     },
 
 }

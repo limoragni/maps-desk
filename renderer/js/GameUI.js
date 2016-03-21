@@ -58,6 +58,7 @@ GameUI.prototype = {
             var val = self.UI.selectChild.val();
             GameModel.currentCountry = val[0];
             self.showCountry();
+            GameModel.setHintCountries();
             self.UI.countryName.show();
             self.UI.selectCountry.fadeOut();
             self.UI.selectChild.empty();

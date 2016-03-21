@@ -14,9 +14,10 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 5,
+                easy: 6,
                 medium: 50
             }
+            this.difficultMode          = null
 
             this.hintCountries          = null
             this.hintCountriesNumber    = 4 // Variable que indica cuantos paises constituyen una HINT, así es configurable
@@ -42,14 +43,14 @@
         setPlayersMode: function(mode){
             this.players.push(new PlayerModel({
                 colorClass: 'player-1-color',
-                playerName: 'Player 1',
+                playerName: 'Player Green',
                 playerIndex: 0
             }));
             this.currentPlayer = this.players[0];
             if (mode == 'multi'){
                 this.players.push(new PlayerModel({
                     colorClass: 'player-2-color',
-                    playerName: 'Player 2',
+                    playerName: 'Player Violet',
                     playerIndex: 1
                 }));
             }
@@ -64,6 +65,7 @@
         },
 
         setDifficultyMode: function(mode){
+            this.difficultMode = mode;
             if(mode !== 'hard')
                 this.randomizedCountries = this.randomizedCountries.slice(0,this.difficultyModesConfig[mode]);
                 this.numberOfCountries   = this.randomizedCountries.length
@@ -195,14 +197,14 @@
             var playerB = this.players[index2]
             var winner  = playerA.playerName === this.comparePlayersPoints(playerA,playerB)
             if (winner) {
-                this.vent.trigger('winner:message', {winner: playerA.playerName,
-                                                     loser : playerB.playerName,
+                this.vent.trigger('winner:message', {winner: playerA,
+                                                     loser : playerB,
                                                      winnerPercent: this.getPercent(playerA.points),
                                                      loserPercent : this.getPercent(playerB.points),
                                                   })
             } else {
-                this.vent.trigger('winner:message', {winner:playerB.playerName,
-                                                     loser:playerA.playerName,
+                this.vent.trigger('winner:message', {winner:playerB,
+                                                     loser:playerA,
                                                      winnerPercent: this.getPercent(playerB.points),
                                                      loserPercent : this.getPercent(playerA.points),
                                                   })
@@ -219,6 +221,7 @@
         },
 
         getPercent: function(playerPoints){
+            this.numberOfCountriesForResults();
             if (this.playersMode === 'multi') {
                 var totalPoints = (this.getNumberOfCountries() / 2) * 10;
             } else {
@@ -228,7 +231,17 @@
             return percent
             // this.UI.finalPanel.append('<strong>Acertaste el ' +percent+ ' de los paises</strong>');
             // this.UI.finalPanel.animate({left:'0px'}, 1000);
-            },
+        },
+
+        numberOfCountriesForResults: function(){
+            if (this.difficultMode == 'easy') {
+                this.numberOfCountries = this.difficultyModesConfig.easy;
+            }else if(this.difficultMode == 'medium') {
+                this.numberOfCountries = this.difficultyModesConfig.medium;
+            }else {
+                this.numberOfCountries = 169;
+            }
+        },
 
         reset: function(){
             this.setProperties();
