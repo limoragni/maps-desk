@@ -14,7 +14,7 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 6,
+                easy: 16,
                 medium: 50
             }
             this.difficultMode          = null
