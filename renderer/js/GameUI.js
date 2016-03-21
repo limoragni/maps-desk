@@ -55,7 +55,7 @@ GameUI.prototype = {
     takeValueSelect:function(){
         var self = this;
         this.UI.selectChild.chosen().change(function(){
-            var val = $('#select-child').val();
+            var val = self.UI.selectChild.val();
             GameModel.currentCountry = val[0];
             self.showCountry();
             self.UI.countryName.show();
@@ -73,12 +73,14 @@ GameUI.prototype = {
 
     putNamesInSelect: function(){
         var countries = GameModel.getCurrentCountries();
-        for (var a in countries) {
-            this.UI.selectChild.append('<option value="'+countries[a]+'">' + WorldMap.names[countries[a]] + '</option>')            
+        for (var i = 0; i < countries.length; i++) {
+            this.UI.selectChild.append('<option value="'+countries[i]+'">' + WorldMap.names[countries[i]] + '</option>')            
         };
+        // for (var a in countries) {
+        //     this.UI.selectChild.append('<option value="'+countries[a]+'">' + WorldMap.names[countries[a]] + '</option>')            
+        // };
         this.UI.selectChild.trigger("liszt:updated"); //usually for this have to use "chosen:update"
         this.UI.selectCountry.show();
-        // this.UI.selectChild.chosen("destroy");
     },
 
     onModeSelected: function(mode){
@@ -122,6 +124,7 @@ GameUI.prototype = {
 
     selectNextCountry: function(){
         GameModel.prepareSelect();
+        this.UI.selectCountry.toggleClass("select-side");
         this.UI.selectCountry.show();
         d3.selectAll('path').classed('hint-country',false)
     },

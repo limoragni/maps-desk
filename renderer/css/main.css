@@ -197,11 +197,15 @@ h1 {
 	stroke-width: 0.4;
 }
 
+.select-country {
+	position: absolute;
+    top: -44%;
+    left: 71%;
+    display: none;
+}
 
-
-#select-country {
+.select-side {
 	position: absolute;
     top: -44%;
     left: 3%;
-    display: none;
 }
