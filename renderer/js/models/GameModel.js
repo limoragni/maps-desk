@@ -14,7 +14,7 @@
             this.randomizedCountries    = this.countriesKeys.slice().mix();
             this.currentCountry         = this.randomizedCountries[0]
             this.difficultyModesConfig  = {
-                easy: 2,
+                easy: 5,
                 medium: 50
             }
 
@@ -31,7 +31,12 @@
             this.players                = []
             this.playersMode            = null
             this.currentPlayer          = null
+            this.multiMode              = 'random'
             this.vent                   = _.extend({}, Backbone.Events);
+        },
+
+        setMultiMode: function(mode){
+             this.vent.trigger('choose:mode', mode)
         },
 
         setPlayersMode: function(mode){
@@ -154,12 +159,23 @@
             return WorldMap.names[this.currentCountry];
         },
 
+        prepareSelect: function(){
+            var indexCurrentCountry = this.randomizedCountries.indexOf(this.currentCountry);
+            this.randomizedCountries.splice(indexCurrentCountry,1);
+            this.randomizedCountries.splice(0,0,this.currentCountry)
+            this.nextCountry();
+        },
+
         nextCountry: function(){
             this.randomizedCountries = this.randomizedCountries.splice(1,this.randomizedCountries.length);
             this.currentCountry = this.randomizedCountries[0];
             this.setHintCountries() //Siempre que se muestra un nuevo pais preparamos la hint que corresponde
             this.changePlayer()
             this.currentPlayer.countClicks = 0;
+            if (this.multiMode != 'random') {
+
+                this.setMultiMode();
+            };
         },
 
         isThisCountryCorrect: function(country){

@@ -11,6 +11,8 @@ MainMenu.prototype = {
             menuPlayers           : $('.menu-buttons'),
             singleButton          : $('#single-button'),
             multiButton           : $('#multi-button'),
+            multiModeOption       : $('#multi-mode-option'),
+            multiModeButtons      : $('.mode-option-multi'),
             menuDifficultyModes   : $('#menu-difficulty-modes'),
             difficultyModeButtons : $('.difficulty-mode-buttons'),
             menuContainer         : $('#menu-container'),
@@ -24,17 +26,43 @@ MainMenu.prototype = {
             loserMessage          : $('#loser-h1'),
             loserPercent          : $('#loser-percent'),
             tiePercent            : $('#tie-percent'),
-            singlePercent         : $('#single-percent')
+            singlePercent         : $('#single-percent'),
         }
     },
 
     setEvents : function(){
-        this.UI.difficultyModeButtons.click( _.bind( this.setDifficultyMode, this)); //what the deal with bind?
-        this.UI.menuPlayers.click(           _.bind( this.moveDiv,           this));
-        this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
+        this.UI.menuPlayers.click(          _.bind( this.setElectionOfPlayers, this));
+        this.UI.difficultyModeButtons.click(_.bind( this.setDifficultyMode,    this)); //what the deal with bind?
+        this.UI.multiModeButtons.click(      _.bind( this.setMultiMode,         this));
+        // this.UI.menuPlayers.click(           _.bind( this.moveDiv,           this));
+        // this.UI.menuPlayers.click(           _.bind( this.setPlayersMode,    this));
+        // this.UI.multiModeOption.click(       _.bind( this.moveDiv2,          this));
 
         GameModel.vent.on('finish-game', this.showFinalPanel, this);
         GameModel.vent.on('winner:message', this.putNamesPodium, this);
+    },
+
+    setElectionOfPlayers : function(evt){
+        var modePlayer = $(evt.currentTarget).data('mode');
+        GameModel.setPlayersMode(modePlayer);
+        this.moveMenu(modePlayer);
+    },
+
+    moveMenu : function(mode){
+        check = this.checkElectionPlayer(mode);
+        if (!check){ 
+            this.moveDiv() 
+        }else { 
+            this.moveDiv2(); 
+        }
+    },
+
+    checkElectionPlayer : function(mode){
+        if (mode == 'single') {
+            return true
+        }else{
+            return false
+        }
     },
 
     moveDiv : function(){
@@ -44,18 +72,35 @@ MainMenu.prototype = {
             self.UI.menuPlayers.fadeOut()
         });
         this.UI.multiButton.animate({top:'+=12.7em'});
-        this.UI.menuDifficultyModes.fadeIn('slow')
+        this.UI.multiModeOption.fadeIn('slow');
     },
 
-    setPlayersMode: function(evt){ // que hace el evt?
-        var mode = $(evt.currentTarget).data('mode');
-        GameModel.setPlayersMode(mode);
+    moveDiv2 : function(){
+        this.UI.menuPlayers.fadeOut('fast');
+        this.UI.multiModeOption.fadeOut();
+        this.UI.menuDifficultyModes.fadeIn('slow');
     },
+
+    // setPlayersMode: function(evt){ // que hace el evt?
+    //     var mode = $(evt.currentTarget).data('mode');
+    //     GameModel.setPlayersMode(mode);
+    // },
 
     setDifficultyMode: function(evt){
         var mode = $(evt.currentTarget).data('mode');
         GameModel.setDifficultyMode(mode);
+        if (this.checkMultiMode()) {GameModel.setMultiMode(GameModel.multiMode);};
         this.getOutModeMenuFrontBackground();
+    },
+
+    setMultiMode : function(evt){
+        GameModel.multiMode = $(evt.currentTarget).data('mode');
+        // aqui deberiamos llamar a setMultiMode de GameModel, pero lo dejamos que lo haga setDifficultyMode para saber antes con cuantos paises se va a jugar
+        this.moveDiv2();
+    },
+
+    checkMultiMode: function(){
+        if (GameModel.multiMode == 'choose') {return true}else{return false};
     },
 
     getOutModeMenuFrontBackground : function(){

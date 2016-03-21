@@ -18,9 +18,10 @@ GameUI.prototype = {
     },
 
     initialize: function(){
-        this.listenToEvents()
-        this.showCountry()
-        $(".chosen-select").chosen()
+        this.listenToEvents();
+        this.showCountry();
+        //$(".chosen-select").chosen()
+        this.takeValueSelect()
     },
 
     setUI: function(){
@@ -30,7 +31,9 @@ GameUI.prototype = {
             countryName      : $('#h-country'),
             finalPanel       : $('#final-indicator'),
             countryNamePanel : $('#bottom-bar'),
-            containerGame    : $('#container-game')
+            containerGame    : $('#container-game'),
+            selectCountry    : $('#select-country'),
+            selectChild      : $('#select-child'),
         }
     },
 
@@ -41,11 +44,41 @@ GameUI.prototype = {
         // this.UI.reset.click( _.bind( this.resetGame,             this));
         this.UI.hint.click(  _.bind( this.colorHintsCountries,   this));
 
+        GameModel.vent.on('choose:mode',            this.setChooseMode,          this);
         GameModel.vent.on('player:mode:set',        this.setPlayersUI,           this);
         GameModel.vent.on('game:mode:set',          this.onModeSelected,         this);
         GameModel.vent.on('points:added',           this.setPoints,              this);
-        GameModel.vent.on('next:turn',              this.showNextCountry,        this);
+        GameModel.vent.on('next:turn',              this.nextTurn,               this);
         GameModel.vent.on('current:player:changed', this.onCurrentPlayerChanged, this);
+    },
+
+    takeValueSelect:function(){
+        var self = this;
+        this.UI.selectChild.chosen().change(function(){
+            var val = $('#select-child').val();
+            GameModel.currentCountry = val[0];
+            self.showCountry();
+            self.UI.countryName.show();
+            self.UI.selectCountry.fadeOut();
+            self.UI.selectChild.empty();
+            self.UI.selectChild.trigger("liszt:updated")
+        })
+    },
+
+    setChooseMode:function(){
+        this.putNamesInSelect();
+        this.UI.countryName.hide();
+        GameModel.currentCountry = null;
+    },
+
+    putNamesInSelect: function(){
+        var countries = GameModel.getCurrentCountries();
+        for (var a in countries) {
+            this.UI.selectChild.append('<option value="'+countries[a]+'">' + WorldMap.names[countries[a]] + '</option>')            
+        };
+        this.UI.selectChild.trigger("liszt:updated"); //usually for this have to use "chosen:update"
+        this.UI.selectCountry.show();
+        // this.UI.selectChild.chosen("destroy");
     },
 
     onModeSelected: function(mode){
@@ -77,6 +110,20 @@ GameUI.prototype = {
         if (( oneCountryLeft && triedAllTimes)||(oneCountryLeft && rightCountry)) {
             return true;
         };
+    },
+
+    nextTurn: function(){
+        if (GameModel.multiMode == 'random') {
+            this.showNextCountry();
+        }else{
+            this.selectNextCountry();
+        }
+    },
+
+    selectNextCountry: function(){
+        GameModel.prepareSelect();
+        this.UI.selectCountry.show();
+        d3.selectAll('path').classed('hint-country',false)
     },
 
     showNextCountry: function(){

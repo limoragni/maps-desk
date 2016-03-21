@@ -1,3 +1,7 @@
+
+// todo este choclo es para que el select se abra para arriba en vez de hacia abajo, ironia de la vida
+
+
 (function () {
     /*
     Chosen source: generate output using 'cake build'

@@ -197,98 +197,11 @@ h1 {
 	stroke-width: 0.4;
 }
 
-#menu-container {
-	height: 100%;
-	width: 33.3%;
-	background-color: #92999F;
-	padding-top: 15%;
-	margin-left: 33.3%;
-	position: absolute;
-}
 
-#menu-difficulty-modes {
-	height: 37.5%;
-	width: 100%;
-    position: absolute;
-	display: none;
-	cursor: pointer;
-}
-.difficulty-mode-buttons {
-	height: 33.3%;
-	width: 100%;
-	border-top: 2px solid #616E73;
-}
-
-#hard-mode-button {
-	border-bottom: 2px solid #616E73;
-}
-
-.menu-buttons {
-	height: 7em;
-	width: 100%;
-	border-top: 2px solid #616E73;
-	padding: 1em;
-	position: relative;
-	cursor: pointer;
-	overflow: hidden;
-}
-#multi-button {
-	border-bottom: 2px solid #616E73;
-}
-
-#menu-container p{
-	text-align: center;
-    font-weight: bold;
-    color: #103B46;
-    font-size: 3em;
-}
-#single-button p{
-	margin-left: 0.8em;
-}
-
-#multi-mode-opcion { 
-	position: absolute;
-	top: 0;
-	left: 100%
-}
-
-#final-panel {
-	position: absolute;
-	width: 33.3%;
-	height: 0%;
-	width: 0%;
-	background-color: #92999F;
-	margin-left: 33.3%;
-	margin-top: 4%;
-	text-align: center;
-	overflow: hidden;
-	transition: height 2s;
-    border-style: ridge;
-    border-width: thin;
-    border-color: rgb(122, 127, 131);
-}
-
-.trophy-final {
-	font-size: 10em !important;
-    float: clear;
-    clear: ;
-    color: #E3AF28;
-    text-align: center;
-    display: block;
-}
-
-#sad-face {
-	font-size: 5em;
-	margin-top: 10%;
-	color: #E44C27;
-}
-
-#multi-panel-winner, #multi-panel-tie, #single-panel {
-	display: none;
-}
 
 #select-country {
 	position: absolute;
     top: -44%;
     left: 3%;
+    display: none;
 }
