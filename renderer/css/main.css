@@ -4,7 +4,7 @@ body{
 
 svg {
 	fill:#CECECF;
-	padding: 10%;
+	padding: 8%;
 	overflow: inherit !important;
 	cursor: -webkit-grab;
     -webkit-touch-callout: none;

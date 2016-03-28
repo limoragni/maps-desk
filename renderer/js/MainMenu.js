@@ -128,7 +128,7 @@ MainMenu.prototype = {
     putNamesPodium: function(position){
         this.UI.winnerMessage.html(position.winner.playerName + ' winner! <br>'+position.winner.countriesGuessed+' guessed countries of '+(position.winner.countriesGuessed+position.winner.countriesMissed));
         this.UI.winnerPercent.html(position.winnerPercent     + ' of points');
-        this.UI.loserMessage.html(position.loser.playerName   + ' Loser <br>'  +position.winner.countriesGuessed+' guessed countries of '+(position.winner.countriesGuessed+position.winner.countriesMissed));
+        this.UI.loserMessage.html(position.loser.playerName   + ' Loser <br>'  +position.loser.countriesGuessed+' guessed countries of '+(position.winner.countriesGuessed+position.winner.countriesMissed));
         this.UI.loserPercent.html(position.loserPercent       + ' of points');
     },
 
