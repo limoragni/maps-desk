@@ -120,7 +120,7 @@ MainMenu.prototype = {
                 this.UI.panelTie.show()
             }
         } else {
-            this.UI.singlePercent.html(options.points + ' of points')
+            this.UI.singlePercent.html(GameModel.currentPlayer.countriesGuessed +' of '+(GameModel.currentPlayer.countriesGuessed+GameModel.currentPlayer.countriesMissed) +' guessed countries <br>' + options.points + ' of points')
             this.UI.panelSingle.show()
         }
     },
