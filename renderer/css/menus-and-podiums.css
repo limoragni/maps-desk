@@ -1,16 +1,23 @@
+
+* {
+    box-sizing: border-box;
+}
+
+
 #menu-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 	height: 100%;
-	width: 33.3%;
+	width: 40%;
 	background-color: #92999F;
-	padding-top: 15%;
-	margin-left: 33.3%;
-	position: absolute;
+	margin-left: 30%;
 }
 
 #menu-difficulty-modes {
 	height: 37.5%;
 	width: 100%;
-    position: absolute;
 	display: none;
 	cursor: pointer;
 }
@@ -18,6 +25,7 @@
 	height: 33.3%;
 	width: 100%;
 	border-top: 2px solid #616E73;
+	display: flex;
 }
 
 #hard-mode-button {
@@ -25,37 +33,51 @@
 }
 
 .menu-buttons {
-	height: 7em;
-	width: 100%;
+	/*height: 7em;*/
+	/*width: 100%;*/
 	border-top: 2px solid #616E73;
 	padding: 1em;
 	position: relative;
 	cursor: pointer;
-	overflow: hidden;
+	/*overflow: hidden;*/
+	display: flex;
+	justify-content: space-around;
 }
 #multi-button {
 	border-bottom: 2px solid #616E73;
 }
 
 #menu-container p{
+	text-align: left;
+  font-weight: bold;
+  color: #103B46;
+	margin: 0;
+	margin-left: 10%;
+	width: 60%;
+}
+.difficulty-mode-buttons p{
+	text-align: center!important;
+	margin: auto!important;
+}
+
+.icon-menu {
+	font-size: 2em !important;
+	color: #236294;
+	margin-top: 0.3em;
+	position: relative;
+}
+
+#multi-mode-option {
+	height: 50%;
+	width: 100%;
+	display: none;
 	text-align: center;
-    font-weight: bold;
-    color: #103B46;
-    font-size: 3em;
-}
-#single-button p{
-	margin-left: 0.8em;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 0 0.5em;
 }
 
-#multi-mode-option { 
-	position: absolute;
-    height: 22%;
-    width: 100%;
-    margin-top: 12%;
-    display: none;
-}
-
-#random-button {
+/*#random-button {
 	float: left;
 	margin-left: 10%;
 }
@@ -63,7 +85,7 @@
 #choose-button {
 	float: right;
 	margin-right: 10%;
-}
+}*/
 
 #final-panel {
 	position: absolute;
@@ -104,29 +126,35 @@
 .orange-circle-button {
 	box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
 	border: .5em solid #2C6390;
-	font-size: 200%;
 	line-height: 1.1em;
 	color: #D3DDE0;
 	background-color: #2C6390;
 	margin: auto;
 	border-radius: 50%;
-	height: 100%;
-	width: 37%;
-	position: relative;
+	height: 38%;
+	width: 70%;
+	/*padding: 1em;*/
+	text-align: center;
 }
 .orange-circle-button:hover {
 	color:#ffffff;
     background-color: #E44C27;
 	text-decoration: none;
 	border-color: #E05D3C;
-	
+
 }
 .orange-circle-button:visited {
 	color:#ffffff;
     background-color: #e84d0e;
 	text-decoration: none;
-	
+
 }
 .orange-circle-link-greater-than {
     font-size: 1em;
+}
+
+@media (min-width: 500px) {
+  #menu-container {
+    font-size: 1.5em;
+  }
 }

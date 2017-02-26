@@ -50,10 +50,10 @@ MainMenu.prototype = {
 
     moveMenu : function(mode){
         check = this.checkElectionPlayer(mode);
-        if (!check){ 
-            this.moveDiv() 
-        }else { 
-            this.moveDiv2(); 
+        if (!check){
+            this.moveDiv()
+        }else {
+            this.moveDiv2();
         }
     },
 
@@ -72,7 +72,7 @@ MainMenu.prototype = {
             self.UI.menuPlayers.fadeOut()
         });
         this.UI.multiButton.animate({top:'+=12.7em'});
-        this.UI.multiModeOption.fadeIn('slow');
+        this.UI.multiModeOption.fadeIn('slow').css("display","flex");
     },
 
     moveDiv2 : function(){

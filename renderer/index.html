@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
 
@@ -12,10 +13,10 @@
         <link rel="stylesheet" href="bower_components/flag-icon-css/css/flag-icon.min.css">
         <link rel="stylesheet" href="bower_components/chosen/chosen.css">
 
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js'); // ELECTRON
-        </script>
-        <!-- BROSWER --> <!-- <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script> -->
+        </script> -->
+        <!-- BROSWER --> <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="bower_components/chosen/chosen.jquery.js"></script>
         <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
@@ -48,7 +49,7 @@
             </div>
             <div id='country-hover' style='position: absolute;'></div>
         </div>
-        
+
         <div id="bottom-bar">
             <i class="fa fa-user fa-4x" id="icon-player"><i id='player-1-turn' class="player-turn fa fa-caret-down"></i></i>
 
@@ -96,13 +97,15 @@
                 <button id="choose-button" data-mode="choose" class="orange-circle-button mode-option-multi">Choose<span class="orange-circle-greater-than"></span></button>
             </div>
 
-            <div id="single-button" data-mode="single" class="menu-buttons">
-                <i class="fa fa-user icon-menu"></i>
-                <p>SINGLE PLAYER</p>
-            </div>
-            <div id="multi-button" data-mode="multi" class="menu-buttons">
-                <i class="fa fa-users icon-menu"></i>
-                <p>TWO PLAYERS</p>
+            <div class="number-players">
+              <div id="single-button" data-mode="single" class="menu-buttons">
+                  <i class="fa fa-user icon-menu"></i>
+                  <p>SINGLE PLAYER</p>
+              </div>
+              <div id="multi-button" data-mode="multi" class="menu-buttons">
+                  <i class="fa fa-users icon-menu"></i>
+                  <p>TWO PLAYERS</p>
+              </div>
             </div>
         </div>
 

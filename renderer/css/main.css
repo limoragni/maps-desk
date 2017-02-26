@@ -191,7 +191,7 @@ h1 {
 
 }
 .disable-country{
-	fill-opacity:30%;
+	fill-opacity:0.3;
 	pointer-events:none;
 	stroke:#2C768B;
 	stroke-width: 0.4;
